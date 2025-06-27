@@ -1,0 +1,84 @@
+.first{
+  border: solid 1px rgb(176, 33, 33);
+  width: 42%;
+    
+}
+
+.viewdiv{
+    /*position: relative;*/
+    margin-left: 39vh;
+    float: left;
+    border: solid 1px rgb(45, 45, 45);
+    width: 95%;
+    margin-top: 3vh;
+    padding-bottom: 2rem;
+    background-color: white;
+    z-index: 0;
+  pointer-events: auto;
+}
+.heading{
+    margin-top: 0;
+    padding: 0;
+    background-color: rgb(173, 165, 165);
+    margin-left: 0;
+    width: 100%;
+    line-height: 6vh;
+    font-weight: bold;
+    color: blue;
+    margin-bottom: 2vh;
+    display: flex;
+    flex-direction: row;
+    gap: 20vh;
+   }
+.viewbutton{
+    /*position: relative; */
+     display: inline;
+    height: 1.8rem;
+    width: 1.8rem;
+    border: none;
+   background-color: transparent;
+    margin-top: 0.6rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+     z-index: 10;
+     padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+   }
+   .viewbutton:hover{
+    transform: scale(1.05);
+   }
+.buttonimage{
+ width: 100% ;             
+  height: 100%;
+  object-fit: contain; 
+  pointer-events: none;
+  }
+
+.viewlayout{
+    width: 96%;
+    padding: 1vh;
+    display: flex;
+    gap: 10px;
+    /*border: solid 1px black;*/
+    height: 40vh;
+    margin-left: 12px;
+    
+}
+.childdiv{
+    width: 50%;
+    border: solid 1px rgb(156, 153, 153);
+    height: 100%;
+     pointer-events: auto;
+     z-index: 0;
+    
+}
+.changeimage{
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    border: 0;
+     padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+}

@@ -1,0 +1,35 @@
+.new{
+    font-weight: bold;
+    align-items: flex;
+    flex-direction: row;
+    width: 38vh;
+    color: white;
+    height: 100vh;
+    background-color: rgb(51, 50, 50);
+    position: fixed;
+}
+
+.words{
+    height: 2rem;
+    font-weight: lighter;
+    font-size: 1.2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    margin-left: 4rem;
+    padding: 0 0 3rem 1.5rem;
+    text-align: left;
+}
+
+.active{
+    background-color: brown;
+}
+.main{
+    color: white;
+    font-weight: lighter;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    margin-left: 3.5rem;
+    font-size: 2.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    
+    text-align: left;
+}
