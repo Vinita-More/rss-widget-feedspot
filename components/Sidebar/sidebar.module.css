@@ -7,18 +7,25 @@
     height: 100vh;
     background-color: rgb(51, 50, 50);
     position: fixed;
+    left: 0;
+  top: 0;
+  box-sizing: border-box;
 }
 
 .words{
-    height: 2rem;
+    /*height: 2rem;*/
     font-weight: lighter;
     font-size: 1.2rem;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-    margin-left: 4rem;
-    padding: 0 0 3rem 1.5rem;
+    margin-left: 0rem;
+    padding: 1rem;
     text-align: left;
+   /* padding-bottom: 3rem ;*/
 }
-
+.words:hover{
+    background-color: rgb(200, 200, 188);
+    font-size: 1.35rem;
+}
 .active{
     background-color: brown;
 }

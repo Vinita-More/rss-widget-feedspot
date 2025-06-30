@@ -1,16 +1,18 @@
-import Sidebar from "./Sidebar/Sidebar";
-import Search from "./Feedurl/rss-feed-url";
-import Searchbar from "./Searchbar/Searchbar";
-import View from "./View/view";
-import c from './component.module.css'
-export default function Page(){
-    return(
-        <div className={c.body}>
-<Sidebar />
-<Searchbar />
+// import Sidebar from "./Sidebar/Sidebar";
+// import Search from "./Feedurl/rss-feed-url";
+// import Searchbar from "./Searchbar/Searchbar";
+// import View from "./View/view";
+// import c from './component.module.css'
+// import Sidediv from './Sidediv/Sidediv'
+// export default function Page(){
+//     return(
+//         <div className={c.body}>
+// <Sidebar />
+// <Searchbar />
         
-       <Search   />
+//        <Search   />
        
-       <View /> 
-        </div>
-    );}
+//        <View /> 
+//        <Sidediv />
+//         </div>
+//     );}
