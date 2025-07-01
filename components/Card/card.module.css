@@ -1,0 +1,122 @@
+
+.h1{
+    font-size:2rem;
+    position: relative;
+    width: 41%;
+    margin-left: 39vh;
+    margin-top: 5vh;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-right: 1vh;
+    font-size: 6vh;
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;     
+    box-sizing: border-box;
+    padding: 2rem;
+   /* min-height: 8vh;
+  display: block;
+   margin-bottom: 10vh;
+   margin-top: 110vh;
+  max-width: 1000px;*/
+ 
+}
+
+.cardcontainer {  
+  display: flex;
+  padding: 0.5rem;
+}
+.insidecontainer{
+ border: solid 1px black;
+  display: flex;
+  flex-wrap: wrap;             /* Allow items to wrap on smaller screens */
+  flex-direction: row;         /* This makes items go side-by-side */
+  gap: 16px;                   /* Spacing between cards */
+  justify-content: center;     /* Center all cards horizontally */
+  align-items: start;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.usercard {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 5px 25px;
+  border: solid 1px black;
+  font-size: 1rem;
+  width: 100%;
+  }
+
+.usercard:hover {
+  transform: translateY(-4px);
+}
+
+.usercard h1 {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 8px;
+  white-space: nowrap;         /* Prevents text from wrapping to next line*/
+  overflow: hidden;            /* Hides overflowing text */
+ text-overflow: ellipsis; 
+   width: 100px; 
+ /* display: -webkit-box;
+  -webkit-line-clamp: 1;       /* Number of lines to show */
+ /* -webkit-box-orient: vertical;
+  overflow: hidden; */
+}
+.usercard img{
+  margin-top: 10px;
+  height: 100px;
+  border: solid 1px black;
+  border-radius: 5px;
+  object-fit: cover;
+  width: 100%;
+}
+.usercard p {
+  margin: 4px 0;
+  color: #666;
+}
+/*.div1{
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 3rem;
+  padding-left: 2rem;
+  justify-content: space-between;
+}*/
+.div1 {
+  display: flex;
+  justify-content: space-between;  /* One side to left, one to right */
+ /* align-items: center;             /* Vertically center items */
+  /*gap: 0.5rem;*/
+  padding: 0 1rem;
+  flex-wrap: wrap;                 /* Wrap on small screens */
+}
+
+.searchInput {
+  flex: 1;
+  max-width: 200px;
+  padding: 0.5rem;
+  padding-bottom: 0.2rem;
+  font-size: 0.8rem;
+  margin-left: 1rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-right: 2rem;
+}
+
+.savebutton {
+  color: black;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.div1 #savebutton{
+  background-color: yellow;
+}

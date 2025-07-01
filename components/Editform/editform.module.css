@@ -1,0 +1,19 @@
+.formparent{
+  font-size: 1vh;
+  z-index: 10;
+  position: relative;      /* Push it to the right of sidebar */
+  display: flex;
+  box-sizing: border-box;
+  padding: 2rem;
+  width: 40%;
+  height: auto;
+  margin-left: 39vh;
+  border: solid 1px black;
+  margin-bottom: 1vh;
+  flex-direction: column;
+  gap: 2vh; 
+  flex-wrap: wrap;
+}
+.generalform{
+  width: 100%;
+}

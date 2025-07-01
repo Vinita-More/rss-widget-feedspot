@@ -1,12 +1,17 @@
 .main{
-    font-size: 6vh;
-    z-index: 10;
-    position: relative;
-     margin-left: 38vh;       /* Push it to the right of sidebar */
+  font-size: 1vh;
+  z-index: 10;
+  position: relative;
+  margin-left: 38vh;       /* Push it to the right of sidebar */
   display: flex;
   justify-content: center; /* center horizontally */
   align-items: center;     /* center vertically if needed */
-  min-height: 100vh;
+  min-height: 50vh;
   box-sizing: border-box;
   padding: 2rem;
+}
+.name{
+ position: relative;
+ box-sizing: border-box;
+
 }

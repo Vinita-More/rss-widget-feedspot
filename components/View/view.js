@@ -2,11 +2,7 @@
 import v from './view.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
-//import squareone from '@/public/icons/singlesquare.png'
-//import singlesquare from '@/public/icons/singlesquare.png';
 import ViewButtons from './buttons';
-//import Side from '../Sidediv/Sidediv'
-//import GeneralText from '../General/General';
 export default function View(){
 
   const [activeIndex, setActiveIndex] = useState(0);
