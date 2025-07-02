@@ -2,7 +2,7 @@ import rf from './feed-url.module.css';
 export default function Search(){
     return(
  <div> 
- hi
+
         <div className={rf.urlform}>
         <div className={rf.heading}>
           <h3>RSS Feed URL</h3>

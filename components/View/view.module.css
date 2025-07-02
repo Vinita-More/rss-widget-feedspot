@@ -13,11 +13,11 @@
     padding-bottom: 2rem;
     background-color: white;
     z-index: 0;
-  pointer-events: auto;
+    pointer-events: auto;
 }
 .heading{
     margin-top: 0;
-    padding: 0;
+    padding: 0 10px 0;
     background-color: rgb(227, 226, 226);
     margin-left: 0;
     width: 100%;
@@ -27,6 +27,7 @@
     margin-bottom: 2vh;
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 20vh;
    }
 .viewbutton{

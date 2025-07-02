@@ -2,12 +2,12 @@
 .h1{
     font-size:2rem;
     position: relative;
-    width: 41%;
-    margin-left: 39vh;
-    margin-top: 5vh;
+    width: 40%;
+    margin-left: 39.5vh;
+    /*margin-top: 4vh;*/
     flex-wrap: wrap;
     text-align: center;
-    margin-right: 1vh;
+   /* margin-right: 1vh;*/
     font-size: 6vh;
     margin-bottom: 4px;
     display: flex;
@@ -15,8 +15,10 @@
     justify-content: center; 
     align-items: center;     
     box-sizing: border-box;
-    padding: 2rem;
-   /* min-height: 8vh;
+    padding: 1rem;
+   /*  border: solid 1px rgb(3, 3, 3);
+
+    min-height: 8vh;
   display: block;
    margin-bottom: 10vh;
    margin-top: 110vh;
@@ -27,9 +29,21 @@
 .cardcontainer {  
   display: flex;
   padding: 0.5rem;
+  overflow: hidden;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-top: 10px;
+  border: solid 1px black;
+}
+.inp{
+  margin-right: 70%;
+  margin-top: 10px;
+  color: rgb(181, 175, 176);
+  font-size: 1.2rem;
+  position: sticky;
 }
 .insidecontainer{
- border: solid 1px black;
+  /*border: solid 1px rgb(3, 3, 3);*/
   display: flex;
   flex-wrap: wrap;             /* Allow items to wrap on smaller screens */
   flex-direction: row;         /* This makes items go side-by-side */
@@ -38,6 +52,9 @@
   align-items: start;
   padding: 0.5rem;
   border-radius: 5px;
+ /* overflow: hidden;*/
+  max-height: 78vh;
+  overflow-y: auto;
 }
 
 .usercard {
@@ -61,14 +78,11 @@
   overflow: hidden;            /* Hides overflowing text */
  text-overflow: ellipsis; 
    width: 100px; 
- /* display: -webkit-box;
-  -webkit-line-clamp: 1;       /* Number of lines to show */
- /* -webkit-box-orient: vertical;
-  overflow: hidden; */
+  overflow: hidden; 
 }
 .usercard img{
   margin-top: 10px;
-  height: 100px;
+  height: 200px;
   border: solid 1px black;
   border-radius: 5px;
   object-fit: cover;
@@ -78,13 +92,7 @@
   margin: 4px 0;
   color: #666;
 }
-/*.div1{
-  display: flex;
-  flex-direction: row;
-  padding: 1rem 3rem;
-  padding-left: 2rem;
-  justify-content: space-between;
-}*/
+
 .div1 {
   display: flex;
   justify-content: space-between;  /* One side to left, one to right */
@@ -118,5 +126,91 @@
 }
 
 .div1 #savebutton{
+  z-index: 10;
   background-color: yellow;
+}
+
+/**/
+@media (max-width: 1024px) {
+  .h1 {
+    width: 90%;
+    margin-left: 0;
+    padding: 1rem 0.5rem;
+  }
+
+  .cardcontainer {
+    padding: 0.5rem;
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+
+  .insidecontainer {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 0.25rem;
+  }
+
+  .usercard {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .usercard h1 {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .usercard img {
+    height: 150px;
+  }
+
+  .div1 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .searchInput {
+    margin: 0;
+    width: 100%;
+    max-width: none;
+  }
+
+  .buttonGroup {
+    justify-content: center;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+
+  .savebutton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .inp {
+    font-size: 1rem;
+    margin-right: 0;
+    text-align: center;
+  }
+}
+
+/* Extra small screens (phones) */
+@media (max-width: 600px) {
+  .usercard img {
+    height: 120px;
+  }
+
+  .usercard h1 {
+    font-size: 0.85rem;
+  }
+
+  .savebutton {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .inp {
+    font-size: 0.9rem;
+  }
 }

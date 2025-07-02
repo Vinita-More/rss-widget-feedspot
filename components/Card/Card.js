@@ -29,8 +29,9 @@
         </div>
     
     <div className={g.cardcontainer}>
-
+            <p className={g.inp}>My RSS Feed</p>
         <div className={g.insidecontainer}>
+            
        { feeds.map(feed => ( 
         <div className={g.usercard} key={feed.id}>
             <img

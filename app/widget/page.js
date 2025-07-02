@@ -4,9 +4,8 @@ import Sidebar from "@/components/Sidebar/Sidebar";
 import Searchbar from "@/components/Searchbar/Searchbar";
 import View from "@/components/View/view";
 import Card from "@/components/Card/Card";
-import Editform from "@/components/Editform/editform";
-//import Sidediv from "@/components/Sidediv/FeedspotSection";
-import FeedspotSection from "@/components/Sidediv/Sidediv";
+import General from "@/components/Editform/general";
+import FeedspotSection from "@/components/Topbody/Topbody";
 
 export default function MainPage() {
   
@@ -25,7 +24,7 @@ export default function MainPage() {
          {/* */}
       <Card />
          {/* */}
-         <Editform />
+         <General />
      {/*  <Sidediv />
          */}
 
