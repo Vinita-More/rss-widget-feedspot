@@ -1,32 +1,30 @@
-
-.h1{
-    font-size:2rem;
-    position: relative;
-    width: 40%;
-    margin-left: 39.5vh;
-    /*margin-top: 4vh;*/
-    flex-wrap: wrap;
-    text-align: center;
-   /* margin-right: 1vh;*/
-    font-size: 6vh;
-    margin-bottom: 4px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center;     
-    box-sizing: border-box;
-    padding: 1rem;
-   /*  border: solid 1px rgb(3, 3, 3);
+.h1 {
+  font-size: 2rem;
+  position: relative;
+  width: 40%;
+  margin-left: 39.5vh;
+  /*margin-top: 4vh;*/
+  flex-wrap: wrap;
+  text-align: center;
+  /* margin-right: 1vh;*/
+  font-size: 6vh;
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 1rem;
+  /*  border: solid 1px rgb(3, 3, 3);
 
     min-height: 8vh;
   display: block;
    margin-bottom: 10vh;
    margin-top: 110vh;
   max-width: 1000px;*/
- 
 }
 
-.cardcontainer {  
+.cardcontainer {
   display: flex;
   padding: 0.5rem;
   overflow: hidden;
@@ -35,24 +33,24 @@
   margin-top: 10px;
   border: solid 1px black;
 }
-.inp{
+.inp {
   margin-right: 70%;
   margin-top: 10px;
   color: rgb(181, 175, 176);
   font-size: 1.2rem;
   position: sticky;
 }
-.insidecontainer{
+.insidecontainer {
   /*border: solid 1px rgb(3, 3, 3);*/
   display: flex;
-  flex-wrap: wrap;             /* Allow items to wrap on smaller screens */
-  flex-direction: row;         /* This makes items go side-by-side */
-  gap: 16px;                   /* Spacing between cards */
-  justify-content: center;     /* Center all cards horizontally */
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  flex-direction: row; /* This makes items go side-by-side */
+  gap: 16px; /* Spacing between cards */
+  justify-content: center; /* Center all cards horizontally */
   align-items: start;
   padding: 0.5rem;
   border-radius: 5px;
- /* overflow: hidden;*/
+  /* overflow: hidden;*/
   max-height: 78vh;
   overflow-y: auto;
 }
@@ -64,7 +62,7 @@
   border: solid 1px black;
   font-size: 1rem;
   width: 100%;
-  }
+}
 
 .usercard:hover {
   transform: translateY(-4px);
@@ -74,13 +72,13 @@
   font-size: 1rem;
   color: #333;
   margin-bottom: 8px;
-  white-space: nowrap;         /* Prevents text from wrapping to next line*/
-  overflow: hidden;            /* Hides overflowing text */
- text-overflow: ellipsis; 
-   width: 100px; 
-  overflow: hidden; 
+  white-space: nowrap; /* Prevents text from wrapping to next line*/
+  overflow: hidden; /* Hides overflowing text */
+  text-overflow: ellipsis;
+  width: 100px;
+  overflow: hidden;
 }
-.usercard img{
+.usercard img {
   margin-top: 10px;
   height: 200px;
   border: solid 1px black;
@@ -95,11 +93,11 @@
 
 .div1 {
   display: flex;
-  justify-content: space-between;  /* One side to left, one to right */
- /* align-items: center;             /* Vertically center items */
+  justify-content: space-between; /* One side to left, one to right */
+  /* align-items: center;             /* Vertically center items */
   /*gap: 0.5rem;*/
   padding: 0 1rem;
-  flex-wrap: wrap;                 /* Wrap on small screens */
+  flex-wrap: wrap; /* Wrap on small screens */
 }
 
 .searchInput {
@@ -125,7 +123,7 @@
   cursor: pointer;
 }
 
-.div1 #savebutton{
+.div1 #savebutton {
   z-index: 10;
   background-color: yellow;
 }
