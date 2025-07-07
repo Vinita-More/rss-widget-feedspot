@@ -140,12 +140,20 @@
     padding: 0.5rem;
     margin-left: 0;
     margin-top: 1rem;
+    /**/
   }
 
   .insidecontainer {
     max-height: 70vh;
     overflow-y: auto;
     padding: 0.25rem;
+    align-items: flex-start;
+    /**/
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: flex-start;
   }
 
   .usercard {
@@ -212,3 +220,185 @@
     font-size: 0.9rem;
   }
 }
+
+/**/
+/* card.module.css */
+/* Layout for image left, text right */
+.layout-image-text {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+/* Ensure the image takes left half */
+.layout-image-text img {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Force text elements (that follow the img) into a vertical column */
+.layout-image-text h1 {
+  display: block;
+  width: 100%;
+}
+.layout-image-text p,
+.layout-image-text a {
+  margin: 0.5rem 0;
+  display: block;
+  width: 100%;
+}
+/*Second image button css*/
+.layout-lines-only {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+.layout-lines-only img {
+  display: none;
+}
+/*for third image button*/
+.layout-four-square {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+/*Fourth button layout*/
+.layout-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.layout-grid-4 p,
+.layout-grid-4 a,
+.layout-grid-4 h1 {
+  display: none;
+}
+.layout-full-square {
+  display: block;
+  text-align: center;
+}
+
+/**/
+/* .grid-layout-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.grid-layout-right .usercard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px; /* adjust card width as needed */
+/*padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.grid-layout-right img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.grid-layout-right h1 {
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Hide description and link */
+/*.grid-layout-right p,
+.grid-layout-right a {
+  display: none !important;
+} */
+
+/**/ /* Only apply this when the layout is 'grid-layout-right' */
+.usercard.layout-grid-4 {
+  width: calc(33.333% - 1rem);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #fff;
+}
+
+/* Image styling */
+.usercard.layout-grid-4 img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Title below image */
+.usercard.layout-grid-4 h1 {
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0 0;
+  line-height: 1.2;
+}
+
+/* Hide description and link */
+.usercard.layout-grid-4 p,
+.usercard.layout-grid-4 a {
+  display: none;
+}
+
+/*When right side card for fourth layout button is selected*/
+.usercard.grid-layout-right {
+  width: calc(33.333% - 0.5rem); /* 3 columns with spacing */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #fff;
+}
+
+/* Image */
+.usercard.grid-layout-right img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Title below image */
+.usercard.grid-layout-right h1 {
+  font-size: 0.95rem;
+  margin: 0.4rem 0 0 0;
+  line-height: 1.2;
+}
+
+/* Show description optionally */
+.usercard.grid-layout-right p {
+  font-size: 0.85rem;
+  margin: 0.3rem 0 0;
+}
+
+/* Optional link */
+.usercard.grid-layout-right a {
+  font-size: 0.8rem;
+  color: blue;
+  margin-top: 0.3rem;
+  display: inline-block;
+}
+
+/**/

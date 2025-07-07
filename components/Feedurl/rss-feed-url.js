@@ -1,5 +1,11 @@
 import rf from "./feed-url.module.css";
-export default function Search() {
+export default function Search({ onFolderChange }) {
+  const handleChange = (e) => {
+    const selectedId = parseInt(e.target.value);
+    console.log("Selected folderId:", selectedId);
+    onFolderChange(selectedId);
+  };
+
   return (
     <div>
       <div className={rf.urlform}>
@@ -20,10 +26,10 @@ export default function Search() {
           OR Select your Feedspot account or Folder Feed URL
         </label>
         <br />
-        <select className={rf.input}>
-          <option>Homepage</option>
-          <option>Technology</option>
-          <option>Lifestyle</option>
+        <select className={rf.input} onChange={handleChange}>
+          <option value="0">Homepage</option>
+          <option value="1">Technology</option>
+          <option value="2">Lifestyle</option>
         </select>
       </div>
     </div>
