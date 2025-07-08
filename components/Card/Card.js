@@ -18,6 +18,8 @@ export default function Card({
   setWidgetName,
   handleFormChange,
   onReset,
+  editMode,
+  formData,
 }) {
   const [feeds, setFeed] = useState([]);
   //const [widgetName, setWidgetName] = useState("");
@@ -57,7 +59,7 @@ export default function Card({
                 style={{ backgroundColor: "#f3d43c" }}
                 onClick={onSave}
               >
-                Save & Get code
+                {editMode ? "Update" : "Save & Get Code"}
               </button>
               <button className={g.savebutton} onClick={onReset}>
                 Reset
@@ -84,8 +86,10 @@ export default function Card({
                     border: showBorder ? `1px solid ${borderColor}` : "none",
                     padding: "1rem",
                     borderRadius: "8px",
-                    height: cardHeight ? `${cardHeight}px` : undefined,
-                    width: cardWidth ? `${cardWidth}px` : undefined,
+                    height: cardHeight
+                      ? `${parseInt(cardHeight)}px`
+                      : undefined,
+                    width: cardWidth ? `${parseInt(cardWidth)}px` : undefined,
                   }}
                 >
                   {feed.image && (
@@ -94,7 +98,9 @@ export default function Card({
                       alt={feed.title}
                       width={100}
                       style={{
-                        height: cardHeight ? `${cardHeight / 2}px` : undefined,
+                        height: cardHeight
+                          ? `${parseInt(cardHeight) / 2}px`
+                          : undefined,
                       }}
                     />
                   )}
@@ -104,9 +110,13 @@ export default function Card({
                         textAlign: textAlign,
                         fontFamily:
                           fontStyle !== "default" ? fontStyle : "default",
-                        display: cardHeight ? `${cardHeight}px` : undefined,
+                        display: cardHeight
+                          ? `${parseInt(cardHeight)}px`
+                          : undefined,
                         fontSize:
-                          cardHeight && cardHeight < 150 ? "10px" : undefined,
+                          formData.height && parseInt(formData.height) < 150
+                            ? "10px"
+                            : undefined,
                       }}
                     >
                       {feed.title}
@@ -117,8 +127,10 @@ export default function Card({
                         textAlign: textAlign,
                         fontFamily:
                           fontStyle !== "default" ? fontStyle : undefined,
-                        fontSize: cardHeight < `150px` ? `10px` : undefined,
-                        display: cardHeight < `150px` ? `none` : undefined,
+                        fontSize:
+                          parseInt(cardHeight) < 150 ? "10px" : undefined,
+                        display:
+                          parseInt(cardHeight) < 150 ? "none" : undefined,
                       }}
                     >
                       {feed.description}
@@ -130,10 +142,10 @@ export default function Card({
                         href={feed.feedurl}
                         target="_blank"
                         style={{
-                          textAlign: textAlign,
                           fontFamily:
                             fontStyle !== "default" ? fontStyle : undefined,
-                          display: cardHeight < `150px` ? `none` : undefined,
+                          display:
+                            parseInt(cardHeight) < 150 ? "none" : undefined,
                         }}
                       >
                         Click here to view full article

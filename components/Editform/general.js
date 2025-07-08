@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+//import { useState } from "react";
 import e from "./editform.module.css";
 export default function General({
   setShowBorder,
@@ -36,8 +36,9 @@ export default function General({
             In Pixels
           </label>
           <input
-            type="text"
+            type="number"
             name="height"
+            value={formData.height}
             onChange={(e) => {
               //  handleChange(e);
               setCardHeight(e.target.value);
@@ -49,6 +50,7 @@ export default function General({
         <div className={e.row}>
           <label>
             <input
+              defaultChecked
               type="radio"
               name="heightMode"
               value="posts"
@@ -79,8 +81,9 @@ export default function General({
             In Pixels
           </label>
           <input
-            type="text"
+            type="number"
             name="width"
+            value={formData.width}
             onChange={(e) => {
               // handleChange;
               setCardWidth(e.target.value);

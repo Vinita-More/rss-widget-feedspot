@@ -1,0 +1,76 @@
+.maindiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10vh; /* leave space for top search bar */
+  padding-left: 40vh; /* space for the fixed sidebar (add a bit more than 38vh) */
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 100%;
+}
+
+.maindiv2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  margin-left: 2vh;
+}
+.maindiv3 {
+  display: flex;
+  gap: 1rem;
+}
+
+.maindiv3 button {
+  z-index: 10;
+  padding: 6px;
+  border-radius: 2px;
+  border: none;
+  background-color: rgb(77, 108, 185);
+  color: white;
+}
+
+.tableContainer {
+  margin-top: 2rem;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+
+.widgetTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+.widgetTable th,
+.widgetTable td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.widgetTable th {
+  background-color: #f5f5f5;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem; /* Increased from 0.5rem to 1rem for more spacing */
+  justify-content: center;
+}
+
+.widgetTable button {
+  padding: 0.4rem 0.8rem;
+  background-color: #faf2f2;
+  color: blue;
+  border: solid 1px #d0d0d0;
+  cursor: pointer;
+}
+
+.widgetTable button:hover {
+  background-color: #d0d0d0;
+}

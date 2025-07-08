@@ -1,5 +1,5 @@
 import rf from "./feed-url.module.css";
-export default function Search({ onFolderChange }) {
+export default function Search({ onFolderChange, folderId }) {
   const handleChange = (e) => {
     const selectedId = parseInt(e.target.value);
     console.log("Selected folderId:", selectedId);
@@ -26,7 +26,7 @@ export default function Search({ onFolderChange }) {
           OR Select your Feedspot account or Folder Feed URL
         </label>
         <br />
-        <select className={rf.input} onChange={handleChange}>
+        <select className={rf.input} onChange={handleChange} value={folderId}>
           <option value="0">Homepage</option>
           <option value="1">Technology</option>
           <option value="2">Lifestyle</option>

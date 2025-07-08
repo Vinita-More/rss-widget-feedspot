@@ -1,9 +1,9 @@
 /*For general component of the edit section*/
 /*Can be used directly for other sections as well , atleast the skeleton*/
-.formparent{
+.formparent {
   font-size: 1vh;
   z-index: 10;
-  position: relative;      /* Push it to the right of sidebar */
+  position: relative; /* Push it to the right of sidebar */
   display: flex;
   box-sizing: border-box;
   /*padding: 2rem;*/
@@ -13,10 +13,10 @@
   border: solid 1px black;
   margin-bottom: 1vh;
   flex-direction: column;
-  gap: 2vh; 
+  gap: 2vh;
   flex-wrap: wrap;
 }
-.formtitle{
+.formtitle {
   width: 100%;
   background-color: rgb(214, 213, 213);
   padding: 1rem;
@@ -27,27 +27,26 @@
 }
 
 /*For the headings of properties and the content inside each div*/
-.content{
+.content {
   margin: 1rem 0rem 0rem 2rem;
   font-size: 1rem;
 }
-.content input{
+.content input {
   margin-bottom: 10px;
 }
-.content input[type='text']{
-  margin: 10px; 
+.content input[type="text"] {
+  margin: 10px;
 }
-.content p{
+.content p {
   margin-bottom: 10px;
 }
-.content select{
+.content select {
   padding: 2px;
   width: 50%;
 }
-.content input[type='radio']{
+.content input[type="radio"] {
   margin: 0 10px 0 10px;
 }
-
 
 /**/
 .row {
@@ -59,9 +58,8 @@
 }
 .row label {
   flex: 1;
-  
 }
-.row input[type='text'] {
+.row input[type="text"] {
   flex: 1;
   max-width: 35%;
   margin-left: auto;
@@ -87,7 +85,7 @@
     margin-bottom: 5px;
   }
 
-  .row input[type='text'],
+  .row input[type="text"],
   .content select {
     width: 100%;
     max-width: 100%;
@@ -103,4 +101,3 @@
     text-align: center;
   }
 }
-
