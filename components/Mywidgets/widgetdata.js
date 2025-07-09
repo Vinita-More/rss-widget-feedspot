@@ -6,14 +6,27 @@ import w from "./mywidgets.module.css";
 export default function WidgetData() {
   const [widgets, setWidgets] = useState([]);
 
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchwidgets.php")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (!data.error) setWidgets(data);
+  //       else console.error(data.error);
+  //     })
+  //     .catch((err) => console.error("API error:", err));
+  // }, []);
   useEffect(() => {
-    fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchwidgets.php")
+    const email = localStorage.getItem("userEmail");
+    if (!email) return;
+
+    fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchwidgets.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    })
       .then((res) => res.json())
-      .then((data) => {
-        if (!data.error) setWidgets(data);
-        else console.error(data.error);
-      })
-      .catch((err) => console.error("API error:", err));
+      .then((data) => setWidgets(data))
+      .catch((err) => console.error("Fetch error:", err));
   }, []);
 
   const handleDelete = async (id) => {

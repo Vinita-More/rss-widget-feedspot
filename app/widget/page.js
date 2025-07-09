@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "next/navigation";
 //import main from "./mainpage.module.css";
-import ma from "./main.module.css";
+//import ma from "./main.module.css";
 
 export default function MainPage() {
   const [showBorder, setShowBorder] = useState(true);
@@ -39,6 +39,12 @@ export default function MainPage() {
   }, [searchParams, pathname]);
 
   const router = useRouter();
+  useEffect(() => {
+    const email = localStorage.getItem("userEmail");
+    if (!email) {
+      router.push("/"); // redirect to login page
+    }
+  }, []);
 
   /*For editing and updating the settings,  this sends the values of a particular widget from the database to the form*/
   useEffect(() => {
@@ -132,7 +138,10 @@ export default function MainPage() {
       ? "http://localhost:8080/RSS_Widget_Backend/api/updatewidget.php"
       : "http://localhost:8080/RSS_Widget_Backend/api/save_settings.php";
 
-    const payload = editMode ? { ...formData, id: editId } : formData;
+    const userEmail = localStorage.getItem("userEmail");
+    const payload = editMode
+      ? { ...formData, id: editId, email: userEmail }
+      : { ...formData, email: userEmail };
 
     try {
       const res = await fetch(apiUrl, {

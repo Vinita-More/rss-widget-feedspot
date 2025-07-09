@@ -1,0 +1,91 @@
+.signupWrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #9fc5fa;
+}
+.signupWrapper h1 {
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-bottom: 1rem;
+}
+
+.signupBox {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 8px 8px 16px #888888;
+}
+
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  font-weight: lighter;
+  margin-bottom: 0.5rem;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #eae8e8;
+}
+
+.signupButton {
+  width: 100%;
+  background: #0070f3;
+  color: white;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: light;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.signupButton:hover {
+  background: #0056c0;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.success {
+  color: green;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.loginText {
+  margin-top: 1rem;
+  text-align: center;
+}
+.loginText span {
+  color: blue;
+}
+.loginText span:hover {
+  text-decoration: underline;
+}
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.toggleWrapper label {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+}
