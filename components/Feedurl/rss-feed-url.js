@@ -26,7 +26,12 @@ export default function Search({ onFolderChange, folderId }) {
           OR Select your Feedspot account or Folder Feed URL
         </label>
         <br />
-        <select className={rf.input} onChange={handleChange} value={folderId}>
+        <select
+          className={rf.input}
+          onChange={handleChange}
+          // value={folderId !== undefined && folderId !== null ? folderId : 0}
+          value={Number.isNaN(folderId) ? 0 : folderId}
+        >
           <option value="0">Homepage</option>
           <option value="1">Technology</option>
           <option value="2">Lifestyle</option>

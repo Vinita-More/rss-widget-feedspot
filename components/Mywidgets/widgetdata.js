@@ -2,9 +2,10 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import w from "./mywidgets.module.css";
-
+import { useRouter } from "next/navigation";
 export default function WidgetData() {
   const [widgets, setWidgets] = useState([]);
+  const router = useRouter();
 
   // useEffect(() => {
   //   fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchwidgets.php")
@@ -16,16 +17,27 @@ export default function WidgetData() {
   //     .catch((err) => console.error("API error:", err));
   // }, []);
   useEffect(() => {
-    const email = localStorage.getItem("userEmail");
-    if (!email) return;
-
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/");
+      return;
+    }
     fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchwidgets.php", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({}), // No need to send email, token has it
     })
       .then((res) => res.json())
-      .then((data) => setWidgets(data))
+      .then((data) => {
+        if (data.error) {
+          console.error("Auth error:", data.error);
+        } else {
+          setWidgets(data);
+        }
+      })
       .catch((err) => console.error("Fetch error:", err));
   }, []);
 

@@ -8,8 +8,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [serverMessage, setServerMessage] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
@@ -25,33 +25,25 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-    // check before submitting
     validateEmail(email);
     validatePassword(password);
 
-    if (emailError || passwordError || !email || !password) return;
-
-    try {
-      const res = await fetch(
-        "http://localhost:8080/RSS_Widget_Backend/api/login.php",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-
-      const result = await res.json();
-      setServerMessage(result.message);
-
-      if (result.success) {
-        localStorage.setItem("userEmail", email);
-        // success actions, e.g., redirect
-        router.push("/widget");
+    const res = await fetch(
+      "http://localhost:8080/RSS_Widget_Backend/api/login.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
       }
-    } catch (error) {
-      setServerMessage("Server error. Try again.");
-      console.error(error);
+    );
+
+    const result = await res.json();
+
+    if (result.success) {
+      localStorage.setItem("token", result.token);
+      router.push("/widget"); // Navigate to protected page
+    } else {
+      alert(result.message || "Login failed");
     }
   };
 
@@ -115,3 +107,34 @@ export default function Login() {
     </div>
   );
 }
+
+// const handleLogin = async () => {
+//   // check before submitting
+//   validateEmail(email);
+//   validatePassword(password);
+
+//   if (emailError || passwordError || !email || !password) return;
+
+//   try {
+//     const res = await fetch(
+//       "http://localhost:8080/RSS_Widget_Backend/api/login.php",
+//       {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ email, password }),
+//       }
+//     );
+
+//     const result = await res.json();
+//     setServerMessage(result.message);
+
+//     if (result.success) {
+//       localStorage.setItem("userEmail", email);
+//       // success actions, e.g., redirect
+//       router.push("/widget");
+//     }
+//   } catch (error) {
+//     setServerMessage("Server error. Try again.");
+//     console.error(error);
+//   }
+// };

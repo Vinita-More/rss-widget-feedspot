@@ -9,8 +9,8 @@ import w from "./mywidgets.module.css";
 export default function Currentwidget() {
   const router = useRouter();
   useEffect(() => {
-    const email = localStorage.getItem("userEmail");
-    if (!email) {
+    const token = localStorage.getItem("token");
+    if (!token) {
       router.push("/"); // Redirect to login if not logged in
     }
   }, []);

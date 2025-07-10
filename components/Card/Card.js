@@ -129,6 +129,8 @@ export default function Card({
                           fontStyle !== "default" ? fontStyle : undefined,
                         fontSize:
                           parseInt(cardHeight) < 150 ? "10px" : undefined,
+                        fontSize:
+                          parseInt(cardWidth) < 170 ? "10px" : undefined,
                         display:
                           parseInt(cardHeight) < 150 ? "none" : undefined,
                       }}

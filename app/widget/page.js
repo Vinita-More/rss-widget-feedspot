@@ -9,8 +9,6 @@ import FeedspotSection from "@/components/Topbody/Topbody";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "next/navigation";
-//import main from "./mainpage.module.css";
-//import ma from "./main.module.css";
 
 export default function MainPage() {
   const [showBorder, setShowBorder] = useState(true);
@@ -29,6 +27,12 @@ export default function MainPage() {
 
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [token, setToken] = useState(null);
+
+  // useEffect(() => {
+  //   const storedToken = localStorage.getItem("token");
+  //   setToken(storedToken);
+  // }, []);
 
   useEffect(() => {
     const edit = searchParams.get("edit") === "true";
@@ -39,27 +43,72 @@ export default function MainPage() {
   }, [searchParams, pathname]);
 
   const router = useRouter();
+  //  const [token, setToken] = useState(null);
+
   useEffect(() => {
-    const email = localStorage.getItem("userEmail");
-    if (!email) {
-      router.push("/"); // redirect to login page
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    } else {
+      router.push("/"); // redirect to login only if token missing
     }
   }, []);
 
   /*For editing and updating the settings,  this sends the values of a particular widget from the database to the form*/
+  // useEffect(() => {
+  //   if (editMode && editId && token) {
+  //     fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       body: JSON.stringify({ id: editId }),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         if (data) {
+  //           setWidgetName(data.widget_name);
+  //           setCardHeight(parseInt(data.height));
+  //           setCardWidth(parseInt(data.width));
+  //           setFolderId(parseInt(data.folder_id));
+  //           setFormData({
+  //             widthMode: data.width_mode,
+  //             width: data.width,
+  //             heightMode: data.height_mode,
+  //             height: data.height,
+  //             autoscroll: data.autoscroll,
+  //             fontStyle: data.font_style,
+  //             border: data.border,
+  //             borderColor: data.border_color,
+  //             textAlign: data.text_alignment,
+  //             widgetName: data.widget_name,
+  //             folder_id: parseInt(data.folder_id) || 0,
+  //           });
+  //         }
+  //       })
+  //       .catch((err) => console.error("Edit fetch error", err));
+  //   }
+  // }, [editMode, editId, token]);
+
   useEffect(() => {
-    if (editMode && editId) {
+    if (editMode && editId && token) {
       fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ id: editId }),
       })
         .then((res) => res.json())
         .then((data) => {
+          // populate form
           if (data) {
             setWidgetName(data.widget_name);
             setCardHeight(parseInt(data.height));
             setCardWidth(parseInt(data.width));
+            setFolderId(parseInt(data.folder_id));
             setFormData({
               widthMode: data.width_mode,
               width: data.width,
@@ -71,12 +120,13 @@ export default function MainPage() {
               borderColor: data.border_color,
               textAlign: data.text_alignment,
               widgetName: data.widget_name,
+              folder_id: parseInt(data.folder_id) || 0,
             });
           }
         })
         .catch((err) => console.error("Edit fetch error", err));
     }
-  }, [editMode, editId]);
+  }, [editMode, editId, token]);
 
   /*for resetting the form inputs*/
   const resetAllSettings = () => {
@@ -115,6 +165,7 @@ export default function MainPage() {
     borderColor: "#000000",
     textAlign: "left",
     widgetName: "",
+    folder_id: 0,
   });
 
   const handleFormChange = (name, value) => {
@@ -128,9 +179,17 @@ export default function MainPage() {
     }));
   };
 
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, folder_id: folderId || 0 }));
+  }, [folderId]);
+
   const handleSubmit = async () => {
     if (!widgetName || widgetName.trim() === "") {
       alert("Please enter a widget name before saving.");
+      return;
+    }
+    if (!token) {
+      alert("User is not authenticated.");
       return;
     }
 
@@ -138,15 +197,16 @@ export default function MainPage() {
       ? "http://localhost:8080/RSS_Widget_Backend/api/updatewidget.php"
       : "http://localhost:8080/RSS_Widget_Backend/api/save_settings.php";
 
-    const userEmail = localStorage.getItem("userEmail");
-    const payload = editMode
-      ? { ...formData, id: editId, email: userEmail }
-      : { ...formData, email: userEmail };
+    //const userEmail = localStorage.getItem("userEmail");
+    const payload = editMode ? { ...formData, id: editId } : { ...formData };
 
     try {
       const res = await fetch(apiUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer  ${localStorage.getItem("token")}`,
+        },
         body: JSON.stringify(payload),
       });
 
@@ -160,7 +220,7 @@ export default function MainPage() {
         alert(result.error);
       } else {
         alert(editMode ? "Widget updated" : "Settings saved");
-        resetAllSettings();
+        // resetAllSettings();
 
         if (editMode) {
           router.replace("/widget"); // clears ?edit=true&id=...
