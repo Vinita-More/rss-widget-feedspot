@@ -1,18 +1,53 @@
-.search{
-    float: right;
-    margin-top: 0;
-    padding-top: 0;
-    width: 81.75%;
-    float: right;
-    position: relative;
-    background-color: rgb(250, 248, 248);
-    line-height: 10vh;
+.search {
+  float: right;
+  margin-top: 0;
+  padding-top: 0;
+  width: 81.75%;
+  float: right;
+  position: relative;
+  background-color: rgb(250, 248, 248);
+  line-height: 10vh;
 }
-.searchinput{
-    margin: 2vh;
-    margin-left: 3vh;
-    padding: 1vh;
-    width: 50%;
-    border: solid 1px rgb(185, 182, 182);
+.searchinput {
+  margin: 2vh;
+  margin-left: 3vh;
+  padding: 1vh;
+  width: 50%;
+  border: solid 1px rgb(185, 182, 182);
+}
 
+@media (max-width: 1024px) {
+  .search {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .searchinput {
+    width: 80%;
+    font-size: 1rem;
+  }
+
+  /* LogoutButton will inherit layout from its container */
+}
+
+@media (max-width: 600px) {
+  .search {
+    padding: 0.5rem;
+  }
+
+  .searchinput {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  /* Target the LogoutButton container */
+  .search :global(button) {
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
 }

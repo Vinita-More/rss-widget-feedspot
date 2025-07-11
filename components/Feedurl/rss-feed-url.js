@@ -21,6 +21,7 @@ export default function Search({ onFolderChange, folderId }) {
           placeholder="Enter RSS Feed URL"
           defaultValue={"https://www.feedspot.com/widgets/create?_src=fsbeta"}
         />
+        <button className={rf.button}> Go </button>
         <br />
         <label className={rf.label}>
           OR Select your Feedspot account or Folder Feed URL

@@ -67,7 +67,7 @@
 
 /*Responsiveness*/
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .formparent {
     width: 90%;
     margin-left: auto;
@@ -99,5 +99,57 @@
   .formtitle {
     font-size: 1.2rem;
     text-align: center;
+  }
+} */
+/* Additional Responsive Styling */
+@media (max-width: 1024px) {
+  .formparent {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .row input[type="text"] {
+    max-width: 60%;
+  }
+
+  .content select {
+    width: 80%;
+  }
+}
+
+@media (max-width: 600px) {
+  .formparent {
+    width: 95%;
+    padding: 0.5rem;
+    gap: 1.5vh;
+  }
+
+  .formtitle {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .content {
+    font-size: 0.9rem;
+  }
+
+  .content select {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .row input[type="text"] {
+    max-width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .row label {
+    width: 100%;
   }
 }

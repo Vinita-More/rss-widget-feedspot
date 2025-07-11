@@ -190,9 +190,9 @@ export default function MainPage() {
     }
     if (!token) {
       alert("User is not authenticated.");
+      router.push("/"); // redirect to login
       return;
     }
-
     const apiUrl = editMode
       ? "http://localhost:8080/RSS_Widget_Backend/api/updatewidget.php"
       : "http://localhost:8080/RSS_Widget_Backend/api/save_settings.php";
@@ -205,13 +205,20 @@ export default function MainPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer  ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(payload),
       });
 
       const text = await res.text();
       console.log("Raw response:", text);
+
+      if (res.status === 401) {
+        alert("Session expired or invalid token. Please log in again.");
+        localStorage.removeItem("token");
+        router.push("/");
+        return;
+      }
 
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${text}`);
       const result = JSON.parse(text);

@@ -1,43 +1,52 @@
-.urlform{
-    position: relative;
-    margin-left: 39vh;
-    float: left;
-    border: solid 1px rgb(45, 45, 45);
-    width: 40%;
-    margin-top: 10px;
-    padding-bottom: 2rem;
-    background-color: white;
+.urlform {
+  position: relative;
+  margin-left: 39vh;
+  float: left;
+  border: solid 1px rgb(45, 45, 45);
+  width: 40%;
+  margin-top: 10px;
+  padding-bottom: 2rem;
+  background-color: white;
 }
-.heading{
-    margin-top: 0;
-    padding: 0 10px 0;
-    background-color: rgb(227, 226, 226);
-    margin-left: 0;
-    width: 100%;
-    line-height: 6vh;
-    font-weight: bold;
-    color: blue;
-    margin-bottom: 2vh;
-    align-items: center;
+.heading {
+  margin-top: 0;
+  padding: 0 10px 0;
+  background-color: rgb(227, 226, 226);
+  margin-left: 0;
+  width: 100%;
+  line-height: 6vh;
+  font-weight: bold;
+  color: blue;
+  margin-bottom: 2vh;
+  align-items: center;
 }
-.label{
-    margin: 2vh;
-    padding: 1vh;
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+.label {
+  margin: 2vh;
+  padding: 1vh;
+  font-size: 0.9rem;
+  padding-bottom: 0.5rem;
 }
-.input{
-    margin: 2vh;
-    margin-left: 3vh;
-    padding: 1vh;
-    width: 80%;
+.input {
+  margin: 2vh;
+  margin-left: 3vh;
+  padding: 1vh;
+  width: 80%;
 }
 .input:focus {
   outline: none;
-  box-shadow: 0 0 8px rgba(33, 84, 139, 0.6); 
+  box-shadow: 0 0 8px rgba(33, 84, 139, 0.6);
   border-color: rgb(43, 67, 140);
 }
-
+.button {
+  background-color: blue;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 2px;
+  color: white;
+  border: none;
+  z-index: 10;
+  cursor: pointer;
+}
 /**/
 @media (max-width: 1024px) {
   .urlform {
@@ -63,6 +72,9 @@
     width: 90%;
     margin: 1vh auto;
     font-size: 0.95rem;
+  }
+  .button {
+    width: 40%;
   }
 }
 
