@@ -21,6 +21,9 @@ export default function MainPage() {
   const [selectedLayout, setSelectedLayout] = useState("");
   const [folderId, setFolderId] = useState(0);
   const [widgetName, setWidgetName] = useState("");
+  const [customFeedUrl, setCustomFeedUrl] = useState(null);
+  const [folderSelected, setFolderSelected] = useState(false);
+  const [rssInputText, setRssInputText] = useState("");
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -43,7 +46,6 @@ export default function MainPage() {
   }, [searchParams, pathname]);
 
   const router = useRouter();
-  //  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -53,43 +55,6 @@ export default function MainPage() {
       router.push("/"); // redirect to login only if token missing
     }
   }, []);
-
-  /*For editing and updating the settings,  this sends the values of a particular widget from the database to the form*/
-  // useEffect(() => {
-  //   if (editMode && editId && token) {
-  //     fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({ id: editId }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         if (data) {
-  //           setWidgetName(data.widget_name);
-  //           setCardHeight(parseInt(data.height));
-  //           setCardWidth(parseInt(data.width));
-  //           setFolderId(parseInt(data.folder_id));
-  //           setFormData({
-  //             widthMode: data.width_mode,
-  //             width: data.width,
-  //             heightMode: data.height_mode,
-  //             height: data.height,
-  //             autoscroll: data.autoscroll,
-  //             fontStyle: data.font_style,
-  //             border: data.border,
-  //             borderColor: data.border_color,
-  //             textAlign: data.text_alignment,
-  //             widgetName: data.widget_name,
-  //             folder_id: parseInt(data.folder_id) || 0,
-  //           });
-  //         }
-  //       })
-  //       .catch((err) => console.error("Edit fetch error", err));
-  //   }
-  // }, [editMode, editId, token]);
 
   useEffect(() => {
     if (editMode && editId && token) {
@@ -120,8 +85,13 @@ export default function MainPage() {
               borderColor: data.border_color,
               textAlign: data.text_alignment,
               widgetName: data.widget_name,
-              folder_id: parseInt(data.folder_id) || 0,
+              folder_id: parseInt(data.folder_id),
             });
+          }
+          if (data.feed_url) {
+            setCustomFeedUrl(data.feed_url);
+            setRssInputText(data.feed_url);
+            setFolderId(-1);
           }
         })
         .catch((err) => console.error("Edit fetch error", err));
@@ -140,6 +110,8 @@ export default function MainPage() {
     setSelectedLayout("");
     setFolderId(0);
     setWidgetName("");
+    setCustomFeedUrl(null);
+    setRssInputText("");
     setFormData({
       widthMode: "",
       width: "",
@@ -198,7 +170,9 @@ export default function MainPage() {
       : "http://localhost:8080/RSS_Widget_Backend/api/save_settings.php";
 
     //const userEmail = localStorage.getItem("userEmail");
-    const payload = editMode ? { ...formData, id: editId } : { ...formData };
+    const payload = editMode
+      ? { ...formData, id: editId, feed_url: customFeedUrl }
+      : { ...formData, feed_url: customFeedUrl };
 
     try {
       const res = await fetch(apiUrl, {
@@ -238,14 +212,29 @@ export default function MainPage() {
     }
   };
 
+  const handleFolderChange = (folderId) => {
+    setFolderId(folderId); // set the folder ID
+    setFolderSelected(true);
+    setCustomFeedUrl(null); // mark that a folder has been explicitly selected
+  };
+  useEffect(() => {
+    if (!customFeedUrl || customFeedUrl.trim() === "") {
+      setFolderSelected(false);
+    }
+  }, [customFeedUrl]);
   return (
     <div>
       <Sidebar />
-
       <Searchbar />
-
       <FeedspotSection />
-      <Search onFolderChange={setFolderId} folderId={folderId} />
+      <Search
+        onFolderChange={setFolderId}
+        folderId={folderId}
+        onFeedUrlChange={setCustomFeedUrl}
+        rssInputText={rssInputText}
+        setRssInputText={setRssInputText}
+        setFolderId={setFolderId}
+      />
 
       {/*setdisplayImg={setdisplayImg}*/}
       <View setSelectedLayout={setSelectedLayout} />
@@ -267,6 +256,8 @@ export default function MainPage() {
           onReset={resetAllSettings}
           editMode={editMode}
           formData={formData}
+          feedUrl={customFeedUrl}
+          folderSelected={folderSelected}
         />
 
         <General
@@ -281,9 +272,6 @@ export default function MainPage() {
           handleFormChange={handleFormChange}
         />
       </div>
-
-      {/*  <Sidediv />
-       */}
     </div>
   );
 }
@@ -320,3 +308,39 @@ export default function MainPage() {
 //     console.error("Fetch error:", err.message);
 //   }
 // };
+/*For editing and updating the settings,  this sends the values of a particular widget from the database to the form*/
+// useEffect(() => {
+//   if (editMode && editId && token) {
+//     fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//       body: JSON.stringify({ id: editId }),
+//     })
+//       .then((res) => res.json())
+//       .then((data) => {
+//         if (data) {
+//           setWidgetName(data.widget_name);
+//           setCardHeight(parseInt(data.height));
+//           setCardWidth(parseInt(data.width));
+//           setFolderId(parseInt(data.folder_id));
+//           setFormData({
+//             widthMode: data.width_mode,
+//             width: data.width,
+//             heightMode: data.height_mode,
+//             height: data.height,
+//             autoscroll: data.autoscroll,
+//             fontStyle: data.font_style,
+//             border: data.border,
+//             borderColor: data.border_color,
+//             textAlign: data.text_alignment,
+//             widgetName: data.widget_name,
+//             folder_id: parseInt(data.folder_id) || 0,
+//           });
+//         }
+//       })
+//       .catch((err) => console.error("Edit fetch error", err));
+//   }
+// }, [editMode, editId, token]);

@@ -20,23 +20,81 @@ export default function Card({
   onReset,
   editMode,
   formData,
+  feedUrl,
+  folderSelected,
 }) {
   const [feeds, setFeed] = useState([]);
-  //const [widgetName, setWidgetName] = useState("");
+
+  const [errorMsg, setErrorMsg] = useState("");
+
   useEffect(() => {
-    const url =
-      folderId > 0
-        ? `http://localhost:8080/RSS_Widget_Backend/api/index.php?folder_id=${folderId}`
-        : `http://localhost:8080/RSS_Widget_Backend/api/index.php`;
+    const fetchFeeds = async () => {
+      setErrorMsg("");
 
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setFeed(data))
-      .catch((err) => console.error("API error:", err));
-  }, [folderId]);
+      // ✅ Use feedUrl only if user has NOT explicitly selected a folder
+      const useFeedUrl = feedUrl && feedUrl.trim() !== "" && !folderSelected;
 
+      if (useFeedUrl) {
+        try {
+          const res = await fetch(
+            "http://localhost:8080/RSS_Widget_Backend/api/index.php",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ feed_url: feedUrl }),
+            }
+          );
+          const data = await res.json();
+
+          if (data.error) {
+            setErrorMsg(data.error);
+            setFeed([]);
+          } else {
+            const unique = (data.items || data).filter(
+              (feed, index, self) =>
+                index ===
+                self.findIndex(
+                  (f) => f.title === feed.title && f.feedurl === feed.feedurl
+                )
+            );
+            setFeed(unique);
+          }
+        } catch (error) {
+          console.error("Custom feed fetch failed:", error);
+          setErrorMsg("Network error while loading feed.");
+          setFeed([]);
+        }
+      } else {
+        // ✅ Fallback to database feeds (based on folderId)
+        const url =
+          folderId > 0
+            ? `http://localhost:8080/RSS_Widget_Backend/api/index.php?folder_id=${folderId}`
+            : `http://localhost:8080/RSS_Widget_Backend/api/index.php`;
+
+        try {
+          const res = await fetch(url);
+          const data = await res.json();
+          setFeed(data);
+        } catch (err) {
+          console.error("Folder feed fetch failed:", err);
+          setErrorMsg("Failed to load folder feeds.");
+        }
+      }
+    };
+
+    fetchFeeds();
+  }, [feedUrl, folderId, folderSelected]);
+
+  if (errorMsg) return <p style={{ color: "red" }}>{errorMsg}</p>;
   if (!feeds.length) return <p>Loading...</p>;
 
+  const uniqueFeeds = feeds.filter(
+    (feed, index, self) =>
+      index ===
+      self.findIndex(
+        (f) => f.title === feed.title && f.feedurl === feed.feedurl
+      )
+  );
   return (
     <div className={g.parent}>
       <div className={g.h1}>
@@ -47,7 +105,7 @@ export default function Card({
               type="text"
               placeholder="Enter Widget Name"
               className={g.searchInput}
-              value={widgetName}
+              value={widgetName || ""}
               onChange={(e) => {
                 setWidgetName(e.target.value);
                 handleFormChange("widgetName", e.target.value);
@@ -81,7 +139,7 @@ export default function Card({
               {feeds.map((feed) => (
                 <div
                   className={`${g.usercard} ${g[selectedLayout] || ""}`}
-                  key={feed.id}
+                  key={feed.id || `${feed.title || "untitled"}-${feed.pubDate}`}
                   style={{
                     border: showBorder ? `1px solid ${borderColor}` : "none",
                     padding: "1rem",
@@ -94,7 +152,11 @@ export default function Card({
                 >
                   {feed.image && (
                     <img
-                      src={`http://localhost:8080/RSS_Widget_Backend/${feed.image}`}
+                      src={
+                        feed.image.startsWith("http") // full external URL from RSS
+                          ? feed.image
+                          : `http://localhost:8080/RSS_Widget_Backend/${feed.image}` // fallback for local
+                      }
                       alt={feed.title}
                       width={100}
                       style={{
@@ -106,6 +168,7 @@ export default function Card({
                   )}
                   <div>
                     <h1
+                      className={g.newlink}
                       style={{
                         textAlign: textAlign,
                         fontFamily:
@@ -123,16 +186,22 @@ export default function Card({
                     </h1>
 
                     <p
+                      className={g.descriptionClamp}
                       style={{
                         textAlign: textAlign,
                         fontFamily:
                           fontStyle !== "default" ? fontStyle : undefined,
                         fontSize:
-                          parseInt(cardHeight) < 150 ? "10px" : undefined,
-                        fontSize:
-                          parseInt(cardWidth) < 170 ? "10px" : undefined,
+                          parseInt(cardHeight) < 170 ||
+                          parseInt(cardWidth) < 170
+                            ? "10px"
+                            : undefined,
+
                         display:
-                          parseInt(cardHeight) < 150 ? "none" : undefined,
+                          parseInt(cardHeight) < 170 ||
+                          parseInt(cardWidth) < 170
+                            ? "none"
+                            : undefined,
                       }}
                     >
                       {feed.description}
@@ -141,6 +210,7 @@ export default function Card({
                     {typeof feed.feedurl === "string" &&
                     feed.feedurl.trim() !== "" ? (
                       <Link
+                        className={g.newlink}
                         href={feed.feedurl}
                         target="_blank"
                         style={{
@@ -148,6 +218,11 @@ export default function Card({
                             fontStyle !== "default" ? fontStyle : undefined,
                           display:
                             parseInt(cardHeight) < 150 ? "none" : undefined,
+                          fontSize:
+                            parseInt(cardHeight) < 150 ||
+                            parseInt(cardWidth) < 150
+                              ? "10px"
+                              : undefined,
                         }}
                       >
                         Click here to view full article
