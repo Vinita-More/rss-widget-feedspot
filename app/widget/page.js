@@ -9,6 +9,7 @@ import FeedspotSection from "@/components/Topbody/Topbody";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "next/navigation";
+import Feedtitle from "@/components/Editform/feedtitle";
 
 export default function MainPage() {
   const [showBorder, setShowBorder] = useState(true);
@@ -271,6 +272,7 @@ export default function MainPage() {
           formData={formData}
           handleFormChange={handleFormChange}
         />
+        <Feedtitle />
       </div>
     </div>
   );

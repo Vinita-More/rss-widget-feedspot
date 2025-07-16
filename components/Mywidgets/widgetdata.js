@@ -5,17 +5,49 @@ import w from "./mywidgets.module.css";
 import { useRouter } from "next/navigation";
 export default function WidgetData() {
   const [widgets, setWidgets] = useState([]);
+  const [showEmbedModal, setShowEmbedModal] = useState(false);
+  const [embedCode, setEmbedCode] = useState("");
+
   const router = useRouter();
 
-  // useEffect(() => {
-  //   fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchwidgets.php")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (!data.error) setWidgets(data);
-  //       else console.error(data.error);
-  //     })
-  //     .catch((err) => console.error("API error:", err));
-  // }, []);
+  const handleEmbedCode = async (widgetId) => {
+    try {
+      const res = await fetch(
+        `http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ id: widgetId }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (data && !data.error) {
+        const code = `<script 
+  src="http://localhost/embed.js"
+  data-widget-id="${widgetId}"
+  data-height="${data.height || "400px"}"
+  data-width="${data.width || "100%"}"
+  data-border="${data.border === "true"}"
+  data-font="${data.font_style || "Arial"}"
+  data-font-size="${data.fontSize || "16px"}"
+></script>`;
+
+        setEmbedCode(code);
+        setShowEmbedModal(true);
+      } else {
+        alert("Widget not found or failed to fetch settings.");
+      }
+    } catch (err) {
+      console.error("Embed fetch error:", err);
+      alert("Failed to generate embed code.");
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -108,7 +140,14 @@ export default function WidgetData() {
                   >
                     Delete
                   </button>
-                  <button className={w.actionBtn}>Embed Code</button>
+
+                  <button
+                    className={w.actionBtn}
+                    onClick={() => handleEmbedCode(widget.id)}
+                  >
+                    Embed Code
+                  </button>
+
                   <button
                     className={w.actionBtn}
                     onClick={() =>
@@ -123,6 +162,41 @@ export default function WidgetData() {
           </tbody>
         </table>
       </div>
+
+      {/* for popup on clicking embed code */}
+      {showEmbedModal && (
+        <div className={w.modalOverlay}>
+          <div className={w.modal}>
+            <h2>Embed Code</h2>
+            <textarea
+              readOnly
+              value={embedCode}
+              style={{
+                width: "100%",
+                height: "100px",
+                fontFamily: "monospace",
+              }}
+            />
+            <button onClick={() => setShowEmbedModal(false)}>Close</button>
+          </div>
+        </div>
+      )}
+      {/*  */}
     </div>
   );
 }
+
+// useEffect(() => {
+//   fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchwidgets.php")
+//     .then((res) => res.json())
+//     .then((data) => {
+//       if (!data.error) setWidgets(data);
+//       else console.error(data.error);
+//     })
+//     .catch((err) => console.error("API error:", err));
+// }, []);
+// const handleEmbedCode = (widgetId) => {
+//   const script = `<script src="http://localhost/embed.js" data-widget-id="${widgetId}"></script>`;
+//   setEmbedCode(script);
+//   setShowEmbedModal(true);
+// };
