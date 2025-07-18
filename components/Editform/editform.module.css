@@ -34,8 +34,11 @@
 .content input {
   margin-bottom: 10px;
 }
-.content input[type="text"] {
+.content input[type="text"],
+.content [type="number"] {
   margin: 10px;
+  margin-right: 20px;
+  padding: 2px;
 }
 .content p {
   margin-bottom: 10px;
@@ -55,14 +58,152 @@
   align-items: center;
   margin-bottom: 5px;
   width: 100%;
+  gap: 150px;
 }
 .row label {
   flex: 1;
 }
 .row input[type="text"] {
   flex: 1;
-  max-width: 35%;
-  margin-left: auto;
+  width: 30%;
+  margin-right: 10px;
+}
+
+/*For slider*/
+/* The switch container */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+  width: 50px;
+}
+
+/* The round slider knob */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* When checked, move the slider */
+input:checked + .slider {
+  background-color: #0080ff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+.flexRow {
+  display: flex;
+  align-items: center;
+  gap: 400px;
+}
+.flexRow p {
+  font-size: 1rem;
+}
+
+/*Add title*/
+.maintitle {
+  width: 90% !important;
+  padding: 2px;
+}
+
+/*To change background color and font color*/
+.label {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 2rem;
+}
+.colorGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.colorInput {
+  width: 40px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  background: none;
+}
+.hexInput {
+  width: 90px;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-family: monospace;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.colorGroup[input="text"] {
+  margin-right: 10px;
+  width: 30%;
+}
+
+/*For font size button */
+.incrementContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 10px;
+}
+
+.incrementBtn {
+  padding: 7px 8px;
+  font-size: 18px;
+  border: none;
+  background-color: #ccc;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.incrementInput {
+  width: 50px !important;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/*animation to hide custom components slowly*/
+.animatedSettings {
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+  overflow: hidden;
+}
+
+.show {
+  opacity: 1;
+  max-height: 1000px; /* big enough to show full content */
+}
+
+.hide {
+  opacity: 0;
+  max-height: 0;
+  pointer-events: none;
 }
 
 /*Responsiveness*/

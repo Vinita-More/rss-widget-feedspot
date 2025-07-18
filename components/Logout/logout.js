@@ -5,7 +5,7 @@ export default function LogoutButton() {
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove the email from localStorage
+    localStorage.removeItem("token");
     router.push("/"); // Redirect to login page
   };
 

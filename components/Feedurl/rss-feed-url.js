@@ -59,7 +59,7 @@ export default function Search({
         <br />
         <select
           className={rf.input}
-          value={folderId}
+          value={folderId ? Number(folderId) : 0}
           onChange={handleChange}
 
           // value={folderId !== undefined && folderId !== null ? folderId : 0}

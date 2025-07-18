@@ -1,5 +1,5 @@
 "use client";
-//import { useState } from "react";
+import { useState } from "react";
 import e from "./editform.module.css";
 export default function General({
   setShowBorder,
@@ -38,9 +38,8 @@ export default function General({
           <input
             type="number"
             name="height"
-            value={formData.height}
+            value={formData.height ?? ""}
             onChange={(e) => {
-              //  handleChange(e);
               setCardHeight(e.target.value);
               handleFormChange("height", e.target.value);
             }}
@@ -83,7 +82,7 @@ export default function General({
           <input
             type="number"
             name="width"
-            value={formData.width}
+            value={formData.width || ""}
             onChange={(e) => {
               // handleChange;
               setCardWidth(e.target.value);
@@ -147,7 +146,7 @@ export default function General({
         <p>Font styles</p>
         <select
           name="fontStyle"
-          value={formData.fontStyle}
+          value={formData.fontStyle ?? ""}
           onChange={(e) => {
             // handleChange(e);
             setFontStyle(e.target.value);
@@ -167,7 +166,7 @@ export default function General({
         <p>Text Alignment</p>
         <select
           name="textAlign"
-          value={formData.textAlign}
+          value={formData.textAlign ?? "left"}
           onChange={(e) => {
             // handleChange(e);
             setTextAlign(e.target.value);
@@ -222,7 +221,7 @@ export default function General({
           <input
             type="color"
             name="borderColor"
-            value={formData.borderColor}
+            value={formData.borderColor || "#000000"}
             onChange={(e) => {
               //  handleChange(e);
               setBorderColor(e.target.value);

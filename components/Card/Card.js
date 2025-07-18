@@ -22,6 +22,11 @@ export default function Card({
   formData,
   feedUrl,
   folderSelected,
+  bgColor,
+  sizeFont,
+  textColor,
+  isBold,
+  mainTitle,
 }) {
   const [feeds, setFeed] = useState([]);
 
@@ -65,7 +70,6 @@ export default function Card({
           setFeed([]);
         }
       } else {
-        // ✅ Fallback to database feeds (based on folderId)
         const url =
           folderId > 0
             ? `http://localhost:8080/RSS_Widget_Backend/api/index.php?folder_id=${folderId}`
@@ -105,7 +109,7 @@ export default function Card({
               type="text"
               placeholder="Enter Widget Name"
               className={g.searchInput}
-              value={widgetName || ""}
+              value={widgetName ?? ""}
               onChange={(e) => {
                 setWidgetName(e.target.value);
                 handleFormChange("widgetName", e.target.value);
@@ -126,7 +130,18 @@ export default function Card({
           </div>
 
           <div className={g.cardcontainer}>
-            <p className={g.inp}>My RSS Feed</p>
+            <p
+              className={g.inp}
+              style={{
+                backgroundColor:
+                  formData.bgColor != "white" ? bgColor : undefined,
+                fontSize: formData.sizeFont ? `${formData.sizeFont}px` : `16px`,
+                color: textColor ? textColor : "#000000",
+                fontWeight: isBold ? "bold" : "normal",
+              }}
+            >
+              {formData.mainTitle || "RSS Feeds"}
+            </p>
 
             <div
               className={g.insidecontainer}

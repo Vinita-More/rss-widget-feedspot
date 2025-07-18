@@ -16,7 +16,7 @@
   /*height: 2rem;*/
   font-weight: lighter;
   font-size: 1.1rem;
-  font-family: "Gill Sans", "Gill Sans MT", "Trebuchet MS", sans-serif;
+  font-family: "Arial", "Gill Sans MT", "Trebuchet MS", sans-serif;
   margin-left: 0rem;
   padding: 0.5rem;
   text-align: left;
@@ -28,7 +28,7 @@
 .main {
   color: white;
   font-weight: lighter;
-  font-family: "Gill Sans", "Gill Sans MT", "Trebuchet MS", sans-serif;
+  font-family: "Arial", "Gill Sans MT", "Trebuchet MS", sans-serif;
   margin-left: 3.5rem;
   font-size: 2.5rem;
   padding: 1rem;

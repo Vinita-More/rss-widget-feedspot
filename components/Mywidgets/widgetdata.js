@@ -10,6 +10,13 @@ export default function WidgetData() {
 
   const router = useRouter();
 
+  const folderNames = {
+    0: "Homepage",
+    1: "Technology",
+    2: "Lifestyle",
+    "-1": "Custom Feed URL",
+  };
+
   const handleEmbedCode = async (widgetId) => {
     try {
       const res = await fetch(
@@ -114,18 +121,19 @@ export default function WidgetData() {
             <Link href="/widget">Create New Widget</Link>
           </button>
           <button>
-            <Link href="https://youtu.be/ea-ybXtsOCc" target="blank">
+            <a href="https://youtu.be/ea-ybXtsOCc" target="blank">
               Learn More
-            </Link>
+            </a>
           </button>
         </div>
       </div>
 
       <div className={w.tableContainer}>
-        <table className={w.widgetTable}>
+        <table className={w.widgetTable} border="1">
           <thead>
             <tr>
               <th>Name</th>
+              <th>Feed URL</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -133,6 +141,17 @@ export default function WidgetData() {
             {widgets.map((widget) => (
               <tr key={widget.id}>
                 <td>{widget.widget_name}</td>
+
+                <td>
+                  {widget.feed_url ? (
+                    <a href={widget.feed_url} target="_blank">
+                      {widget.feed_url}
+                    </a>
+                  ) : (
+                    folderNames[widget.folder_id] || "Unknown"
+                  )}
+                </td>
+
                 <td className={w.actionButtons}>
                   <button
                     className={w.actionBtn}

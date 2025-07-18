@@ -25,6 +25,11 @@ export default function MainPage() {
   const [customFeedUrl, setCustomFeedUrl] = useState(null);
   const [folderSelected, setFolderSelected] = useState(false);
   const [rssInputText, setRssInputText] = useState("");
+  const [bgColor, setBgColor] = useState("#FFFFFF");
+  const [sizeFont, setSizeFont] = useState(16);
+  const [textColor, setTextColor] = useState("#000000");
+  const [isBold, setBold] = useState(false);
+  const [mainTitle, setMainTitle] = useState("");
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -32,22 +37,19 @@ export default function MainPage() {
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
   const [token, setToken] = useState(null);
+  const [existingSettings, setExistingSettings] = useState({});
 
-  // useEffect(() => {
-  //   const storedToken = localStorage.getItem("token");
-  //   setToken(storedToken);
-  // }, []);
-
+  /*For checking if edit mode is active*/
   useEffect(() => {
     const edit = searchParams.get("edit") === "true";
     const id = searchParams.get("id");
-
     setEditMode(edit);
     setEditId(id);
   }, [searchParams, pathname]);
 
   const router = useRouter();
 
+  /*To check if user has a valid token */
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
@@ -56,6 +58,26 @@ export default function MainPage() {
       router.push("/"); // redirect to login only if token missing
     }
   }, []);
+  /*Default values*/
+  const defaultSettings = {
+    bgColor: "#FFFFFF",
+    sizeFont: 16,
+    mainTitle: "RSS Feeds",
+    textAlign: "left",
+    textColor: "#000000",
+    isBold: false,
+    border: true,
+    borderColor: "#000000",
+    height: "300px",
+    width: "100%",
+    fontStyle: "normal",
+    autoscroll: false,
+    heightMode: "",
+    widthMode: "",
+  };
+
+  /*To fetch data if edit is requested. */
+  // In your page.js, replace the useEffect for fetching edit data with this:
 
   useEffect(() => {
     if (editMode && editId && token) {
@@ -69,30 +91,65 @@ export default function MainPage() {
       })
         .then((res) => res.json())
         .then((data) => {
-          // populate form
           if (data) {
+            // Parse set_data JSON
+            let parsedSettings = {};
+            try {
+              parsedSettings = data.set_data ? JSON.parse(data.set_data) : {};
+            } catch (err) {
+              console.error("Invalid JSON in set_data:", err);
+            }
+
+            // Create merged settings object
+            const mergedSettings = {
+              ...defaultSettings,
+              // Database columns
+              widthMode: data.width_mode ?? defaultSettings.widthMode,
+              width: data.width ?? defaultSettings.width,
+              heightMode: data.height_mode ?? defaultSettings.heightMode,
+              height: data.height ?? defaultSettings.height,
+              autoscroll:
+                data.autoscroll === "true" || data.autoscroll === true,
+              fontStyle: data.font_style ?? defaultSettings.fontStyle,
+              border: data.border === "true" || data.border === true,
+              borderColor: data.border_color ?? defaultSettings.borderColor,
+              textAlign: data.text_alignment ?? defaultSettings.textAlign,
+              widgetName: data.widget_name ?? "",
+              folder_id: parseInt(data.folder_id) || 0,
+              // JSON settings (override DB columns where applicable)
+              ...parsedSettings,
+            };
+
+            console.log("Merged settings:", mergedSettings); // Debug log
+
+            // Set the complete form data
+            setFormData(mergedSettings);
+
+            // Set existing settings for comparison
+            setExistingSettings(mergedSettings);
+
+            // Set individual component states
             setWidgetName(data.widget_name);
-            setCardHeight(parseInt(data.height));
-            setCardWidth(parseInt(data.width));
-            setFolderId(parseInt(data.folder_id));
-            setFormData({
-              widthMode: data.width_mode,
-              width: data.width,
-              heightMode: data.height_mode,
-              height: data.height,
-              autoscroll: data.autoscroll,
-              fontStyle: data.font_style,
-              border: data.border,
-              borderColor: data.border_color,
-              textAlign: data.text_alignment,
-              widgetName: data.widget_name,
-              folder_id: parseInt(data.folder_id),
-            });
-          }
-          if (data.feed_url) {
-            setCustomFeedUrl(data.feed_url);
-            setRssInputText(data.feed_url);
-            setFolderId(-1);
+            setCardHeight(mergedSettings.height);
+            setCardWidth(mergedSettings.width);
+            setFolderId(mergedSettings.folder_id);
+            setMainTitle(mergedSettings.mainTitle);
+            setSizeFont(mergedSettings.sizeFont);
+            setBold(mergedSettings.isBold);
+            setTextColor(mergedSettings.textColor);
+            setBgColor(mergedSettings.bgColor);
+            setFontStyle(mergedSettings.fontStyle);
+            setTextAlign(mergedSettings.textAlign);
+            setBorderColor(mergedSettings.borderColor);
+            setShowBorder(mergedSettings.border);
+            setAutoscroll(mergedSettings.autoscroll.toString());
+
+            // Handle custom feed URL
+            if (data.feed_url) {
+              setCustomFeedUrl(data.feed_url);
+              setRssInputText(data.feed_url);
+              setFolderId(-1);
+            }
           }
         })
         .catch((err) => console.error("Edit fetch error", err));
@@ -139,6 +196,11 @@ export default function MainPage() {
     textAlign: "left",
     widgetName: "",
     folder_id: 0,
+    bgColor: "#FFFFFF",
+    sizeFont: 16,
+    textColor: "#000000",
+    isBold: false,
+    mainTitle: "",
   });
 
   const handleFormChange = (name, value) => {
@@ -156,6 +218,7 @@ export default function MainPage() {
     setFormData((prev) => ({ ...prev, folder_id: folderId || 0 }));
   }, [folderId]);
 
+  /*Handles data submission*/
   const handleSubmit = async () => {
     if (!widgetName || widgetName.trim() === "") {
       alert("Please enter a widget name before saving.");
@@ -163,24 +226,68 @@ export default function MainPage() {
     }
     if (!token) {
       alert("User is not authenticated.");
-      router.push("/"); // redirect to login
+      router.push("/");
       return;
     }
+
+    // Create the current settings object
+    const currentSettings = {
+      bgColor: bgColor,
+      sizeFont: sizeFont,
+      mainTitle: mainTitle,
+      textAlign: textAlign,
+      textColor: textColor,
+      isBold: isBold,
+      fontStyle: fontStyle,
+      border: showBorder,
+      borderColor: borderColor,
+      autoscroll: autoscroll,
+      widthMode: formData.widthMode,
+      width: formData.width,
+      heightMode: formData.heightMode,
+      height: formData.height,
+      folder_id: folderId,
+      widgetName: widgetName,
+    };
+
+    // Merge with existing settings for edit mode
+    const mergedSettings = editMode
+      ? { ...existingSettings, ...currentSettings }
+      : currentSettings;
+
     const apiUrl = editMode
       ? "http://localhost:8080/RSS_Widget_Backend/api/updatewidget.php"
       : "http://localhost:8080/RSS_Widget_Backend/api/save_settings.php";
 
-    //const userEmail = localStorage.getItem("userEmail");
-    const payload = editMode
-      ? { ...formData, id: editId, feed_url: customFeedUrl }
-      : { ...formData, feed_url: customFeedUrl };
+    const payload = {
+      widgetName: widgetName,
+      folder_id: folderId,
+      feed_url: customFeedUrl,
+      settings: JSON.stringify(mergedSettings),
+      ...(editMode && { id: editId }),
+    };
+
+    console.log("Payload being sent:", payload);
+    // In your handleSubmit function, add this before the fetch:
+    console.log("Current form state:", {
+      widgetName,
+      folderId,
+      customFeedUrl,
+      bgColor,
+      sizeFont,
+      mainTitle,
+      textAlign,
+      textColor,
+      isBold,
+      formData,
+    });
 
     try {
       const res = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       });
@@ -195,21 +302,49 @@ export default function MainPage() {
         return;
       }
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${text}`);
-      const result = JSON.parse(text);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${text}`);
+      }
+
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (jsonErr) {
+        // Try to extract JSON from the end of the response
+        const jsonMatch = text.match(/({[\s\S]*})\s*$/);
+        if (jsonMatch) {
+          try {
+            result = JSON.parse(jsonMatch[1]);
+          } catch (jsonErr2) {
+            alert("Server error: " + text);
+            console.error("Non-JSON response from server:", text);
+            return;
+          }
+        } else {
+          alert("Server error: " + text);
+          console.error("Non-JSON response from server:", text);
+          return;
+        }
+      }
 
       if (result.error) {
         alert(result.error);
       } else {
-        alert(editMode ? "Widget updated" : "Settings saved");
-        // resetAllSettings();
+        alert(
+          editMode
+            ? "Widget updated successfully!"
+            : "Settings saved successfully!"
+        );
 
         if (editMode) {
-          router.replace("/widget"); // clears ?edit=true&id=...
+          router.replace("/widget"); // Navigate back to widget list
+        } else {
+          resetAllSettings(); // Reset form for new widget
         }
       }
     } catch (err) {
       console.error("Fetch error:", err.message);
+      alert("An error occurred while saving. Please try again.");
     }
   };
 
@@ -218,11 +353,20 @@ export default function MainPage() {
     setFolderSelected(true);
     setCustomFeedUrl(null); // mark that a folder has been explicitly selected
   };
+
   useEffect(() => {
     if (!customFeedUrl || customFeedUrl.trim() === "") {
       setFolderSelected(false);
     }
   }, [customFeedUrl]);
+
+  // Prevent invisible border: if borderColor matches bgColor, use black
+  const effectiveBorderColor =
+    borderColor &&
+    bgColor &&
+    borderColor.toLowerCase() === bgColor.toLowerCase()
+      ? "#000000"
+      : borderColor;
   return (
     <div>
       <Sidebar />
@@ -242,7 +386,7 @@ export default function MainPage() {
       <div>
         <Card
           showBorder={showBorder}
-          borderColor={borderColor}
+          borderColor={effectiveBorderColor}
           textAlign={textAlign}
           fontStyle={fontStyle}
           autoscroll={autoscroll}
@@ -259,6 +403,11 @@ export default function MainPage() {
           formData={formData}
           feedUrl={customFeedUrl}
           folderSelected={folderSelected}
+          bgColor={bgColor}
+          sizeFont={sizeFont}
+          textColor={textColor}
+          isBold={isBold}
+          mainTitle={mainTitle}
         />
 
         <General
@@ -272,77 +421,18 @@ export default function MainPage() {
           formData={formData}
           handleFormChange={handleFormChange}
         />
-        <Feedtitle />
+
+        <Feedtitle
+          setBgColor={setBgColor}
+          setSizeFont={setSizeFont}
+          setTextColor={setTextColor}
+          formData={formData}
+          handleFormChange={handleFormChange}
+          setFormData={setFormData}
+          setBold={setBold}
+          setMainTitle={setMainTitle}
+        />
       </div>
     </div>
   );
 }
-
-// const handleSubmit = async () => {
-//   if (!widgetName || widgetName.trim() === "") {
-//     alert("Please enter a widget name before saving.");
-//     return;
-//   }
-
-//   try {
-//     const res = await fetch(
-//       "http://localhost:8080/RSS_Widget_Backend/api/save_settings.php",
-//       {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(formData),
-//         //widgetName: widgetName,
-//       }
-//     );
-
-//     const text = await res.text();
-//     console.log("Raw response:", text);
-
-//     if (!res.ok) throw new Error(`HTTP ${res.status}: ${text}`);
-//     const result = JSON.parse(text);
-//     if (result.error) {
-//       alert(result.error); // ✅ shows "Widget name already exists"
-//       return;
-//     }
-
-//     alert(result.message || "Settings saved");
-//   } catch (err) {
-//     console.error("Fetch error:", err.message);
-//   }
-// };
-/*For editing and updating the settings,  this sends the values of a particular widget from the database to the form*/
-// useEffect(() => {
-//   if (editMode && editId && token) {
-//     fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//       body: JSON.stringify({ id: editId }),
-//     })
-//       .then((res) => res.json())
-//       .then((data) => {
-//         if (data) {
-//           setWidgetName(data.widget_name);
-//           setCardHeight(parseInt(data.height));
-//           setCardWidth(parseInt(data.width));
-//           setFolderId(parseInt(data.folder_id));
-//           setFormData({
-//             widthMode: data.width_mode,
-//             width: data.width,
-//             heightMode: data.height_mode,
-//             height: data.height,
-//             autoscroll: data.autoscroll,
-//             fontStyle: data.font_style,
-//             border: data.border,
-//             borderColor: data.border_color,
-//             textAlign: data.text_alignment,
-//             widgetName: data.widget_name,
-//             folder_id: parseInt(data.folder_id) || 0,
-//           });
-//         }
-//       })
-//       .catch((err) => console.error("Edit fetch error", err));
-//   }
-// }, [editMode, editId, token]);

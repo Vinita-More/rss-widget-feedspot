@@ -6,10 +6,12 @@ export default function ViewButtons({ onClick }) {
       <button className={v.viewbutton} onClick={() => onClick(0)}>
         <Image
           src="/icons/image1.png"
-          width={10}
-          height={10}
+          width={20}
+          height={20}
           alt=""
           className={v.buttonimage}
+          unoptimized={true} // Bypass Next.js optimization
+          priority={true}
         />
       </button>
 

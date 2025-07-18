@@ -507,3 +507,149 @@
     text-align: center;
   }
 }
+/*
+// const handleSubmit = async () => {
+//   if (!widgetName || widgetName.trim() === "") {
+//     alert("Please enter a widget name before saving.");
+//     return;
+//   }
+
+//   try {
+//     const res = await fetch(
+//       "http://localhost:8080/RSS_Widget_Backend/api/save_settings.php",
+//       {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(formData),
+//         //widgetName: widgetName,
+//       }
+//     );
+
+//     const text = await res.text();
+//     console.log("Raw response:", text);
+
+//     if (!res.ok) throw new Error(`HTTP ${res.status}: ${text}`);
+//     const result = JSON.parse(text);
+//     if (result.error) {
+//       alert(result.error); // ✅ shows "Widget name already exists"
+//       return;
+//     }
+
+//     alert(result.message || "Settings saved");
+//   } catch (err) {
+//     console.error("Fetch error:", err.message);
+//   }
+// };
+/*For editing and updating the settings,  this sends the values of a particular widget from the database to the form
+// useEffect(() => {
+//   if (editMode && editId && token) {
+//     fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//       body: JSON.stringify({ id: editId }),
+//     })
+//       .then((res) => res.json())
+//       .then((data) => {
+//         if (data) {
+//           setWidgetName(data.widget_name);
+//           setCardHeight(parseInt(data.height));
+//           setCardWidth(parseInt(data.width));
+//           setFolderId(parseInt(data.folder_id));
+//           setFormData({
+//             widthMode: data.width_mode,
+//             width: data.width,
+//             heightMode: data.height_mode,
+//             height: data.height,
+//             autoscroll: data.autoscroll,
+//             fontStyle: data.font_style,
+//             border: data.border,
+//             borderColor: data.border_color,
+//             textAlign: data.text_alignment,
+//             widgetName: data.widget_name,
+//             folder_id: parseInt(data.folder_id) || 0,
+//           });
+//         }
+//       })
+//       .catch((err) => console.error("Edit fetch error", err));
+//   }
+// }, [editMode, editId, token]);
+
+
+for editing latest one:
+useEffect(() => {
+    if (editMode && editId && token) {
+      fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ id: editId }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // populate form
+          if (data) {
+            setWidgetName(data.widget_name);
+            setCardHeight(parseInt(data.height));
+            setCardWidth(parseInt(data.width));
+            setFolderId(parseInt(data.folder_id));
+            
+            setFormData({
+              widthMode: data.width_mode,
+              width: data.width,
+              heightMode: data.height_mode,
+              height: data.height,
+              autoscroll: data.autoscroll,
+              fontStyle: data.font_style,
+              border: data.border,
+              borderColor: data.border_color,
+              textAlign: data.text_alignment,
+              widgetName: data.widget_name,
+              textColor: data.textColor,
+              bgColor: data.bgColor,
+              folder_id: parseInt(data.folder_id),
+            });
+          }
+          let parsedSettings = {};
+          try {
+            parsedSettings = data.set_data ? JSON.parse(data.set_data) : {};
+          } catch (err) {
+            console.error("Invalid JSON in set_data:", err);
+          }
+
+          // 3. Merge both
+          const mergedSettings = {
+            ...baseSettings,
+            mainTitle: parsedSettings.mainTitle || "",
+            sizeFont: parsedSettings.sizeFont || 16,
+            isBold: parsedSettings.isBold ?? false,
+            textColor: parsedSettings.textColor || "#000000",
+            bgColor: parsedSettings.bgColor || "#FFFFFF",
+          };
+
+          setFormData(mergedSettings);
+
+          // 4. Sync to local states if needed
+          setMainTitle(mergedSettings.mainTitle);
+          setSizeFont(mergedSettings.sizeFont);
+          setBold(mergedSettings.isBold);
+          setTextColor(mergedSettings.textColor);
+          setBgColor(mergedSettings.bgColor);
+          setFontStyle(mergedSettings.fontStyle);
+          setTextAlign(mergedSettings.textAlign);
+          setBorderColor(mergedSettings.borderColor);
+          setShowBorder(mergedSettings.border === "true");
+
+          if (data.feed_url) {
+            setCustomFeedUrl(data.feed_url);
+            setRssInputText(data.feed_url);
+            setFolderId(-1);
+          }
+        })
+        .catch((err) => console.error("Edit fetch error", err));
+    }
+  }, [editMode, editId, token]);
