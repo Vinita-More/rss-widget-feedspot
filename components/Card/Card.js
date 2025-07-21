@@ -27,16 +27,20 @@ export default function Card({
   textColor,
   isBold,
   mainTitle,
+  titleBold,
+  feedBgColor,
+  showDesc,
+  isTitle,
+  descFont,
+  postNumber,
 }) {
   const [feeds, setFeed] = useState([]);
-
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     const fetchFeeds = async () => {
       setErrorMsg("");
 
-      // ✅ Use feedUrl only if user has NOT explicitly selected a folder
       const useFeedUrl = feedUrl && feedUrl.trim() !== "" && !folderSelected;
 
       if (useFeedUrl) {
@@ -99,6 +103,28 @@ export default function Card({
         (f) => f.title === feed.title && f.feedurl === feed.feedurl
       )
   );
+
+  const formatDate = (dateStr, format) => {
+    const date = new Date(dateStr);
+
+    if (format === "dd-mm-yyyy") {
+      return `${date.getDate().toString().padStart(2, "0")}-${(
+        date.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}-${date.getFullYear()}`;
+    }
+
+    // Default: Month DD, YYYY
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    });
+  };
+  // Limit posts based on postNumber setting
+  const displayFeeds = uniqueFeeds.slice(0, postNumber || 3);
+
   return (
     <div className={g.parent}>
       <div className={g.h1}>
@@ -130,28 +156,28 @@ export default function Card({
           </div>
 
           <div className={g.cardcontainer}>
+            {/* Feed Title with customizable styling */}
             <p
               className={g.inp}
               style={{
-                backgroundColor:
-                  formData.bgColor != "white" ? bgColor : undefined,
-                fontSize: formData.sizeFont ? `${formData.sizeFont}px` : `16px`,
+                backgroundColor: bgColor !== "#ffffff" ? bgColor : undefined,
+                fontSize: sizeFont ? `${sizeFont}px` : `16px`,
                 color: textColor ? textColor : "#000000",
                 fontWeight: isBold ? "bold" : "normal",
               }}
             >
-              {formData.mainTitle || "RSS Feeds"}
+              {mainTitle || "RSS Feeds"}
             </p>
 
             <div
               className={g.insidecontainer}
               style={{
                 overflowY: autoscroll === "true" ? "scroll" : "visible",
-                // maxHeight: autoscroll === "true" ? "680px" : "auto", // optional
                 scrollBehavior: "smooth",
+                backgroundColor: feedBgColor || undefined, // done twice to apply bgcolor to both card and background on which card is
               }}
             >
-              {feeds.map((feed) => (
+              {displayFeeds.map((feed) => (
                 <div
                   className={`${g.usercard} ${g[selectedLayout] || ""}`}
                   key={feed.id || `${feed.title || "untitled"}-${feed.pubDate}`}
@@ -163,89 +189,114 @@ export default function Card({
                       ? `${parseInt(cardHeight)}px`
                       : undefined,
                     width: cardWidth ? `${parseInt(cardWidth)}px` : undefined,
+                    backgroundColor: feedBgColor || undefined,
                   }}
                 >
-                  {feed.image && (
-                    <img
-                      src={
-                        feed.image.startsWith("http") // full external URL from RSS
-                          ? feed.image
-                          : `http://localhost:8080/RSS_Widget_Backend/${feed.image}` // fallback for local
-                      }
-                      alt={feed.title}
-                      width={100}
-                      style={{
-                        height: cardHeight
-                          ? `${parseInt(cardHeight) / 2}px`
+                  <Link
+                    className={g.newlink}
+                    href={feed.feedurl}
+                    target="_blank"
+                    style={{
+                      fontFamily:
+                        fontStyle !== "default" ? fontStyle : undefined,
+                      display: parseInt(cardHeight) < 150 ? "none" : undefined,
+                      textAlign: textAlign ? textAlign : "left",
+                      fontSize:
+                        parseInt(cardHeight) < 150 || parseInt(cardWidth) < 150
+                          ? "10px"
                           : undefined,
-                      }}
-                    />
-                  )}
-                  <div>
-                    <h1
-                      className={g.newlink}
-                      style={{
-                        textAlign: textAlign,
-                        fontFamily:
-                          fontStyle !== "default" ? fontStyle : "default",
-                        display: cardHeight
-                          ? `${parseInt(cardHeight)}px`
-                          : undefined,
-                        fontSize:
-                          formData.height && parseInt(formData.height) < 150
-                            ? "10px"
-                            : undefined,
-                      }}
-                    >
-                      {feed.title}
-                    </h1>
-
-                    <p
-                      className={g.descriptionClamp}
-                      style={{
-                        textAlign: textAlign,
-                        fontFamily:
-                          fontStyle !== "default" ? fontStyle : undefined,
-                        fontSize:
-                          parseInt(cardHeight) < 170 ||
-                          parseInt(cardWidth) < 170
-                            ? "10px"
-                            : undefined,
-
-                        display:
-                          parseInt(cardHeight) < 170 ||
-                          parseInt(cardWidth) < 170
-                            ? "none"
-                            : undefined,
-                      }}
-                    >
-                      {feed.description}
-                    </p>
-
-                    {typeof feed.feedurl === "string" &&
-                    feed.feedurl.trim() !== "" ? (
-                      <Link
-                        className={g.newlink}
-                        href={feed.feedurl}
-                        target="_blank"
+                    }}
+                  >
+                    {feed.image ? (
+                      <img
+                        src={
+                          feed.image.startsWith("http") // full external URL from RSS
+                            ? feed.image
+                            : `http://localhost:8080/RSS_Widget_Backend/${feed.image}` // fallback for local
+                        }
+                        alt={feed.title}
+                        width={100}
                         style={{
-                          fontFamily:
-                            fontStyle !== "default" ? fontStyle : undefined,
-                          display:
-                            parseInt(cardHeight) < 150 ? "none" : undefined,
-                          fontSize:
-                            parseInt(cardHeight) < 150 ||
-                            parseInt(cardWidth) < 150
-                              ? "10px"
-                              : undefined,
+                          height: cardHeight
+                            ? `${parseInt(cardHeight) / 2}px`
+                            : undefined,
+                        }}
+                      />
+                    ) : (
+                      <p
+                        style={{
+                          textAlign: "center",
+                          backgroundColor: "grey",
+                          color: "white",
                         }}
                       >
-                        Click here to view full article
-                      </Link>
-                    ) : (
-                      <p style={{ color: "gray" }}>No link available</p>
+                        image not present
+                      </p>
                     )}
-                  </div>
+                    <div>
+                      {(isTitle === undefined ||
+                        isTitle === true ||
+                        isTitle === "true") && (
+                        <h1
+                          className={g.newlink}
+                          style={{
+                            textAlign: textAlign,
+                            fontFamily:
+                              fontStyle !== "default" ? fontStyle : "default",
+                            fontSize:
+                              formData.height && parseInt(formData.height) < 150
+                                ? "10px"
+                                : undefined,
+                            fontWeight: titleBold ? "bold" : "normal",
+                          }}
+                        >
+                          {feed.title}
+                        </h1>
+                      )}
+
+                      {(showDesc === undefined ||
+                        showDesc === true ||
+                        showDesc === "true") && (
+                        <p
+                          className={g.descriptionClamp}
+                          style={{
+                            textAlign: textAlign ? textAlign : "left",
+                            fontFamily:
+                              fontStyle !== "default" ? fontStyle : undefined,
+                            fontSize: descFont
+                              ? `${descFont}px`
+                              : parseInt(cardHeight) < 170 ||
+                                parseInt(cardWidth) < 170
+                              ? "10px"
+                              : undefined,
+                            display:
+                              parseInt(cardHeight) < 170 ||
+                              parseInt(cardWidth) < 170
+                                ? "none"
+                                : undefined,
+                          }}
+                        >
+                          {feed.description}
+                        </p>
+                      )}
+                    </div>
+                    {feed.pubDate && (
+                      <p
+                        style={{
+                          fontSize: "12px",
+                          fontStyle: "italic",
+                          color: "#666",
+                          marginTop: "-8px",
+                          textAlign: textAlign,
+                        }}
+                      >
+                        {formatDate(
+                          feed.pubDate,
+                          formData?.dateFormat || "month-dd-yyyy"
+                        )}
+                      </p>
+                    )}
+                  </Link>
                 </div>
               ))}
             </div>
@@ -255,81 +306,3 @@ export default function Card({
     </div>
   );
 }
-
-// "use client";
-// import Link from "next/link";
-// import g from "./card.module.css";
-// import { useState, useEffect } from "react";
-
-// export default function Card({ showBorder, borderColor, displayImg }) {
-//   const [feeds, setFeed] = useState([]);
-
-//   useEffect(() => {
-//     fetch("http://localhost:8080/RSS_Widget_Backend/api/index.php")
-//       .then((res) => res.json())
-//       .then((data) => setFeed(data))
-//       .catch((err) => console.error("API error:", err));
-//   }, []);
-
-//   if (!feeds.length) return <p>Loading...</p>;
-//   return (
-//     <div className={g.h1}>
-//       {/*Feedspot Widget is a handy widget which lets you embed and display latest updates from your favourite sources (Blogs, News Websites, Podcasts, Youtube Channels, RSS Feeds, etc) on your website. Watch Video
-//        */}
-//       <div>
-//         <div className={g.div1}>
-//           <input
-//             type="text"
-//             placeholder="Enter Widget Name"
-//             className={g.searchInput}
-//           />
-//           <div className={g.buttonGroup}>
-//             <button
-//               className={g.savebutton}
-//               style={{ backgroundColor: "#f3d43c" }}
-//             >
-//               Save & Get code
-//             </button>
-//             <button className={g.savebutton}>Reset</button>
-//           </div>
-//         </div>
-
-//         <div className={g.cardcontainer}>
-//           <p className={g.inp}>My RSS Feed</p>
-//           <div className={g.insidecontainer}>
-//             {feeds.map((feed) => (
-//               <div
-//                 className={g.usercard}
-//                 key={feed.id}
-//                 style={{
-//                   border: showBorder ? `1px solid ${borderColor}` : "none",
-//                   padding: "1rem",
-//                   borderRadius: "8px",
-//                 }}
-//               >
-//                 <img
-//                   src={`http://localhost:8080/RSS_Widget_Backend/${feed.image}`}
-//                   alt={feed.title}
-//                   width={100}
-
-//                   //   style={{displayImg ? "" : "none"}}
-//                 />
-
-//                 <h1>{feed.title}</h1>
-//                 <p>{feed.description}</p>
-
-//                 {feed.feedurl ? (
-//                   <Link href={feed.feedurl} target="_blank">
-//                     Click here to view full article
-//                   </Link>
-//                 ) : (
-//                   <p style={{ color: "gray" }}>No link available</p>
-//                 )}
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }

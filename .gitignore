@@ -19,6 +19,7 @@
 
 # production
 /build
+dummy/
 
 # misc
 .DS_Store

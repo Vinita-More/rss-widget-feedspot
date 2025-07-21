@@ -93,6 +93,7 @@
   transition: 0.4s;
   border-radius: 34px;
   width: 50px;
+  margin-right: 100px;
 }
 
 /* The round slider knob */
@@ -205,43 +206,63 @@ input:checked + .slider:before {
   max-height: 0;
   pointer-events: none;
 }
+.format {
+  padding: 6px;
+  margin: 0 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  z-index: 10;
+  cursor: pointer;
+}
+.format:hover {
+  text-decoration: underline;
+}
+.one {
+  margin-left: 290px;
+  background-color: #aaa9a9;
+}
+.two {
+  margin-left: 30px;
+  background-color: #045cb4;
+}
 
 /*Responsiveness*/
 
 /* @media (max-width: 768px) {
-  .formparent {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1rem;
-    box-sizing: border-box;
-  }
+    .formparent {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
 
-  .row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    .row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-  .row label {
-    margin-bottom: 5px;
-  }
+    .row label {
+      margin-bottom: 5px;
+    }
 
-  .row input[type="text"],
-  .content select {
-    width: 100%;
-    max-width: 100%;
-  }
+    .row input[type="text"],
+    .content select {
+      width: 100%;
+      max-width: 100%;
+    }
 
-  .content {
-    margin: 1rem 0;
-    font-size: 0.95rem;
-  }
+    .content {
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
 
-  .formtitle {
-    font-size: 1.2rem;
-    text-align: center;
-  }
-} */
+    .formtitle {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+  } */
 /* Additional Responsive Styling */
 @media (max-width: 1024px) {
   .formparent {

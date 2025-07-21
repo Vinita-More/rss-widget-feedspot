@@ -8,6 +8,7 @@
   background-color: rgb(250, 248, 248);
   line-height: 10vh;
 }
+
 .searchinput {
   margin: 2vh;
   margin-left: 3vh;
@@ -16,38 +17,71 @@
   border: solid 1px rgb(185, 182, 182);
 }
 
-@media (max-width: 1024px) {
+/* Mobile Menu Button - hidden on desktop */
+.mobileMenuBtn {
+  display: none;
+  background: none;
+  border: none;
+  color: rgb(51, 50, 50);
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1002;
+}
+
+.mobileHamburgerIcon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.mobileMenuBtn:hover .mobileHamburgerIcon {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
   .search {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 1rem;
     width: 100%;
     padding: 1rem;
+    float: none;
+    position: relative;
+  }
+
+  /* Show mobile menu button */
+  .mobileMenuBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
   .searchinput {
-    width: 80%;
+    width: 60%;
     font-size: 1rem;
+    margin: 0;
+    padding: 0.8rem;
+    flex: 1;
   }
-
-  /* LogoutButton will inherit layout from its container */
 }
 
 @media (max-width: 600px) {
   .search {
-    padding: 0.5rem;
+    padding: 1rem;
+    gap: 0.5rem;
   }
 
   .searchinput {
     width: 100%;
     font-size: 1rem;
+    flex: 1;
   }
 
   /* Target the LogoutButton container */
   .search :global(button) {
-    width: 100%;
-    font-size: 1rem;
-    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    margin-top: 0;
+    flex-shrink: 0;
   }
 }

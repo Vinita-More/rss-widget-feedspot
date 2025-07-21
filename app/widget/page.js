@@ -6,12 +6,17 @@ import View from "@/components/View/view";
 import Card from "@/components/Card/Card";
 import General from "@/components/Editform/general";
 import FeedspotSection from "@/components/Topbody/Topbody";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "next/navigation";
 import Feedtitle from "@/components/Editform/feedtitle";
+import FeedContent from "@/components/Editform/feedcontent";
 
 export default function MainPage() {
+  const [selectedLayout, setSelectedLayout] = useState("");
+  const [folderId, setFolderId] = useState(0);
+
+  // States of general customization
   const [showBorder, setShowBorder] = useState(true);
   const [borderColor, setBorderColor] = useState("#000000");
   const [textAlign, setTextAlign] = useState("left");
@@ -19,25 +24,45 @@ export default function MainPage() {
   const [autoscroll, setAutoscroll] = useState("true");
   const [cardHeight, setCardHeight] = useState();
   const [cardWidth, setCardWidth] = useState();
-  const [selectedLayout, setSelectedLayout] = useState("");
-  const [folderId, setFolderId] = useState(0);
-  const [widgetName, setWidgetName] = useState("");
   const [customFeedUrl, setCustomFeedUrl] = useState(null);
   const [folderSelected, setFolderSelected] = useState(false);
   const [rssInputText, setRssInputText] = useState("");
+
+  // State for feed title sutomization
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [sizeFont, setSizeFont] = useState(16);
   const [textColor, setTextColor] = useState("#000000");
   const [isBold, setBold] = useState(false);
   const [mainTitle, setMainTitle] = useState("");
 
+  // States for Feed content customization
+  const [postNumber, setPostNumber] = useState(3);
+  const [feedBgColor, setFeedBgColor] = useState("#FFFFFF");
+  const [isTitle, setIsTitle] = useState(true);
+  const [titleBold, setTitleBold] = useState(false);
+  const [showDesc, setShowDesc] = useState(true);
+  const [descFont, setDescFont] = useState(16);
+
+  // State for card widget name
+  const [widgetName, setWidgetName] = useState("");
+
+  // States for edit mode checking
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
+
+  // State to check token
   const [token, setToken] = useState(null);
   const [existingSettings, setExistingSettings] = useState({});
+
+  // State to check for mobile screen, to apply mobile responsiveness
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   /*For checking if edit mode is active*/
   useEffect(() => {
@@ -74,6 +99,12 @@ export default function MainPage() {
     autoscroll: false,
     heightMode: "",
     widthMode: "",
+    showDesc: false,
+    descFont: 12,
+    feedBgColor: "#f0f0f0",
+    isTitle: true,
+    postNumber: 3,
+    titleBold: false,
   };
 
   /*To fetch data if edit is requested. */
@@ -201,6 +232,13 @@ export default function MainPage() {
     textColor: "#000000",
     isBold: false,
     mainTitle: "",
+    showDesc: true,
+    descFont: 16,
+    feedBgColor: "#FFFFFF",
+    isTitle: true,
+    postNumber: 3,
+    titleBold: false,
+    dateFormat: "month-dd-yyyy",
   });
 
   const handleFormChange = (name, value) => {
@@ -248,6 +286,13 @@ export default function MainPage() {
       height: formData.height,
       folder_id: folderId,
       widgetName: widgetName,
+      showDesc: formData.showDesc,
+      descFont: formData.descFont,
+      feedBgColor: formData.feedBgColor,
+      isTitle: formData.isTitle,
+      postNumber: formData.postNumber,
+      titleBold: formData.titleBold,
+      ...formData,
     };
 
     // Merge with existing settings for edit mode
@@ -266,21 +311,6 @@ export default function MainPage() {
       settings: JSON.stringify(mergedSettings),
       ...(editMode && { id: editId }),
     };
-
-    console.log("Payload being sent:", payload);
-    // In your handleSubmit function, add this before the fetch:
-    console.log("Current form state:", {
-      widgetName,
-      folderId,
-      customFeedUrl,
-      bgColor,
-      sizeFont,
-      mainTitle,
-      textAlign,
-      textColor,
-      isBold,
-      formData,
-    });
 
     try {
       const res = await fetch(apiUrl, {
@@ -369,8 +399,15 @@ export default function MainPage() {
       : borderColor;
   return (
     <div>
-      <Sidebar />
-      <Searchbar />
+      <Sidebar
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+        isMobileMenuOpen={isMobileMenuOpen}
+      />
+      <Searchbar
+        onMobileMenuToggle={handleMobileMenuToggle}
+        isMobileMenuOpen={isMobileMenuOpen}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+      />
       <FeedspotSection />
       <Search
         onFolderChange={setFolderId}
@@ -408,6 +445,12 @@ export default function MainPage() {
           textColor={textColor}
           isBold={isBold}
           mainTitle={mainTitle}
+          titleBold={titleBold}
+          feedBgColor={feedBgColor}
+          showDesc={showDesc}
+          isTitle={isTitle}
+          descFont={descFont}
+          postNumber={postNumber}
         />
 
         <General
@@ -428,9 +471,19 @@ export default function MainPage() {
           setTextColor={setTextColor}
           formData={formData}
           handleFormChange={handleFormChange}
-          setFormData={setFormData}
+          // setFormData={setFormData}
           setBold={setBold}
           setMainTitle={setMainTitle}
+        />
+        <FeedContent
+          setTitleBold={setTitleBold}
+          setFeedBgColor={setFeedBgColor}
+          setShowDesc={setShowDesc}
+          setIsTitle={setIsTitle}
+          setDescFont={setDescFont}
+          setPostNumber={setPostNumber}
+          formData={formData}
+          handleFormChange={handleFormChange}
         />
       </div>
     </div>
