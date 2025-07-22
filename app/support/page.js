@@ -11,12 +11,14 @@ import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "next/navigation";
 import Feedtitle from "@/components/Editform/feedtitle";
 import FeedContent from "@/components/Editform/feedcontent";
+import p from "./layout.module.css";
 
 export default function MainPage() {
   const [selectedLayout, setSelectedLayout] = useState("");
   const [folderId, setFolderId] = useState(0);
+  const [topbodyHeight, setTopbodyHeight] = useState(160); // Default height
 
-  // States of general customization
+  // ... all your existing state variables remain the same ...
   const [showBorder, setShowBorder] = useState(true);
   const [borderColor, setBorderColor] = useState("#000000");
   const [textAlign, setTextAlign] = useState("left");
@@ -28,7 +30,7 @@ export default function MainPage() {
   const [folderSelected, setFolderSelected] = useState(false);
   const [rssInputText, setRssInputText] = useState("");
 
-  // State for feed title sutomization
+  // State for feed title customization
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [sizeFont, setSizeFont] = useState(16);
   const [textColor, setTextColor] = useState("#e2e2e2");
@@ -64,6 +66,30 @@ export default function MainPage() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Effect to measure topbody height dynamically
+  useEffect(() => {
+    const measureTopbodyHeight = () => {
+      const topbodyElement = document.querySelector(".topbody-section");
+      if (topbodyElement) {
+        const height = topbodyElement.offsetHeight;
+        setTopbodyHeight(height);
+        // Set CSS custom property for dynamic positioning
+        document.documentElement.style.setProperty(
+          "--topbody-height",
+          `${height}px`
+        );
+      }
+    };
+
+    // Measure on mount and resize
+    measureTopbodyHeight();
+    window.addEventListener("resize", measureTopbodyHeight);
+
+    return () => window.removeEventListener("resize", measureTopbodyHeight);
+  }, []);
+
+  // ... all your existing useEffect hooks and functions remain the same ...
+
   /*For checking if edit mode is active*/
   useEffect(() => {
     const edit = searchParams.get("edit") === "true";
@@ -83,6 +109,7 @@ export default function MainPage() {
       router.push("/"); // redirect to login only if token missing
     }
   }, []);
+
   /*Default values*/
   const defaultSettings = {
     bgColor: "#FFFFFF",
@@ -109,8 +136,6 @@ export default function MainPage() {
   };
 
   /*To fetch data if edit is requested. */
-  // In your page.js, replace the useEffect for fetching edit data with this:
-
   useEffect(() => {
     if (editMode && editId && token) {
       fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php", {
@@ -242,7 +267,6 @@ export default function MainPage() {
       postNumber: 3,
       titleBold: false,
       dateFormat: "month-dd-yyyy",
-
       selectedLayout: "",
     });
   };
@@ -415,12 +439,6 @@ export default function MainPage() {
     }
   };
 
-  // const handleFolderChange = (folderId) => {
-  //   setFolderId(folderId); // set the folder ID
-  //   setFolderSelected(true);
-  //   setCustomFeedUrl(null); // mark that a folder has been explicitly selected
-  // };
-
   useEffect(() => {
     if (!customFeedUrl || customFeedUrl.trim() === "") {
       setFolderSelected(false);
@@ -435,97 +453,102 @@ export default function MainPage() {
       ? "#000000"
       : borderColor;
   return (
-    <div>
-      <Sidebar
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
-        isMobileMenuOpen={isMobileMenuOpen}
-      />
-      <Searchbar
-        onMobileMenuToggle={handleMobileMenuToggle}
-        isMobileMenuOpen={isMobileMenuOpen}
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
-      />
-      <FeedspotSection />
-      <Search
-        onFolderChange={setFolderId}
-        folderId={folderId}
-        onFeedUrlChange={setCustomFeedUrl}
-        rssInputText={rssInputText}
-        setRssInputText={setRssInputText}
-        setFolderId={setFolderId}
-      />
+    <div className={p.pageWrapper} style={{ width: "100%" }}>
+      {/* Top section scrolls normally */}
+      <div className={p.topSection}>
+        <Sidebar
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+          isMobileMenuOpen={isMobileMenuOpen}
+        />
+        <Searchbar
+          onMobileMenuToggle={handleMobileMenuToggle}
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+        />
+        <FeedspotSection />
+      </div>
 
-      {/*setdisplayImg={setdisplayImg}*/}
-      <View
-        setSelectedLayout={setSelectedLayout}
-        handleFormChange={handleFormChange}
-        formData={formData}
-      />
-      <div>
-        <Card
-          showBorder={showBorder}
-          borderColor={effectiveBorderColor}
-          textAlign={textAlign}
-          fontStyle={fontStyle}
-          autoscroll={autoscroll}
-          cardHeight={cardHeight}
-          cardWidth={cardWidth}
-          selectedLayout={selectedLayout}
-          folderId={folderId}
-          onSave={handleSubmit}
-          widgetName={widgetName}
-          setWidgetName={setWidgetName}
-          handleFormChange={handleFormChange}
-          onReset={resetAllSettings}
-          editMode={editMode}
-          formData={formData}
-          feedUrl={customFeedUrl}
-          folderSelected={folderSelected}
-          bgColor={bgColor}
-          sizeFont={sizeFont}
-          textColor={textColor}
-          isBold={isBold}
-          mainTitle={mainTitle}
-          titleBold={titleBold}
-          feedBgColor={feedBgColor}
-          showDesc={showDesc}
-          isTitle={isTitle}
-          descFont={descFont}
-          postNumber={postNumber}
-        />
+      {/* Everything from FeedUrl downward scrolls left, card stays sticky */}
+      <div className={p.scrollableLayout}>
+        <div className={p.leftContent}>
+          <Search
+            onFolderChange={setFolderId}
+            folderId={folderId}
+            onFeedUrlChange={setCustomFeedUrl}
+            rssInputText={rssInputText}
+            setRssInputText={setRssInputText}
+            setFolderId={setFolderId}
+          />
+          <View
+            setSelectedLayout={setSelectedLayout}
+            handleFormChange={handleFormChange}
+            formData={formData}
+          />
+          <General
+            setShowBorder={setShowBorder}
+            setBorderColor={setBorderColor}
+            setTextAlign={setTextAlign}
+            setFontStyle={setFontStyle}
+            setAutoscroll={setAutoscroll}
+            setCardHeight={setCardHeight}
+            setCardWidth={setCardWidth}
+            formData={formData}
+            handleFormChange={handleFormChange}
+          />
+          <Feedtitle
+            setBgColor={setBgColor}
+            setSizeFont={setSizeFont}
+            setTextColor={setTextColor}
+            formData={formData}
+            handleFormChange={handleFormChange}
+            setBold={setBold}
+            setMainTitle={setMainTitle}
+          />
+          <FeedContent
+            setTitleBold={setTitleBold}
+            setFeedBgColor={setFeedBgColor}
+            setShowDesc={setShowDesc}
+            setIsTitle={setIsTitle}
+            setDescFont={setDescFont}
+            setPostNumber={setPostNumber}
+            formData={formData}
+            handleFormChange={handleFormChange}
+          />
+        </div>
 
-        <General
-          setShowBorder={setShowBorder}
-          setBorderColor={setBorderColor}
-          setTextAlign={setTextAlign}
-          setFontStyle={setFontStyle}
-          setAutoscroll={setAutoscroll}
-          setCardHeight={setCardHeight}
-          setCardWidth={setCardWidth}
-          formData={formData}
-          handleFormChange={handleFormChange}
-        />
-
-        <Feedtitle
-          setBgColor={setBgColor}
-          setSizeFont={setSizeFont}
-          setTextColor={setTextColor}
-          formData={formData}
-          handleFormChange={handleFormChange}
-          // setFormData={setFormData}
-          setBold={setBold}
-          setMainTitle={setMainTitle}
-        />
-        <FeedContent
-          setTitleBold={setTitleBold}
-          setFeedBgColor={setFeedBgColor}
-          setShowDesc={setShowDesc}
-          setIsTitle={setIsTitle}
-          setDescFont={setDescFont}
-          setPostNumber={setPostNumber}
-          formData={formData}
-          handleFormChange={handleFormChange}
-        />
+        <div className={p.rightStickyCard}>
+          <Card
+            showBorder={showBorder}
+            borderColor={effectiveBorderColor}
+            textAlign={textAlign}
+            fontStyle={fontStyle}
+            autoscroll={autoscroll}
+            cardHeight={cardHeight}
+            cardWidth={cardWidth}
+            selectedLayout={selectedLayout}
+            folderId={folderId}
+            onSave={handleSubmit}
+            widgetName={widgetName}
+            setWidgetName={setWidgetName}
+            handleFormChange={handleFormChange}
+            onReset={resetAllSettings}
+            editMode={editMode}
+            formData={formData}
+            feedUrl={customFeedUrl}
+            folderSelected={folderSelected}
+            bgColor={bgColor}
+            sizeFont={sizeFont}
+            textColor={textColor}
+            isBold={isBold}
+            mainTitle={mainTitle}
+            titleBold={titleBold}
+            feedBgColor={feedBgColor}
+            showDesc={showDesc}
+            isTitle={isTitle}
+            descFont={descFont}
+            postNumber={postNumber}
+          />
+        </div>
       </div>
     </div>
   );

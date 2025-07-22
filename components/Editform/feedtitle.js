@@ -28,7 +28,7 @@ export default function Feedtitle({
   return (
     <div className={e.formparent}>
       <div className={e.formtitle}>
-        <p>Feed Title</p>
+        <h4>Feed Title</h4>
       </div>
 
       {/* To Change feed title */}

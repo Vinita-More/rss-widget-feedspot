@@ -1,12 +1,13 @@
 .search {
   float: right;
+  margin-left: 30vh;
   margin-top: 0;
   padding-top: 0;
-  width: 81.75%;
-  float: right;
-  position: relative;
+  width: 85.5%;
+  position: fixed;
   background-color: rgb(250, 248, 248);
-  line-height: 10vh;
+  line-height: 20px;
+  z-index: 100;
 }
 
 .searchinput {

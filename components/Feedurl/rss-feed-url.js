@@ -37,7 +37,7 @@ export default function Search({
     <div>
       <div className={rf.urlform}>
         <div className={rf.heading}>
-          <h3>RSS Feed URL</h3>
+          <h4>RSS Feed URL</h4>
         </div>
 
         <label className={rf.label}>Enter Feed URL</label>

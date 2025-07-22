@@ -9,27 +9,29 @@
   /*padding: 2rem;*/
   width: 40%;
   height: auto;
-  margin-left: 39vh;
-  border: solid 1px black;
+  margin-left: 35vh;
+  border: solid 1px #d2d2d2;
   margin-bottom: 1vh;
   flex-direction: column;
   gap: 2vh;
   flex-wrap: wrap;
+  border-radius: 5px;
 }
 .formtitle {
   width: 100%;
-  background-color: rgb(214, 213, 213);
+  background-color: #e9e9e9;
   padding: 1rem;
   padding-left: 10px;
   font-size: 1rem;
-  color: blue;
+  color: #0077b5;
   font-weight: bold;
 }
 
 /*For the headings of properties and the content inside each div*/
 .content {
   margin: 1rem 0rem 0rem 2rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
+  font-weight: lighter;
 }
 .content input {
   margin-bottom: 10px;
@@ -123,20 +125,24 @@ input:checked + .slider:before {
   gap: 400px;
 }
 .flexRow p {
-  font-size: 1rem;
+  font-size: 0.8rem;
+  font-weight: lighter;
 }
 
 /*Add title*/
 .maintitle {
   width: 90% !important;
   padding: 2px;
+  border: solid 1px #d2d2d2;
+  padding: 2px;
+  border-radius: 2px;
 }
 
 /*To change background color and font color*/
 .label {
   flex: 1;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.8rem;
+  font-weight: lighter;
   margin-left: 2rem;
 }
 .colorGroup {
@@ -156,7 +162,7 @@ input:checked + .slider:before {
   padding: 4px 8px;
   font-size: 14px;
   font-family: monospace;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d1d1;
   border-radius: 4px;
 }
 .colorGroup[input="text"] {
@@ -176,7 +182,7 @@ input:checked + .slider:before {
   padding: 7px 8px;
   font-size: 18px;
   border: none;
-  background-color: #ccc;
+  background-color: #c5c4c4;
   cursor: pointer;
   border-radius: 4px;
   font-weight: bold;
@@ -187,7 +193,7 @@ input:checked + .slider:before {
   width: 50px !important;
   text-align: center;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #f2f2f2;
   border-radius: 4px;
 }
 /*animation to hide custom components slowly*/

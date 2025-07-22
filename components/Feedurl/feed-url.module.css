@@ -1,22 +1,23 @@
 .urlform {
   position: relative;
-  margin-left: 39vh;
+  margin-left: 35vh;
   float: left;
-  border: solid 1px rgb(45, 45, 45);
+  border: solid 1px #f1f1f1;
   width: 40%;
   margin-top: 10px;
   padding-bottom: 2rem;
   background-color: white;
+  border-radius: 5px;
 }
 .heading {
   margin-top: 0;
   padding: 0 10px 0;
-  background-color: rgb(227, 226, 226);
+  background-color: #e9e9e9;
   margin-left: 0;
   width: 100%;
   line-height: 6vh;
   font-weight: bold;
-  color: blue;
+  color: #0077b5; /*blue;*/
   margin-bottom: 2vh;
   align-items: center;
 }
@@ -31,6 +32,7 @@
   margin-left: 3vh;
   padding: 1vh;
   width: 80%;
+  border: solid 1px #f1f1f1; /*for border use #f1f1f1*/
 }
 .input:focus {
   outline: none;
@@ -38,7 +40,7 @@
   border-color: rgb(43, 67, 140);
 }
 .button {
-  background-color: blue;
+  background-color: #0077b5;
   height: 2rem;
   width: 2rem;
   border-radius: 2px;

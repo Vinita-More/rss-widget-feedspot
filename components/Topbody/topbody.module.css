@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 .main {
-  z-index: 10;
+  z-index: 8;
   position: relative;
-  margin-left: 38vh; /* Push it to the right of sidebar */
+  margin-left: 35vh; /* Push it to the right of sidebar */
   display: flex;
   flex-direction: column;
   justify-content: center; /* center horizontally */
@@ -10,6 +10,7 @@
   min-height: 40vh;
   box-sizing: border-box;
   padding: 1rem;
+  top: 10vh;
 }
 
 .name {
@@ -31,20 +32,21 @@
 .right {
   width: 49%;
   font-weight: 100;
-  font-size: 1rem;
+  line-height: 1.3rem;
 }
 
 .left {
   float: left;
+  font-size: 1rem;
 }
 
 .right {
   float: right;
-  line-height: 1.3rem;
   font-family: "IBM Plex Mono", monospace;
   font-weight: 200;
   font-style: normal;
   padding-bottom: 0;
+  font-size: 0.8rem;
 }
 .right li {
   list-style: none;

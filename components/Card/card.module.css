@@ -16,6 +16,7 @@
   align-items: center;
   box-sizing: border-box;
   padding: 1rem;
+  border-color: #e2e2e2;
   /*border: solid 1px rgb(3, 3, 3);
   min-height: 8vh;
   display: block;
@@ -31,13 +32,13 @@
   flex-direction: column;
   margin-left: 10px;
   margin-top: 10px;
-  border: solid 1px black;
+  border: solid 1px #e2e2e2;
 }
 .inp {
   margin-right: 70%;
   margin-top: 10px;
-  color: rgb(181, 175, 176);
-  font-size: 1.2rem;
+  color: #e2e2e2;
+  font-size: 1.1rem;
   position: sticky;
   padding: 5px;
   width: 100%;
@@ -143,6 +144,7 @@
   padding-bottom: 0.2rem;
   font-size: 0.8rem;
   margin-left: 1rem;
+  border: solid 1px #e2e2e2;
 }
 
 .buttonGroup {
@@ -304,7 +306,7 @@
 /*Fourth button layout*/
 .layout-grid-4 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
 }
 

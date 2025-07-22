@@ -25,7 +25,7 @@ export default function FeedContent({
   return (
     <div className={e.formparent}>
       <div className={e.formtitle}>
-        <p>Feed Content</p>
+        <h4>Feed Content</h4>
       </div>
 
       {/*Display no. of posts*/}

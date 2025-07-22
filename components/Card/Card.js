@@ -160,13 +160,13 @@ export default function Card({
             <p
               className={g.inp}
               style={{
-                backgroundColor: bgColor !== "#ffffff" ? bgColor : undefined,
+                backgroundColor: bgColor !== "#ffffff" ? bgColor : "",
                 fontSize: sizeFont ? `${sizeFont}px` : `16px`,
-                color: textColor ? textColor : "#000000",
+                color: textColor ? textColor : "#e2e2e2",
                 fontWeight: isBold ? "bold" : "normal",
               }}
             >
-              {mainTitle || "RSS Feeds"}
+              {formData.mainTitle || "RSS Feeds"}
             </p>
 
             <div
@@ -174,7 +174,7 @@ export default function Card({
               style={{
                 overflowY: autoscroll === "true" ? "scroll" : "visible",
                 scrollBehavior: "smooth",
-                backgroundColor: feedBgColor || undefined, // done twice to apply bgcolor to both card and background on which card is
+                backgroundColor: formData.feedBgColor || undefined, // done twice to apply bgcolor to both card and background on which card is
               }}
             >
               {displayFeeds.map((feed) => (
@@ -189,7 +189,7 @@ export default function Card({
                       ? `${parseInt(cardHeight)}px`
                       : undefined,
                     width: cardWidth ? `${parseInt(cardWidth)}px` : undefined,
-                    backgroundColor: feedBgColor || undefined,
+                    // backgroundColor: formData.feedBgColor || undefined,
                   }}
                 >
                   <Link
@@ -247,7 +247,7 @@ export default function Card({
                               formData.height && parseInt(formData.height) < 150
                                 ? "10px"
                                 : undefined,
-                            fontWeight: titleBold ? "bold" : "normal",
+                            fontWeight: formData.titleBold ? "bold" : "normal",
                           }}
                         >
                           {feed.title}
@@ -263,8 +263,8 @@ export default function Card({
                             textAlign: textAlign ? textAlign : "left",
                             fontFamily:
                               fontStyle !== "default" ? fontStyle : undefined,
-                            fontSize: descFont
-                              ? `${descFont}px`
+                            fontSize: formData.descFont
+                              ? `${formData.descFont}px`
                               : parseInt(cardHeight) < 170 ||
                                 parseInt(cardWidth) < 170
                               ? "10px"
