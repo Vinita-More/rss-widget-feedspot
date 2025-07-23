@@ -1,7 +1,7 @@
 import s from "./topbody.module.css";
-export default function Side() {
+export default function Side({ isCollapsed }) {
   return (
-    <div>
+    <div className={`${isCollapsed ? s.collapsed : s.expanded}`}>
       {/* This div is parent div of headings content on the page */}
       <div className={s.main}>
         <header className={s.name}>
@@ -45,7 +45,7 @@ export default function Side() {
       </div>
       <br />
       <br />
-      <br />
+
       <br />
       <br />
     </div>

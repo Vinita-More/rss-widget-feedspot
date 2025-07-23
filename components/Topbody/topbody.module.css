@@ -2,7 +2,6 @@
 .main {
   z-index: 8;
   position: relative;
-  margin-left: 35vh; /* Push it to the right of sidebar */
   display: flex;
   flex-direction: column;
   justify-content: center; /* center horizontally */
@@ -10,20 +9,28 @@
   min-height: 40vh;
   box-sizing: border-box;
   padding: 1rem;
-  top: 10vh;
+  top: 8vh;
+}
+.collapsed {
+  margin-left: 70px; /* Sidebar collapsed */
+  transition: margin-left 0.5s ease;
 }
 
+.expanded {
+  margin-left: 225px; /* Sidebar expanded */
+  transition: margin-left 0.5s ease;
+}
 .name {
   width: 100%;
   text-align: center;
 }
 
 .name h1 {
-  padding-bottom: 2rem;
+  padding-bottom: 1.5rem;
 }
 
 .name h2 {
-  padding-bottom: 2rem;
+  padding-bottom: 1.5rem;
   color: rgb(119, 118, 118);
   font-weight: lighter;
 }

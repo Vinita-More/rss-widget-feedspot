@@ -1,23 +1,26 @@
 /*new*/
 .first {
   /*border: solid 1px rgb(176, 33, 33);*/
-  width: 42%;
+  width: 100%;
 }
-
 .viewdiv {
   /*position: relative;*/
-  margin-left: 35vh;
+  margin-left: 30vh;
   float: left;
   border: solid 1px #e2e2e2;
-  width: 90%;
+  width: 70%;
   margin-top: 2vh;
   border-radius: 5px;
   padding-bottom: 1rem;
   background-color: white;
   z-index: 0;
+  margin-bottom: 15px;
   pointer-events: auto;
 }
-
+.v p {
+  font-weight: bold;
+  font-size: 16px;
+}
 .heading {
   margin-top: 0;
   padding: 0 10px 0;
@@ -43,7 +46,7 @@
   background-color: transparent;
   margin-top: 0.6rem;
   margin-right: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.1rem;
   z-index: 10;
   padding: 0;
   overflow: hidden;
@@ -53,23 +56,23 @@
 }
 
 .viewbutton:hover {
-  transform: scale(1.05);
-  background-color: rgba(70, 144, 226, 0.1);
+  transform: scale(1.1);
+  /* background-color: rgba(70, 144, 226, 0.1);*/
 }
-
+/*
 .viewbutton.active {
-  background-color: rgba(70, 144, 226, 0.2);
-  border: 1px solid #4690e2;
-}
+  /*background-color: rgba(70, 144, 226, 0.2);*/
+/* border: 1px solid #4690e2;
+}*/
 
 .buttonIcon {
   color: #7f7b7b;
   transition: color 0.2s ease;
 }
-
+/*
 .buttonIcon:hover {
   color: #3672b1;
-}
+}*/
 
 .buttonIcon.activeIcon {
   color: #4a90e2;
@@ -121,7 +124,7 @@
 .changeimage.selectedImage::after {
   content: "";
   position: absolute;
-  top: 1px;
+  top: 0.5px;
   padding: 11px 12px;
   color: white;
   height: 90%;
@@ -133,7 +136,7 @@
   font-size: 14px;
   z-index: 20;
   border-radius: 8px;
-  border: solid 2px #0077b5;
+  border: solid 2px #044061;
 }
 
 .changeimage Image {
@@ -144,6 +147,17 @@
 
 .changeimage.selectedImage Image {
   opacity: 0.9;
+}
+
+.collapsed {
+  width: 85%;
+  margin-left: 71px;
+  transition: margin-left 0.5s ease;
+}
+
+.expanded {
+  margin-left: 225px;
+  transition: margin-left 0.5s ease;
 }
 
 /*.first {

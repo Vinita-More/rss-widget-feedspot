@@ -1,3 +1,10 @@
+.insidecontainer {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.insidecontainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 /*card css*/
 .h1 {
   font-size: 2rem;

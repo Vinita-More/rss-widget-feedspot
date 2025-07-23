@@ -9,6 +9,7 @@ export default function FeedContent({
   setTitleBold,
   setDescFont,
   setShowDesc,
+  isCollapsed,
 }) {
   function postNumberChange(alpha) {
     const newNum = Math.max(1, (formData.postNumber || 3) + alpha);
@@ -23,7 +24,9 @@ export default function FeedContent({
   }
 
   return (
-    <div className={e.formparent}>
+    <div
+      className={`${e.formparent} ${isCollapsed ? e.collapsed : e.expanded}`}
+    >
       <div className={e.formtitle}>
         <h4>Feed Content</h4>
       </div>
@@ -211,6 +214,8 @@ export default function FeedContent({
           </div>
         </div>
       )}
+      <br />
+      <br />
     </div>
   );
 }

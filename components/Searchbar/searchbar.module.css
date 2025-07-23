@@ -37,6 +37,16 @@
 .mobileMenuBtn:hover .mobileHamburgerIcon {
   transform: scale(1.1);
 }
+.collapsed {
+  margin-left: 70px;
+  width: 100%;
+  transition: margin-left 0.5s ease;
+}
+
+.expanded {
+  margin-left: 225px;
+  transition: margin-left 0.5s ease;
+}
 
 @media (max-width: 768px) {
   .search {

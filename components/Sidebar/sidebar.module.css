@@ -2,7 +2,7 @@
   font-weight: bold;
   display: flex;
   flex-direction: column;
-  width: 225px; /* Expanded width */
+  width: 225px;
   color: white;
   height: 100vh;
   background-color: rgb(51, 50, 50);
@@ -13,11 +13,6 @@
   transition: width 0.3s ease;
   overflow: hidden;
   z-index: 1000;
-}
-
-/* Collapsed state */
-.new.collapsed {
-  width: 70px; /* Collapsed width */
 }
 
 /* Header with Title and Toggle */
@@ -51,6 +46,11 @@
 
 .toggleBtn:hover .hamburgerIcon {
   transform: scale(1.1);
+}
+/* Collapsed state */
+.collapsed {
+  width: 70px; /* Collapsed width */
+  transition: width ease 0.5s;
 }
 
 /* Mobile overlay */
@@ -87,27 +87,10 @@
   overflow-x: hidden;
 }
 
-.words {
-  font-weight: lighter;
-  font-size: 0.9rem;
-  font-family: "Arial", "Gill Sans MT", "Trebuchet MS", sans-serif;
-  margin: 0;
-  padding: 0;
-  transition: background-color 0.2s ease;
-}
-
-.words:hover {
-  background-color: rgb(200, 200, 188);
-}
-
-.words:hover .link {
-  color: rgb(51, 50, 50);
-}
-
 .link {
   display: flex;
   align-items: center;
-  padding: 0.6rem 0.8rem;
+  padding: 0.3rem 0.8rem;
   text-decoration: none;
   color: inherit;
   width: 100%;
@@ -131,6 +114,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
   transition: opacity 0.3s ease;
+}
+
+.words {
+  font-weight: lighter;
+  font-size: 0.9rem;
+  font-family: "Arial", "Gill Sans MT", "Trebuchet MS", sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.2s ease;
+}
+
+.words:hover {
+  background-color: rgb(200, 200, 188);
+}
+
+.words:hover .link {
+  color: rgb(51, 50, 50);
 }
 
 /* Collapsed state adjustments */

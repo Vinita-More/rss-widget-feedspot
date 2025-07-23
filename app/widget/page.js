@@ -11,14 +11,14 @@ import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "next/navigation";
 import Feedtitle from "@/components/Editform/feedtitle";
 import FeedContent from "@/components/Editform/feedcontent";
-
+import p from "../support/layout.module.css";
 export default function MainPage() {
   const [selectedLayout, setSelectedLayout] = useState("");
   const [folderId, setFolderId] = useState(0);
 
   // States of general customization
   const [showBorder, setShowBorder] = useState(true);
-  const [borderColor, setBorderColor] = useState("#000000");
+  const [borderColor, setBorderColor] = useState("#e2e2e2");
   const [textAlign, setTextAlign] = useState("left");
   const [fontStyle, setFontStyle] = useState("default");
   const [autoscroll, setAutoscroll] = useState("true");
@@ -60,8 +60,15 @@ export default function MainPage() {
   // State to check for mobile screen, to apply mobile responsiveness
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Handler for sidebar collapse state
+  const handleSidebarToggle = (collapsed) => {
+    setIsSidebarCollapsed(collapsed);
   };
 
   /*For checking if edit mode is active*/
@@ -93,7 +100,7 @@ export default function MainPage() {
     isBold: false,
     border: true,
     borderColor: "#000000",
-    height: "300px",
+    height: "100px",
     width: "100%",
     fontStyle: "normal",
     autoscroll: false,
@@ -191,7 +198,7 @@ export default function MainPage() {
   /*for resetting the form inputs*/
   const resetAllSettings = () => {
     setShowBorder(true);
-    setBorderColor("#000000");
+    setBorderColor("#e2e2e2");
     setTextAlign("left");
     setFontStyle("default");
     setAutoscroll("true");
@@ -226,7 +233,7 @@ export default function MainPage() {
       autoscroll: "true",
       fontStyle: "default",
       border: "true",
-      borderColor: "#000000",
+      borderColor: "#e2e2e2",
       textAlign: "left",
       widgetName: "",
       folder_id: 0,
@@ -255,7 +262,7 @@ export default function MainPage() {
     autoscroll: "true",
     fontStyle: "default",
     border: "true",
-    borderColor: "#000000",
+    borderColor: "#e2e2e2",
     textAlign: "left",
     widgetName: "",
     folder_id: 0,
@@ -435,97 +442,111 @@ export default function MainPage() {
       ? "#000000"
       : borderColor;
   return (
-    <div>
-      <Sidebar
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
-        isMobileMenuOpen={isMobileMenuOpen}
-      />
-      <Searchbar
-        onMobileMenuToggle={handleMobileMenuToggle}
-        isMobileMenuOpen={isMobileMenuOpen}
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
-      />
-      <FeedspotSection />
-      <Search
-        onFolderChange={setFolderId}
-        folderId={folderId}
-        onFeedUrlChange={setCustomFeedUrl}
-        rssInputText={rssInputText}
-        setRssInputText={setRssInputText}
-        setFolderId={setFolderId}
-      />
+    <div className={p.pageWrapper} style={{ width: "100%" }}>
+      {/* Top section scrolls normally */}
+      <div className={p.topSection}>
+        <Sidebar
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+          isMobileMenuOpen={isMobileMenuOpen}
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+        />
+        <Searchbar
+          onMobileMenuToggle={handleMobileMenuToggle}
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+          isCollapsed={isCollapsed}
+        />
+        <FeedspotSection isCollapsed={isCollapsed} />
+      </div>
 
-      {/*setdisplayImg={setdisplayImg}*/}
-      <View
-        setSelectedLayout={setSelectedLayout}
-        handleFormChange={handleFormChange}
-        formData={formData}
-      />
-      <div>
-        <Card
-          showBorder={showBorder}
-          borderColor={effectiveBorderColor}
-          textAlign={textAlign}
-          fontStyle={fontStyle}
-          autoscroll={autoscroll}
-          cardHeight={cardHeight}
-          cardWidth={cardWidth}
-          selectedLayout={selectedLayout}
-          folderId={folderId}
-          onSave={handleSubmit}
-          widgetName={widgetName}
-          setWidgetName={setWidgetName}
-          handleFormChange={handleFormChange}
-          onReset={resetAllSettings}
-          editMode={editMode}
-          formData={formData}
-          feedUrl={customFeedUrl}
-          folderSelected={folderSelected}
-          bgColor={bgColor}
-          sizeFont={sizeFont}
-          textColor={textColor}
-          isBold={isBold}
-          mainTitle={mainTitle}
-          titleBold={titleBold}
-          feedBgColor={feedBgColor}
-          showDesc={showDesc}
-          isTitle={isTitle}
-          descFont={descFont}
-          postNumber={postNumber}
-        />
+      {/* Everything from FeedUrl downward scrolls left, card stays sticky */}
+      <div className={p.scrollableLayout}>
+        <div className={p.leftContent}>
+          <Search
+            isCollapsed={isCollapsed}
+            onFolderChange={setFolderId}
+            folderId={folderId}
+            onFeedUrlChange={setCustomFeedUrl}
+            rssInputText={rssInputText}
+            setRssInputText={setRssInputText}
+            setFolderId={setFolderId}
+          />
+          <View
+            isCollapsed={isCollapsed}
+            setSelectedLayout={setSelectedLayout}
+            handleFormChange={handleFormChange}
+            formData={formData}
+          />
+          <General
+            isCollapsed={isCollapsed}
+            setShowBorder={setShowBorder}
+            setBorderColor={setBorderColor}
+            setTextAlign={setTextAlign}
+            setFontStyle={setFontStyle}
+            setAutoscroll={setAutoscroll}
+            setCardHeight={setCardHeight}
+            setCardWidth={setCardWidth}
+            formData={formData}
+            handleFormChange={handleFormChange}
+          />
+          <Feedtitle
+            isCollapsed={isCollapsed}
+            setBgColor={setBgColor}
+            setSizeFont={setSizeFont}
+            setTextColor={setTextColor}
+            formData={formData}
+            handleFormChange={handleFormChange}
+            setBold={setBold}
+            setMainTitle={setMainTitle}
+          />
+          <FeedContent
+            isCollapsed={isCollapsed}
+            setTitleBold={setTitleBold}
+            setFeedBgColor={setFeedBgColor}
+            setShowDesc={setShowDesc}
+            setIsTitle={setIsTitle}
+            setDescFont={setDescFont}
+            setPostNumber={setPostNumber}
+            formData={formData}
+            handleFormChange={handleFormChange}
+          />
+        </div>
 
-        <General
-          setShowBorder={setShowBorder}
-          setBorderColor={setBorderColor}
-          setTextAlign={setTextAlign}
-          setFontStyle={setFontStyle}
-          setAutoscroll={setAutoscroll}
-          setCardHeight={setCardHeight}
-          setCardWidth={setCardWidth}
-          formData={formData}
-          handleFormChange={handleFormChange}
-        />
-
-        <Feedtitle
-          setBgColor={setBgColor}
-          setSizeFont={setSizeFont}
-          setTextColor={setTextColor}
-          formData={formData}
-          handleFormChange={handleFormChange}
-          // setFormData={setFormData}
-          setBold={setBold}
-          setMainTitle={setMainTitle}
-        />
-        <FeedContent
-          setTitleBold={setTitleBold}
-          setFeedBgColor={setFeedBgColor}
-          setShowDesc={setShowDesc}
-          setIsTitle={setIsTitle}
-          setDescFont={setDescFont}
-          setPostNumber={setPostNumber}
-          formData={formData}
-          handleFormChange={handleFormChange}
-        />
+        <div className={p.rightStickyCard}>
+          <Card
+            isCollapsed={isCollapsed}
+            showBorder={showBorder}
+            borderColor={effectiveBorderColor}
+            textAlign={textAlign}
+            fontStyle={fontStyle}
+            autoscroll={autoscroll}
+            cardHeight={cardHeight}
+            cardWidth={cardWidth}
+            selectedLayout={selectedLayout}
+            folderId={folderId}
+            onSave={handleSubmit}
+            widgetName={widgetName}
+            setWidgetName={setWidgetName}
+            handleFormChange={handleFormChange}
+            onReset={resetAllSettings}
+            editMode={editMode}
+            formData={formData}
+            feedUrl={customFeedUrl}
+            folderSelected={folderSelected}
+            bgColor={bgColor}
+            sizeFont={sizeFont}
+            textColor={textColor}
+            isBold={isBold}
+            mainTitle={mainTitle}
+            titleBold={titleBold}
+            feedBgColor={feedBgColor}
+            showDesc={showDesc}
+            isTitle={isTitle}
+            descFont={descFont}
+            postNumber={postNumber}
+          />
+        </div>
       </div>
     </div>
   );

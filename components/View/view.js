@@ -8,23 +8,24 @@ export default function View({
   setSelectedLayout,
   handleFormChange,
   formData,
+  isCollapsed,
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedSide, setSelectedSide] = useState(null);
 
   const leftCamImages = [
-    ["imagetext1.webp", "layout-image-text"],
+    ["imagetext1.webp", "left_one"],
     ["linesonly.webp", "layout-lines-only"],
-    ["foursquare1.webp", "layout-four-square"],
-    ["grid41.webp", "layout-grid-4"],
+    ["foursquare1.webp", "left_three"],
+    ["grid41.webp", "left_four"],
     ["fullsquare1.webp", "layout-full-square"],
   ];
 
   const rightCamImages = [
-    ["imagetext2.webp", "image-layout-right"],
+    ["imagetext2.webp", "right_one"],
     ["linesonly.webp", "layout-lines-only"],
-    ["foursquare2.webp", "layout-four-right"],
-    ["grid42.webp", "grid-layout-right"],
+    ["foursquare2.webp", "right_three"],
+    ["grid42.webp", "right_four"],
     ["fullsquare2.webp", "single-card-scroll"],
   ];
 
@@ -79,10 +80,10 @@ export default function View({
   };
 
   return (
-    <div className={v.first}>
-      <div className={v.viewdiv}>
+    <div className={`${v.first}`}>
+      <div className={`${v.viewdiv} ${isCollapsed ? v.collapsed : v.expanded}`}>
         <div className={v.heading}>
-          <h4>Following Views</h4>
+          <p>Following Views</p>
           <ViewButtons onClick={handleClick} activeIndex={activeIndex} />
         </div>
 

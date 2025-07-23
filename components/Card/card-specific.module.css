@@ -1,0 +1,520 @@
+/* Left layout - Image on left, content on right */
+.left_one {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 5px;
+  height: auto;
+  min-height: 100px;
+}
+
+.left_one img {
+  width: 120px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 2px;
+  /*border: 1px solid #ddd;*/
+  border: none;
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+.left_one > a {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.left_one > a > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.left_one h1 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  color: #333;
+  width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.left_one .descriptionClamp {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+  margin: 8px 0;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.left_one p:last-child {
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+/* Right layout - Image full width, content below */
+.right_one {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  height: auto;
+  min-height: 250px;
+}
+
+.right_one > a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
+.right_one img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+.right_one > a > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.right_one h1 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  color: #333;
+  width: 100%;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.right_one .descriptionClamp {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.4;
+  margin: 8px 0;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.right_one p:last-child {
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+/* Container modifications for these layouts */
+.insidecontainer:has(.left_one) {
+  flex-direction: column;
+  gap: 20px;
+}
+
+.insidecontainer:has(.right_one) {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+/*second left and right image*/
+
+.layout-lines-only {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 500px;
+  font-size: 0.9rem;
+  height: 50px;
+}
+.layout-lines-only p {
+  font-size: 0.75rem;
+  font-weight: lighter;
+}
+.layout-lines-only img {
+  display: none;
+}
+/* Left layout three - Large card on left, stacked smaller cards on right */
+.left_three {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 10px;
+  height: 300px;
+  width: 100%;
+}
+
+/* First card (large one on left) */
+.usercard.left_three:nth-child(1) {
+  flex: 2;
+  position: relative;
+  height: 100%;
+}
+
+.usercard.left_three:nth-child(1) img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.usercard.left_three:nth-child(1) h1 {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 8px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  border-radius: 0 0 6px 6px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.usercard.left_three:nth-child(1) .descriptionClamp,
+.usercard.left_three:nth-child(1) p:last-child {
+  display: none;
+}
+
+/* Right side container for stacked smaller cards */
+.left_three .right-stack {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Other cards (smaller ones stacked on right) */
+.usercard.left_three:nth-child(n + 2) {
+  position: relative;
+  height: 150px;
+  width: 100%;
+}
+
+.usercard.left_three:nth-child(n + 2) img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.usercard.left_three:nth-child(n + 2) h1 {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  right: 5px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 6px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  border-radius: 0 0 4px 4px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.usercard.left_three:nth-child(n + 2) .descriptionClamp,
+.usercard.left_three:nth-child(n + 2) p:last-child {
+  display: none;
+}
+
+/* Left layout three - Large card on left, stacked smaller cards on right */
+.left_three {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 10px;
+  height: 300px;
+  width: 100%;
+}
+
+/* First card (large one on left) */
+.usercard.left_three:nth-child(1) {
+  flex: 2;
+  position: relative;
+  height: 100%;
+}
+
+.usercard.left_three:nth-child(1) img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.usercard.left_three:nth-child(1) h1 {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 8px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  border-radius: 0 0 6px 6px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.usercard.left_three:nth-child(1) .descriptionClamp,
+.usercard.left_three:nth-child(1) p:last-child {
+  display: none;
+}
+
+/* Right side container for stacked smaller cards */
+.left_three .right-stack {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Other cards (smaller ones stacked on right) */
+.usercard.left_three:nth-child(n + 2) {
+  position: relative;
+  height: 150px;
+  width: 100%;
+}
+
+.usercard.left_three:nth-child(n + 2) img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.usercard.left_three:nth-child(n + 2) h1 {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  right: 5px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 6px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  border-radius: 0 0 4px 4px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.usercard.left_three:nth-child(n + 2) .descriptionClamp,
+.usercard.left_three:nth-child(n + 2) p:last-child {
+  display: none;
+}
+
+/* Right layout three - 2x2 Flexbox Grid */
+.right_three {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  width: 48%; /* Two items per row with gap */
+  display: flex;
+  flex-direction: column;
+  background: white;
+  position: relative;
+  padding: 5px;
+  height: auto;
+}
+
+.right_three .newlink {
+  width: 48%; /* Two items per row with gap */
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.right_three img {
+  width: 100%;
+  height: 200px; /* smaller height */
+  object-fit: cover;
+  border-radius: 0px;
+}
+
+.right_three h1 {
+  margin: 8px;
+  word-wrap: break-word;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.right_three p {
+  margin: 8px;
+  word-wrap: break-word;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.right_three .descriptionClamp,
+.right_three p:last-child {
+  display: block;
+}
+
+/* Container modifications */
+.insidecontainer:has(.left_three) {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 320px;
+  padding: 10px;
+}
+
+.insidecontainer:has(.right_three) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  height: 280px;
+  padding: 10px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .left_three {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .usercard.left_three:nth-child(1) {
+    height: 200px;
+    flex: none;
+  }
+
+  .usercard.left_three:nth-child(n + 2) {
+    height: 120px;
+    flex: none;
+  }
+
+  .insidecontainer:has(.right_three) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: auto;
+  }
+
+  .right_three {
+    width: 48%;
+    margin-bottom: 10px;
+  }
+}
+/*left fourth image*/
+/* Left layout - 3 items per row */
+/* Left layout with images only */
+.left_four {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three images per row */
+  gap: 2px;
+  background: white;
+  padding: 5px;
+}
+
+.left_four .newlink {
+  display: inline-block;
+  background: white;
+}
+
+.left_four img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 0px;
+}
+
+/* Hide all text content */
+.left_four h1,
+.left_four p,
+.left_four .descriptionClamp {
+  display: none;
+}
+
+/* Optional responsive behavior */
+@media (max-width: 768px) {
+  .left_four {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* 2 items per row on smaller screens */
+  }
+}
+/**/
+.right_four {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  width: 25%; /* Two items per row with gap */
+  display: flex;
+  flex-direction: column;
+  background: white;
+  position: relative;
+  padding: 5px;
+  height: auto;
+}
+
+.right_four .newlink {
+  width: 48%; /* Two items per row with gap */
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.right_four img {
+  width: 100%;
+  height: 200px; /* smaller height */
+  object-fit: cover;
+  border-radius: 0px;
+}
+
+.right_four h1 {
+  margin: 8px;
+  word-wrap: break-word;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.right_four p {
+  margin: 8px;
+  word-wrap: break-word;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.right_four .descriptionClamp,
+.right_four p:last-child {
+  display: block;
+}

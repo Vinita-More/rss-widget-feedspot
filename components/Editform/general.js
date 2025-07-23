@@ -11,9 +11,12 @@ export default function General({
   setCardWidth,
   formData,
   handleFormChange,
+  isCollapsed,
 }) {
   return (
-    <div className={e.formparent}>
+    <div
+      className={`${e.formparent} ${isCollapsed ? e.collapsed : e.expanded}`}
+    >
       <div className={e.formtitle}>
         <p>General</p>
       </div>

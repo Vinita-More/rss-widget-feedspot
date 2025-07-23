@@ -1,8 +1,8 @@
 "use client";
-import Link from "next/link";
+//import Link from "next/link";
 import g from "./card.module.css";
 import { useState, useEffect } from "react";
-
+import ch from "./card-specific.module.css";
 export default function Card({
   showBorder,
   borderColor,
@@ -33,6 +33,7 @@ export default function Card({
   isTitle,
   descFont,
   postNumber,
+  isCollapsed,
 }) {
   const [feeds, setFeed] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
@@ -122,6 +123,7 @@ export default function Card({
       year: "numeric",
     });
   };
+
   // Limit posts based on postNumber setting
   const displayFeeds = uniqueFeeds.slice(0, postNumber || 3);
 
@@ -155,7 +157,16 @@ export default function Card({
             </div>
           </div>
 
-          <div className={g.cardcontainer}>
+          <div
+            className={`${g.cardcontainer} ${
+              isCollapsed ? g.collapsed : g.expanded
+            }`}
+            style={{
+              height: cardHeight ? `${parseInt(cardHeight)}px` : undefined,
+              width: cardWidth ? `${parseInt(cardWidth)}px` : undefined,
+              border: showBorder ? `1px solid ${borderColor}` : "none",
+            }}
+          >
             {/* Feed Title with customizable styling */}
             <p
               className={g.inp}
@@ -179,27 +190,17 @@ export default function Card({
             >
               {displayFeeds.map((feed) => (
                 <div
-                  className={`${g.usercard} ${g[selectedLayout] || ""}`}
+                  className={`${g.usercard} ${ch[selectedLayout] || ""}`}
                   key={feed.id || `${feed.title || "untitled"}-${feed.pubDate}`}
-                  style={{
-                    border: showBorder ? `1px solid ${borderColor}` : "none",
-                    padding: "1rem",
-                    borderRadius: "8px",
-                    height: cardHeight
-                      ? `${parseInt(cardHeight)}px`
-                      : undefined,
-                    width: cardWidth ? `${parseInt(cardWidth)}px` : undefined,
-                    // backgroundColor: formData.feedBgColor || undefined,
-                  }}
+                  style={{ backgroundColor: formData.feedBgColor || undefined }}
                 >
-                  <Link
+                  <a
                     className={g.newlink}
                     href={feed.feedurl}
                     target="_blank"
                     style={{
                       fontFamily:
-                        fontStyle !== "default" ? fontStyle : undefined,
-                      display: parseInt(cardHeight) < 150 ? "none" : undefined,
+                        fontStyle !== "default" ? fontStyle : "sans-serif",
                       textAlign: textAlign ? textAlign : "left",
                       fontSize:
                         parseInt(cardHeight) < 150 || parseInt(cardWidth) < 150
@@ -217,9 +218,12 @@ export default function Card({
                         alt={feed.title}
                         width={100}
                         style={{
-                          height: cardHeight
+                          display:
+                            parseInt(cardHeight) < 150 ? "none" : undefined,
+
+                          /* height: cardHeight
                             ? `${parseInt(cardHeight) / 2}px`
-                            : undefined,
+                            : undefined,*/
                         }}
                       />
                     ) : (
@@ -262,18 +266,20 @@ export default function Card({
                           style={{
                             textAlign: textAlign ? textAlign : "left",
                             fontFamily:
-                              fontStyle !== "default" ? fontStyle : undefined,
+                              fontStyle !== "default"
+                                ? fontStyle
+                                : "sans-serif",
                             fontSize: formData.descFont
                               ? `${formData.descFont}px`
                               : parseInt(cardHeight) < 170 ||
                                 parseInt(cardWidth) < 170
                               ? "10px"
                               : undefined,
-                            display:
+                            /*  display:
                               parseInt(cardHeight) < 170 ||
                               parseInt(cardWidth) < 170
                                 ? "none"
-                                : undefined,
+                                : undefined,*/
                           }}
                         >
                           {feed.description}
@@ -296,7 +302,7 @@ export default function Card({
                         )}
                       </p>
                     )}
-                  </Link>
+                  </a>
                 </div>
               ))}
             </div>

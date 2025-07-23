@@ -1,15 +1,12 @@
 .h1 {
-  height: 95vh;
-  font-size: 2rem;
-  position: relative;
-  width: 40%;
-  margin-left: 39.5vh;
-  /*margin-top: 4vh;*/
+  height: 70vh;
+  font-size: 1rem;
+  width: 100%;
+  margin-top: 90px;
+  margin-left: 1vh;
   flex-wrap: wrap;
   text-align: center;
-  /* margin-right: 1vh;*/
   font-size: 6vh;
-  margin-bottom: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,12 +14,13 @@
   box-sizing: border-box;
   padding: 1rem;
   border-color: #e2e2e2;
-  /*border: solid 1px rgb(3, 3, 3);
-  min-height: 8vh;
-  display: block;
-  margin-bottom: 10vh;
-  margin-top: 110vh;
-  max-width: 1000px;*/
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: white;
+  /*position: relative;*/
+  /* margin-right: 1vh;*/
+  /*margin-top: 4vh;*/
 }
 
 .cardcontainer {
@@ -58,15 +56,14 @@
   max-width: 80vh;
   overflow-y: auto;
 }
-
 .usercard {
   background-color: #ffffff;
   border-radius: 12px;
-  padding: 5px 25px;
+  padding: 5px 5px;
   /*border: solid 1px black;*/
   font-size: 1rem;
   width: 100%;
-  height: 280px;
+  height: 200px;
 }
 
 .usercard:hover {
@@ -75,7 +72,7 @@
 .usercard h1 {
   font-size: 1rem;
   color: #333;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   white-space: nowrap; /* Prevents text from wrapping to next line*/
   overflow: hidden; /* Hides overflowing text */
   text-overflow: ellipsis;
@@ -83,15 +80,15 @@
   overflow: hidden;
 }
 .usercard img {
-  margin-top: 10px;
   height: 160px;
   border: solid 1px black;
-  border-radius: 5px;
+  border-radius: 0px;
   object-fit: cover;
   width: 100%;
 }
 .usercard p {
-  margin: 4px 0;
+  margin: 5px 0;
+  padding-bottom: 5px;
   color: #666;
   overflow: hidden;
   word-wrap: break-word;
@@ -124,8 +121,8 @@
   text-overflow: ellipsis;
   word-break: break-all; /* Break long URLs */
   max-width: 100%; /* Prevents spilling outside card */
-  font-size: 0.9rem;
-  line-height: 1.4;
+  font-size: 0.8rem;
+  line-height: 1;
 }
 
 .div1 {
@@ -136,7 +133,16 @@
   padding: 0 1rem;
   flex-wrap: wrap; /* Wrap on small screens */
 }
+.collapsed {
+  margin-left: -70px; /* Sidebar collapsed */
+  width: 85vh;
+  transition: margin-left 0.5s ease;
+}
 
+.expanded {
+  margin-left: 0px; /* Sidebar expanded */
+  transition: margin-left 0.5s ease;
+}
 .searchInput {
   flex: 1;
   max-width: 200px;
@@ -155,7 +161,7 @@
 
 .savebutton {
   color: black;
-  padding: 0.5rem 1rem;
+  padding: 0.2rem 0.5rem;
   border: none;
   border-radius: 3px;
   cursor: pointer;
@@ -184,34 +190,33 @@
   .insidecontainer {
     max-height: 70vh;
     overflow-y: auto;
-    padding: 0.25rem;
+    /*padding: 0.1rem;*/
     align-items: flex-start;
-    /**/
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.1rem;
     justify-content: center;
     align-items: flex-start;
   }
 
   .usercard {
-    width: 95%;
-    padding: 10px;
+    width: 95%; /*
+    padding: 10px;*/
   }
 
   .usercard h1 {
-    width: 100%;
-    font-size: 0.95rem;
+    width: 100%; /*
+    font-size: 0.95rem;*/
   }
 
   .usercard img {
-    height: 150px;
+    height: 150px !important;
   }
 
   .div1 {
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    gap: 0.1rem;
     padding: 0;
   }
 
@@ -261,6 +266,8 @@
 
 /**/
 /* card.module.css */
+
+/*left image 1*/
 /* Layout for image left, text right */
 .layout-image-text {
   display: flex;
@@ -272,37 +279,35 @@
 
 /* Ensure the image takes left half */
 .layout-image-text img {
-  width: 50%;
-  height: auto;
+  width: 150px;
+  height: 200px;
   object-fit: cover;
 }
 
 /* Force text elements (that follow the img) into a vertical column */
 .layout-image-text h1 {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: 50%;
 }
 .layout-image-text p,
 .layout-image-text a {
-  margin: 0.5rem 0;
-  display: block;
-  width: 100%;
+  margin: 0;
+  display: inline-block;
+  width: 50%;
 }
-/*Second image button css*/
-.layout-lines-only {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
+/*Right image one*/
+.right_one {
+  width: 95%;
+  padding: 10px;
 }
-.layout-lines-only img {
-  display: none;
-}
+/*left image 2*/
 /*for third image button*/
-.layout-four-square {
+.left_three {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
+
 /*Fourth button layout*/
 .layout-grid-4 {
   display: grid;
@@ -319,45 +324,6 @@
   display: block;
   text-align: center;
 }
-
-/**/
-/* .grid-layout-right {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.grid-layout-right .usercard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 200px; /* adjust card width as needed */
-/*padding: 0.5rem;
-  background-color: transparent;
-  border: none;
-  box-shadow: none;
-}
-
-.grid-layout-right img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.grid-layout-right h1 {
-  font-size: 1rem;
-  text-align: center;
-  margin-top: 0.5rem;
-}
-
-/* Hide description and link */
-/*.grid-layout-right p,
-.grid-layout-right a {
-  display: none !important;
-} */
 
 /**/ /* Only apply this when the layout is 'grid-layout-right' */
 .usercard.layout-grid-4 {
@@ -438,5 +404,3 @@
   margin-top: 0.3rem;
   display: inline-block;
 }
-
-/**/

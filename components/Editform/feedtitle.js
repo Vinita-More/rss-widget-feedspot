@@ -10,6 +10,7 @@ export default function Feedtitle({
   setBold,
   formData,
   handleFormChange,
+  isCollapsed,
 }) {
   const [isCustom, setIsCustom] = useState(true);
 
@@ -26,7 +27,9 @@ export default function Feedtitle({
   };
 
   return (
-    <div className={e.formparent}>
+    <div
+      className={`${e.formparent} ${isCollapsed ? e.collapsed : e.expanded}`}
+    >
       <div className={e.formtitle}>
         <h4>Feed Title</h4>
       </div>

@@ -7,6 +7,7 @@ export default function Search({
   rssInputText,
   setRssInputText,
   setFolderId,
+  isCollapsed,
 }) {
   const handleChange = (e) => {
     const selectedId = parseInt(e.target.value);
@@ -35,9 +36,11 @@ export default function Search({
 
   return (
     <div>
-      <div className={rf.urlform}>
+      <div
+        className={`${rf.urlform} ${isCollapsed ? rf.collapsed : rf.expanded}`}
+      >
         <div className={rf.heading}>
-          <h4>RSS Feed URL</h4>
+          <p>RSS Feed URL</p>
         </div>
 
         <label className={rf.label}>Enter Feed URL</label>

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   HiHome,
   HiTemplate,
@@ -13,12 +13,31 @@ import {
 } from "react-icons/hi";
 import classes from "./sidebar.module.css";
 
-export default function Sidebar({ isMobileMenuOpen, onMobileMenuToggle }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export default function Sidebar({
+  isMobileMenuOpen,
+  onMobileMenuToggle,
+  onSidebarToggle,
+  isCollapsed,
+  setIsCollapsed,
+}) {
+  // const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
+    const newCollapsedState = !isCollapsed;
+    setIsCollapsed(newCollapsedState);
+
+    // Notify parent component about the sidebar state change
+    if (onSidebarToggle) {
+      onSidebarToggle(newCollapsedState);
+    }
   };
+
+  // Notify parent about initial state
+  useEffect(() => {
+    if (onSidebarToggle) {
+      onSidebarToggle(isCollapsed);
+    }
+  }, []);
 
   return (
     <>
