@@ -23,7 +23,7 @@ export default function General({
 
       {/* Height */}
       <div className={e.content}>
-        <h4>Height</h4>
+        <p>Height</p>
         <div className={e.row}>
           <label>
             <input

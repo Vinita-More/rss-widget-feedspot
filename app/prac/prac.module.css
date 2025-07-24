@@ -1,0 +1,137 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease;
+}
+
+.pageWrapper.sidebarCollapsed {
+  margin-left: 70px;
+}
+
+.topSection {
+  position: relative;
+  z-index: 1;
+}
+
+/* Normal mode - follows document flow */
+.scrollableLayout.normalMode {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+/* Sticky mode - fixed positioning when trigger is passed */
+.scrollableLayout.stickyMode {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  z-index: 50; /* Lower than sidebar (1000) but higher than content */
+  background: white;
+  /* top, left, height, and width will be set dynamically via inline styles */
+}
+
+/* Left content - scroll disabled initially */
+.leftContent.scrollDisabled {
+  flex: 1;
+  padding: 1rem;
+  overflow: visible;
+  height: auto;
+}
+
+/* Left content - scroll enabled when sticky */
+.leftContent.scrollEnabled {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  /* height will be set dynamically via inline styles */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Ensure smooth scrolling */
+  scroll-behavior: smooth;
+}
+
+.leftContent.scrollEnabled::-webkit-scrollbar {
+  display: none;
+}
+
+.rightStickyCard {
+  width: 45%;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: fit-content;
+  z-index: 2;
+  margin-bottom: 20px;
+}
+
+/* When in sticky mode, make right card full height if needed */
+.scrollableLayout.stickyMode .rightStickyCard {
+  height: auto;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .pageWrapper {
+    margin-left: 0;
+  }
+
+  .pageWrapper.sidebarCollapsed {
+    margin-left: 0;
+  }
+
+  .scrollableLayout.stickyMode {
+    left: 0 !important;
+    position: relative;
+    height: auto;
+  }
+
+  .rightStickyCard {
+    width: 100%;
+    position: relative;
+  }
+
+  .scrollableLayout.normalMode,
+  .scrollableLayout.stickyMode {
+    flex-direction: column;
+  }
+}
+
+.container {
+  display: flex;
+}
+
+.mainContent {
+  margin-left: 225px;
+  transition: margin-left 0.3s ease;
+  width: 100%;
+  padding: 1rem;
+}
+
+.collapsed {
+  margin-left: 70px;
+}
+.scrollableLayout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.leftContent {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+.rightStickyCard {
+  width: 45%;
+  min-width: 300px;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  height: fit-content;
+  align-self: flex-start;
+}

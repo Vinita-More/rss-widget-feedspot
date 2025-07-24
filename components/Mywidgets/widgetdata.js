@@ -129,7 +129,7 @@ export default function WidgetData() {
       </div>
 
       <div className={w.tableContainer}>
-        <table className={w.widgetTable} border="1">
+        <table className={w.widgetTable}>
           <thead>
             <tr>
               <th>Name</th>

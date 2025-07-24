@@ -43,11 +43,6 @@ export default function Side({ isCollapsed }) {
           </div>
         </div>
       </div>
-      <br />
-      <br />
-
-      <br />
-      <br />
     </div>
   );
 }

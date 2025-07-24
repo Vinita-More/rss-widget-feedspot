@@ -42,12 +42,17 @@
   width: 100%;
   transition: margin-left 0.5s ease;
 }
-
+.cs {
+  margin-right: 80px;
+}
 .expanded {
   margin-left: 225px;
   transition: margin-left 0.5s ease;
 }
 
+.inputUserWrapper {
+  height: 80px;
+}
 @media (max-width: 768px) {
   .search {
     display: flex;
@@ -76,7 +81,75 @@
     flex: 1;
   }
 }
+.userWrapper {
+  float: inline-end;
+}
+.userCircle {
+  margin: 15px 15px;
+  height: 35px;
+  width: 35px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgb(215, 34, 247);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(14, 14, 14);
+  font-weight: 600;
+}
+.userDropdown {
+  position: absolute;
+  top: 90%; /* slight space below the icon */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  min-width: 150px;
+  margin-right: 20px;
+  z-index: 10;
+}
 
+.dropdownMenu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  padding: 10px;
+  z-index: 999;
+  min-width: 280px;
+
+  margin-right: 20px;
+}
+
+.dropdownCol {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.dropdownItem {
+  padding: 8px 6px;
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+.emailText {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+}
 @media (max-width: 600px) {
   .search {
     padding: 1rem;

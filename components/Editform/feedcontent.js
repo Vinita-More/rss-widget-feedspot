@@ -137,7 +137,7 @@ export default function FeedContent({
         <div className={e.content}>
           <div className={e.row}>
             <div className={e.flexRow}>
-              <p>Bold Title</p>
+              <p tyle={{ marginRight: "10px" }}>Bold Title</p>
               <label className={e.switch}>
                 <input
                   type="checkbox"
@@ -158,7 +158,7 @@ export default function FeedContent({
       <div className={e.content}>
         <div className={e.row}>
           <div className={e.flexRow}>
-            <p>Show Description</p>
+            <p style={{ marginRight: "-40px" }}>Show Description</p>
             <label className={e.switch}>
               <input
                 type="checkbox"

@@ -10,8 +10,8 @@ export default function LogoutButton() {
   };
 
   return (
-    <button onClick={handleLogout} className={lb.button}>
-      Logout
-    </button>
+    <p onClick={handleLogout} className={lb.button}>
+      🚪 Logout
+    </p>
   );
 }

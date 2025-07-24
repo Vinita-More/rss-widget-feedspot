@@ -95,7 +95,8 @@ export default function Card({
   }, [feedUrl, folderId, folderSelected]);
 
   if (errorMsg) return <p style={{ color: "red" }}>{errorMsg}</p>;
-  if (!feeds.length) return <p>Loading...</p>;
+  if (!feeds.length)
+    return <p style={{ marginTop: "70px", marginLeft: "20px" }}>Loading...</p>;
 
   const uniqueFeeds = feeds.filter(
     (feed, index, self) =>
@@ -195,7 +196,7 @@ export default function Card({
                   style={{ backgroundColor: formData.feedBgColor || undefined }}
                 >
                   <a
-                    className={g.newlink}
+                    // className={g.newlink}
                     href={feed.feedurl}
                     target="_blank"
                     style={{

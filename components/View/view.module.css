@@ -94,7 +94,7 @@
   height: 100%;
   pointer-events: auto;
   z-index: 0;
-  border-radius: 8px;
+  border-radius: 0px;
   overflow: hidden;
 }
 
@@ -111,14 +111,11 @@
 }
 
 .changeimage:hover {
-  transform: scale(1.02);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .changeimage.selectedImage {
-  border: 3px solid #4a90e2;
-  box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
-  transform: scale(1.02);
+  border: 3px solid #569ff1;
 }
 
 .changeimage.selectedImage::after {
@@ -135,8 +132,6 @@
   font-weight: bold;
   font-size: 14px;
   z-index: 20;
-  border-radius: 8px;
-  border: solid 2px #044061;
 }
 
 .changeimage Image {

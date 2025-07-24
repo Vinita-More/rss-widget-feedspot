@@ -141,7 +141,7 @@ export default function Sidebar({
 
           <div className={classes.words}>
             <Link
-              href="/customers"
+              href="/prac"
               className={classes.link}
               onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
             >

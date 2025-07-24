@@ -1,72 +1,68 @@
+/* Keep layout intact */
 .pageWrapper {
   display: flex;
   flex-direction: column;
-  /* Add transition for smooth adjustment */
-  transition: margin-left 0.3s ease;
 }
 
-.pageWrapper.sidebarCollapsed {
-  margin-left: 70px; /* Collapsed sidebar width */
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
+/* Sticky top section with search + topbody */
 .topSection {
-  /* Searchbar and Topbody - scrolls normally */
-  position: relative;
-  z-index: 1;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
 }
 
+/* Layout below top section */
 .scrollableLayout {
   display: flex;
   flex-direction: row;
-  height: calc(100vh - 100px); /* Adjust 100px to your topSection height */
-  overflow: hidden;
+  width: 100%;
+  transition: all 0.3s ease;
+  gap: 1rem;
+  padding: 1rem;
 }
 
-.leftContent {
-  flex: 1;
+/* When triggered, apply scroll area only to left content */
+.scrollableLayout.scrollableFixed .leftContent {
+  max-height: calc(100vh - var(--top-height, 0px));
   overflow-y: auto;
+}
+
+/* Left and Right Panels */
+.leftContent {
+  width: 55%;
   padding: 1rem;
+  overflow-y: hidden;
+  transition: all 0.3s ease;
 }
 
 .rightStickyCard {
   width: 45%;
   padding: 1rem;
   position: sticky;
-  top: 0;
-  align-self: flex-start;
+  top: var(--top-height, 0px); /* Align with topSection height */
   height: fit-content;
   z-index: 2;
-  margin-bottom: 20px;
 }
 
-.leftContent {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
+/* Hide scrollbars on WebKit */
 .leftContent::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
-/* Responsive design */
+
 @media (max-width: 768px) {
-  .pageWrapper {
-    margin-left: 0; /* No margin on mobile */
+  .scrollableLayout {
+    flex-direction: column;
   }
 
-  .pageWrapper.sidebarCollapsed {
-    margin-left: 0; /* No margin on mobile */
+  .leftContent,
+  .rightStickyCard {
+    width: 100%;
   }
-}
-.container {
-  display: flex;
-}
-
-.mainContent {
-  margin-left: 225px; /* sidebar expanded width */
-  transition: margin-left 0.3s ease;
-  width: 100%;
-  padding: 1rem;
-}
-
-.collapsed {
-  margin-left: 70px; /* sidebar collapsed width */
 }

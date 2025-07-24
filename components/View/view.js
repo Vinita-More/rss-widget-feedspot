@@ -100,8 +100,8 @@ export default function View({
             >
               <Image
                 src={`/images/${leftCamImages[activeIndex][0]}`}
-                width={270}
-                height={270}
+                width={250}
+                height={260}
                 alt="layout image"
               />
             </button>
@@ -119,8 +119,8 @@ export default function View({
             >
               <Image
                 src={`/images/${rightCamImages[activeIndex][0]}`}
-                width={270}
-                height={270}
+                width={250}
+                height={260}
                 alt="layout image"
               />
             </button>
