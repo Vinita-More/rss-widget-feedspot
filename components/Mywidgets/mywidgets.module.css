@@ -2,11 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 10vh; /* leave space for top search bar */
-  padding-left: 40vh; /* space for the fixed sidebar (add a bit more than 38vh) */
+  padding-top: 10px; /* leave space for top search bar */
+  padding-left: 30vh; /* space for the fixed sidebar (add a bit more than 38vh) */
   box-sizing: border-box;
   flex-direction: column;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .maindiv2 {
@@ -96,4 +97,49 @@
   width: 400px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.inlineInput {
+  font-size: 14px;
+  padding: 4px 6px;
+  width: 160px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.editRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.editIcon {
+  margin-left: 8px;
+  color: #007bff;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.saveIcon {
+  color: green;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cancelIcon {
+  color: red;
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.nameCell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.editIcon {
+  color: #007bff;
+  cursor: pointer;
+  margin-left: 8px;
 }

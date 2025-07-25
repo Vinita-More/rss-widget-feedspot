@@ -89,21 +89,11 @@ export default function MainPage() {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
-
-      try {
-        const decoded = jwtDecode(storedToken);
-        if (decoded?.email) {
-          console.log("User email:", decoded.email);
-          setUserEmail(decoded.email);
-          setUserInitial(decoded.email.charAt(0).toUpperCase());
-        }
-      } catch (err) {
-        console.error("Invalid token:", err);
-      }
     } else {
       router.push("/"); // redirect to login only if token missing
     }
   }, []);
+
   /*Default values*/
   const defaultSettings = {
     bgColor: "#FFFFFF",
@@ -255,7 +245,7 @@ export default function MainPage() {
       sizeFont: 16,
       textColor: "#e2e2e2",
       isBold: false,
-      mainTitle: "RSS Feeds",
+      mainTitle: "",
       showDesc: true,
       descFont: 14,
       feedBgColor: "#FFFFFF",

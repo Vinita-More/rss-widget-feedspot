@@ -389,153 +389,164 @@ export default function MainPage() {
       : borderColor;
 
   return (
-    <div className={p.pageWrapper} style={{ width: "100%" }}>
-      {/* Top section */}
-      <div ref={topSectionRef} className={p.topSection}>
-        <Sidebar
-          setIsMobileMenuOpen={setIsMobileMenuOpen}
-          isMobileMenuOpen={isMobileMenuOpen}
-          isCollapsed={isCollapsed}
-          setIsCollapsed={setIsCollapsed}
-        />
-        <Searchbar
-          onMobileMenuToggle={handleMobileMenuToggle}
-          isMobileMenuOpen={isMobileMenuOpen}
-          setIsMobileMenuOpen={setIsMobileMenuOpen}
-          isCollapsed={isCollapsed}
-        />
-        <FeedspotSection isCollapsed={isCollapsed} />
-      </div>
+    <>
+      <div className={p.pageWrapper} style={{ width: "100%" }}>
+        {/* Top section */}
+        <div ref={topSectionRef} className={p.topSection}>
+          <Sidebar
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+            isMobileMenuOpen={isMobileMenuOpen}
+            isCollapsed={isCollapsed}
+            setIsCollapsed={setIsCollapsed}
+          />
+          <Searchbar
+            onMobileMenuToggle={handleMobileMenuToggle}
+            isMobileMenuOpen={isMobileMenuOpen}
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+            isCollapsed={isCollapsed}
+          />
+          <FeedspotSection isCollapsed={isCollapsed} />
+        </div>
 
-      {/* Invisible trigger element */}
-      <div ref={triggerRef} style={{ height: "1px", width: "100%" }} />
+        {/* Invisible trigger element */}
+        <div ref={triggerRef} style={{ height: "1px", width: "100%" }} />
 
-      {/* Placeholder to maintain document flow when sticky */}
-      {enableInternalScroll && (
+        {/* Placeholder to maintain document flow when sticky */}
+        {enableInternalScroll && (
+          <div
+            style={{
+              height: `${layoutHeight}px`,
+              width: "50%",
+              marginLeft: isCollapsed ? "70px" : "225px",
+            }}
+          />
+        )}
+
+        {/* Main content area */}
         <div
+          ref={scrollableLayoutRef}
+          className={p.scrollableLayout}
           style={{
-            height: `${layoutHeight}px`,
-            width: "50%",
-            marginLeft: isCollapsed ? "70px" : "225px",
-          }}
-        />
-      )}
-
-      {/* Main content area */}
-      <div
-        ref={scrollableLayoutRef}
-        className={p.scrollableLayout}
-        style={{
-          ...(enableInternalScroll
-            ? {
-                position: "fixed",
-                left: `${sidebarWidth}px`,
-                width: `calc(100vw - ${sidebarWidth}px)`,
-                height: "100vh",
-                background: "#ffffff",
-                overflow: "auto",
-              }
-            : {}),
-        }}
-      >
-        <div
-          className={`${p.leftContent} ${
-            enableInternalScroll ? p.scrollEnabled : p.scrollDisabled
-          }`}
-          style={
-            enableInternalScroll
+            ...(enableInternalScroll
               ? {
+                  position: "fixed",
+                  left: `${sidebarWidth}px`,
+                  width: `calc(100vw - ${sidebarWidth}px)`,
                   height: "100vh",
-                  scrollBehavior: "smooth",
+                  background: "#ffffff",
+                  overflow: "auto",
                 }
-              : {}
-          }
+              : {}),
+          }}
         >
-          <Search
-            isCollapsed={isCollapsed}
-            onFolderChange={setFolderId}
-            folderId={folderId}
-            onFeedUrlChange={setCustomFeedUrl}
-            rssInputText={rssInputText}
-            setRssInputText={setRssInputText}
-            setFolderId={setFolderId}
-          />
-          <View
-            isCollapsed={isCollapsed}
-            setSelectedLayout={setSelectedLayout}
-            handleFormChange={handleFormChange}
-            formData={formData}
-          />
-          <General
-            isCollapsed={isCollapsed}
-            setShowBorder={setShowBorder}
-            setBorderColor={setBorderColor}
-            setTextAlign={setTextAlign}
-            setFontStyle={setFontStyle}
-            setAutoscroll={setAutoscroll}
-            setCardHeight={setCardHeight}
-            setCardWidth={setCardWidth}
-            formData={formData}
-            handleFormChange={handleFormChange}
-          />
-          <Feedtitle
-            isCollapsed={isCollapsed}
-            setBgColor={setBgColor}
-            setSizeFont={setSizeFont}
-            setTextColor={setTextColor}
-            formData={formData}
-            handleFormChange={handleFormChange}
-            setBold={setBold}
-            setMainTitle={setMainTitle}
-          />
-          <FeedContent
-            isCollapsed={isCollapsed}
-            setTitleBold={setTitleBold}
-            setFeedBgColor={setFeedBgColor}
-            setShowDesc={setShowDesc}
-            setIsTitle={setIsTitle}
-            setDescFont={setDescFont}
-            setPostNumber={setPostNumber}
-            formData={formData}
-            handleFormChange={handleFormChange}
-          />
-        </div>
+          <div
+            className={`${p.leftContent} ${
+              enableInternalScroll ? p.scrollEnabled : p.scrollDisabled
+            }`}
+            style={
+              enableInternalScroll
+                ? {
+                    height: "100vh",
+                    scrollBehavior: "smooth",
+                  }
+                : {}
+            }
+          >
+            <Search
+              isCollapsed={isCollapsed}
+              onFolderChange={setFolderId}
+              folderId={folderId}
+              onFeedUrlChange={setCustomFeedUrl}
+              rssInputText={rssInputText}
+              setRssInputText={setRssInputText}
+              setFolderId={setFolderId}
+            />
+            <View
+              isCollapsed={isCollapsed}
+              setSelectedLayout={setSelectedLayout}
+              handleFormChange={handleFormChange}
+              formData={formData}
+            />
+            <General
+              isCollapsed={isCollapsed}
+              setShowBorder={setShowBorder}
+              setBorderColor={setBorderColor}
+              setTextAlign={setTextAlign}
+              setFontStyle={setFontStyle}
+              setAutoscroll={setAutoscroll}
+              setCardHeight={setCardHeight}
+              setCardWidth={setCardWidth}
+              formData={formData}
+              handleFormChange={handleFormChange}
+            />
+            <Feedtitle
+              isCollapsed={isCollapsed}
+              setBgColor={setBgColor}
+              setSizeFont={setSizeFont}
+              setTextColor={setTextColor}
+              formData={formData}
+              handleFormChange={handleFormChange}
+              setBold={setBold}
+              setMainTitle={setMainTitle}
+            />
+            <FeedContent
+              isCollapsed={isCollapsed}
+              setTitleBold={setTitleBold}
+              setFeedBgColor={setFeedBgColor}
+              setShowDesc={setShowDesc}
+              setIsTitle={setIsTitle}
+              setDescFont={setDescFont}
+              setPostNumber={setPostNumber}
+              formData={formData}
+              handleFormChange={handleFormChange}
+            />
+          </div>
 
-        <div className={p.rightStickyCard}>
-          <Card
-            isCollapsed={isCollapsed}
-            showBorder={showBorder}
-            borderColor={effectiveBorderColor}
-            textAlign={textAlign}
-            fontStyle={fontStyle}
-            autoscroll={autoscroll}
-            cardHeight={cardHeight}
-            cardWidth={cardWidth}
-            selectedLayout={selectedLayout}
-            folderId={folderId}
-            onSave={handleSubmit}
-            widgetName={widgetName}
-            setWidgetName={setWidgetName}
-            handleFormChange={handleFormChange}
-            onReset={resetAllSettings}
-            editMode={editMode}
-            formData={formData}
-            feedUrl={customFeedUrl}
-            folderSelected={folderSelected}
-            bgColor={bgColor}
-            sizeFont={sizeFont}
-            textColor={textColor}
-            isBold={isBold}
-            mainTitle={mainTitle}
-            titleBold={titleBold}
-            feedBgColor={feedBgColor}
-            showDesc={showDesc}
-            isTitle={isTitle}
-            descFont={descFont}
-            postNumber={postNumber}
-          />
+          <div className={p.rightStickyCard}>
+            <Card
+              isCollapsed={isCollapsed}
+              showBorder={showBorder}
+              borderColor={effectiveBorderColor}
+              textAlign={textAlign}
+              fontStyle={fontStyle}
+              autoscroll={autoscroll}
+              cardHeight={cardHeight}
+              cardWidth={cardWidth}
+              selectedLayout={selectedLayout}
+              folderId={folderId}
+              onSave={handleSubmit}
+              widgetName={widgetName}
+              setWidgetName={setWidgetName}
+              handleFormChange={handleFormChange}
+              onReset={resetAllSettings}
+              editMode={editMode}
+              formData={formData}
+              feedUrl={customFeedUrl}
+              folderSelected={folderSelected}
+              bgColor={bgColor}
+              sizeFont={sizeFont}
+              textColor={textColor}
+              isBold={isBold}
+              mainTitle={mainTitle}
+              titleBold={titleBold}
+              feedBgColor={feedBgColor}
+              showDesc={showDesc}
+              isTitle={isTitle}
+              descFont={descFont}
+              postNumber={postNumber}
+            />
+          </div>
+          <div
+            style={{
+              marginTop: "20px",
+              background: "#cd3535ff",
+              padding: "10px",
+              border: "1px solid #ccc",
+              width: "10%",
+            }}
+          ></div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

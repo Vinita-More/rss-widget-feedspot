@@ -3,12 +3,56 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import w from "./mywidgets.module.css";
 import { useRouter } from "next/navigation";
+import {
+  FaTrash,
+  FaCode,
+  FaEdit,
+  FaPlusCircle,
+  FaInfoCircle,
+  FaCheck,
+} from "react-icons/fa";
+
 export default function WidgetData() {
   const [widgets, setWidgets] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [editedName, setEditedName] = useState("");
   const [showEmbedModal, setShowEmbedModal] = useState(false);
   const [embedCode, setEmbedCode] = useState("");
 
   const router = useRouter();
+  const handleNameEdit = (id, currentName) => {
+    setEditingId(id);
+    setEditedName(currentName);
+  };
+
+  const handleNameSave = async (id) => {
+    if (!editedName.trim()) return;
+
+    try {
+      const res = await fetch(
+        "http://localhost:8080/RSS_Widget_Backend/api/updatewidgetname.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, widget_name: editedName }),
+        }
+      );
+
+      const data = await res.json();
+      if (data.success) {
+        // Update locally
+        setWidgets((prev) =>
+          prev.map((w) => (w.id === id ? { ...w, widget_name: editedName } : w))
+        );
+        setEditingId(null);
+      } else {
+        alert("Failed to update name.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error updating widget name.");
+    }
+  };
 
   const folderNames = {
     0: "Homepage",
@@ -140,7 +184,45 @@ export default function WidgetData() {
           <tbody>
             {widgets.map((widget) => (
               <tr key={widget.id}>
-                <td>{widget.widget_name}</td>
+                <td>
+                  {editingId === widget.id ? (
+                    <div className={w.editRow}>
+                      <input
+                        type="text"
+                        value={editedName}
+                        autoFocus
+                        onChange={(e) => setEditedName(e.target.value)}
+                        className={w.inlineInput}
+                      />
+                      <FaCheck
+                        className={w.saveIcon}
+                        title="Save"
+                        onClick={() => handleNameSave(widget.id)}
+                      />
+                      <span
+                        className={w.cancelIcon}
+                        title="Cancel"
+                        onClick={() => {
+                          setEditingId(null);
+                          setEditedName("");
+                        }}
+                      >
+                        ❌
+                      </span>
+                    </div>
+                  ) : (
+                    <div className={w.nameCell}>
+                      <span>{widget.widget_name}</span>
+                      <FaEdit
+                        className={w.editIcon}
+                        onClick={() =>
+                          handleNameEdit(widget.id, widget.widget_name)
+                        }
+                        title="Edit Widget Name"
+                      />
+                    </div>
+                  )}
+                </td>
 
                 <td>
                   {widget.feed_url ? (
@@ -157,7 +239,7 @@ export default function WidgetData() {
                     className={w.actionBtn}
                     onClick={() => handleDelete(widget.id)}
                   >
-                    Delete
+                    <FaTrash /> Delete
                   </button>
 
                   <button

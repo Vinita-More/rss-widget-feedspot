@@ -1,0 +1,27 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.mainContent {
+  margin-left: 250px; /* Must match sidebar width */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  padding-top: 80px; /* Space for fixed searchbar */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mainContent {
+    margin-left: 0;
+  }
+
+  .content {
+    padding-top: 60px;
+  }
+}
