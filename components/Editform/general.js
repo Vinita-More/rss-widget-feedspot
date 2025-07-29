@@ -1,18 +1,20 @@
 "use client";
-import { useState } from "react";
 import e from "./editform.module.css";
-export default function General({
-  setShowBorder,
-  setBorderColor,
-  setTextAlign,
-  setFontStyle,
-  setAutoscroll,
-  setCardHeight,
-  setCardWidth,
-  formData,
-  handleFormChange,
-  isCollapsed,
-}) {
+import useWidgetStore from "@/Store/widgetStore";
+
+export default function General({ isCollapsed }) {
+  // Get state and actions from Zustand store
+  const {
+    formData,
+    handleFormChange,
+    setShowBorder,
+    setBorderColor,
+    setTextAlign,
+    setFontStyle,
+    setAutoscroll,
+    setCardDimensions,
+  } = useWidgetStore();
+
   return (
     <div
       className={`${e.formparent} ${isCollapsed ? e.collapsed : e.expanded}`}
@@ -30,9 +32,8 @@ export default function General({
               type="radio"
               name="heightMode"
               value="pixels"
+              checked={formData.heightMode === "pixels"}
               onChange={(e) => {
-                //   handleChange(e);
-                setCardHeight(e.target.value);
                 handleFormChange("heightMode", e.target.value);
               }}
             />
@@ -43,8 +44,9 @@ export default function General({
             name="height"
             value={formData.height ?? ""}
             onChange={(e) => {
-              setCardHeight(e.target.value);
-              handleFormChange("height", e.target.value);
+              const value = e.target.value;
+              setCardDimensions(value, formData.width);
+              handleFormChange("height", value);
             }}
             disabled={formData.heightMode !== "pixels"}
           />
@@ -52,12 +54,11 @@ export default function General({
         <div className={e.row}>
           <label>
             <input
-              defaultChecked
               type="radio"
               name="heightMode"
               value="posts"
+              checked={formData.heightMode === "posts" || !formData.heightMode}
               onChange={(e) => {
-                //    handleChange(e);
                 handleFormChange("heightMode", e.target.value);
               }}
             />
@@ -75,8 +76,8 @@ export default function General({
               type="radio"
               name="widthMode"
               value="pixels"
+              checked={formData.widthMode === "pixels"}
               onChange={(e) => {
-                //    handleChange(e);
                 handleFormChange("widthMode", e.target.value);
               }}
             />{" "}
@@ -87,9 +88,9 @@ export default function General({
             name="width"
             value={formData.width || ""}
             onChange={(e) => {
-              // handleChange;
-              setCardWidth(e.target.value);
-              handleFormChange("width", e.target.value);
+              const value = e.target.value;
+              setCardDimensions(formData.height, value);
+              handleFormChange("width", value);
             }}
             disabled={formData.widthMode !== "pixels"}
           />
@@ -99,11 +100,13 @@ export default function General({
             <input
               type="radio"
               name="widthMode"
-              value="width"
-              defaultChecked
+              value="Responsive (Mobile friendly)"
+              checked={
+                formData.widthMode === "Responsive (Mobile friendly)" ||
+                !formData.widthMode
+              }
               onChange={(e) => {
-                //   handleChange(e);
-                handleFormChange("width", e.target.value);
+                handleFormChange("widthMode", e.target.value);
               }}
             />
             Responsive (Mobile Friendly)
@@ -121,7 +124,6 @@ export default function General({
             value="true"
             checked={formData.autoscroll === "true"}
             onChange={(e) => {
-              // handleChange(e);
               setAutoscroll("true");
               handleFormChange("autoscroll", e.target.value);
             }}
@@ -135,7 +137,6 @@ export default function General({
             value="false"
             checked={formData.autoscroll === "false"}
             onChange={(e) => {
-              // handleChange(e);
               setAutoscroll("false");
               handleFormChange("autoscroll", e.target.value);
             }}
@@ -149,9 +150,8 @@ export default function General({
         <p>Font styles</p>
         <select
           name="fontStyle"
-          value={formData.fontStyle ?? ""}
+          value={formData.fontStyle ?? "default"}
           onChange={(e) => {
-            // handleChange(e);
             setFontStyle(e.target.value);
             handleFormChange("fontStyle", e.target.value);
           }}
@@ -164,14 +164,13 @@ export default function General({
         </select>
       </div>
 
-      {/* Text  Align*/}
+      {/* Text Align */}
       <div className={e.content}>
         <p>Text Alignment</p>
         <select
           name="textAlign"
           value={formData.textAlign ?? "left"}
           onChange={(e) => {
-            // handleChange(e);
             setTextAlign(e.target.value);
             handleFormChange("textAlign", e.target.value);
           }}
@@ -191,10 +190,8 @@ export default function General({
             type="radio"
             name="border"
             value="true"
-            // defaultChecked
             checked={formData.border === "true"}
             onChange={(e) => {
-              //  handleChange(e);
               setShowBorder(true);
               handleFormChange("border", e.target.value);
             }}
@@ -208,7 +205,6 @@ export default function General({
             value="false"
             checked={formData.border === "false"}
             onChange={(e) => {
-              //  handleChange(e);
               setShowBorder(false);
               handleFormChange("border", e.target.value);
             }}
@@ -226,18 +222,12 @@ export default function General({
             name="borderColor"
             value={formData.borderColor || "#000000"}
             onChange={(e) => {
-              //  handleChange(e);
               setBorderColor(e.target.value);
               handleFormChange("borderColor", e.target.value);
             }}
           />
         </div>
       )}
-
-      {/* Save Button */}
-      {/* <div className={e.content}>
-        <button onClick={handleSubmit}>Save Settings</button>
-      </div> */}
     </div>
   );
 }

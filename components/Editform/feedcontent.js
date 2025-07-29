@@ -1,16 +1,19 @@
 import e from "./editform.module.css";
+import useWidgetStore from "@/Store/widgetStore";
 
-export default function FeedContent({
-  formData,
-  handleFormChange,
-  setIsTitle,
-  setFeedBgColor,
-  setPostNumber,
-  setTitleBold,
-  setDescFont,
-  setShowDesc,
-  isCollapsed,
-}) {
+export default function FeedContent({ isCollapsed }) {
+  // Get state and actions from Zustand store
+  const {
+    formData,
+    handleFormChange,
+    setIsTitle,
+    setFeedBgColor,
+    setPostNumber,
+    setTitleBold,
+    setDescFont,
+    setShowDesc,
+  } = useWidgetStore();
+
   function postNumberChange(alpha) {
     const newNum = Math.max(1, (formData.postNumber || 3) + alpha);
     setPostNumber(newNum);
@@ -48,7 +51,7 @@ export default function FeedContent({
             <input
               type="number"
               className={e.incrementInput}
-              value={formData.postNumber || 3} // Fixed typo: was postNumer
+              value={formData.postNumber || 3}
               min="1"
               onChange={(e) => {
                 const value = Math.max(1, parseInt(e.target.value) || 3);
@@ -99,13 +102,17 @@ export default function FeedContent({
       <div className={e.content}>
         <div className={e.row}>Date format</div>
         <button
-          className={`${e.format} ${e.one}`}
+          className={`${e.format} ${e.one} ${
+            formData.dateFormat === "month-dd-yyyy" ? e.active : ""
+          }`}
           onClick={() => handleFormChange("dateFormat", "month-dd-yyyy")}
         >
           Month DD, YYYY
         </button>
         <button
-          className={`${e.format} ${e.two}`}
+          className={`${e.format} ${e.two} ${
+            formData.dateFormat === "dd-mm-yyyy" ? e.active : ""
+          }`}
           onClick={() => handleFormChange("dateFormat", "dd-mm-yyyy")}
         >
           DD-MM-YYYY
@@ -120,10 +127,10 @@ export default function FeedContent({
             <label className={e.switch}>
               <input
                 type="checkbox"
-                checked={formData.isTitle || false} // Added checked attribute
+                checked={formData.isTitle || false}
                 onChange={(e) => {
-                  setIsTitle(e.target.checked);
-                  handleFormChange("isTitle", e.target.checked); // Fixed: was "IsTitle"
+                  // setIsTitle(e.target.checked);
+                  handleFormChange("isTitle", e.target.checked);
                 }}
               />
               <span className={e.slider}></span>
@@ -137,7 +144,7 @@ export default function FeedContent({
         <div className={e.content}>
           <div className={e.row}>
             <div className={e.flexRow}>
-              <p tyle={{ marginRight: "10px" }}>Bold Title</p>
+              <p style={{ marginRight: "10px" }}>Bold Title</p>
               <label className={e.switch}>
                 <input
                   type="checkbox"
@@ -162,7 +169,7 @@ export default function FeedContent({
             <label className={e.switch}>
               <input
                 type="checkbox"
-                checked={formData.showDesc || false} // Added checked attribute
+                checked={formData.showDesc || false}
                 onChange={(e) => {
                   setShowDesc(e.target.checked);
                   handleFormChange("showDesc", e.target.checked);
@@ -192,7 +199,7 @@ export default function FeedContent({
               <input
                 type="number"
                 className={e.incrementInput}
-                value={formData.descFont || 16} // Fixed: was 3, changed to 16
+                value={formData.descFont || 16}
                 min="1"
                 max="100"
                 onChange={(e) => {

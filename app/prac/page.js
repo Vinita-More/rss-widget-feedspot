@@ -536,16 +536,24 @@ export default function MainPage() {
               postNumber={postNumber}
             />
           </div>
+        </div>
+        {!enableInternalScroll && (
           <div
             style={{
-              marginTop: "20px",
-              background: "#cd3535ff",
-              padding: "10px",
-              border: "1px solid #ccc",
-              width: "10%",
+              marginLeft: isCollapsed ? "70px" : "225px",
+              padding: "1.5rem",
+              backgroundColor: "#f7f7f7",
+              marginTop: "200vh",
             }}
-          ></div>
-        </div>
+          >
+            <h2 style={{ marginBottom: "1rem" }}>New Section</h2>
+            <p>
+              This section appears below the sticky layout when not in sticky
+              mode.hi
+            </p>
+            {/* Add your new content here */}
+          </div>
+        )}
       </div>
     </>
   );

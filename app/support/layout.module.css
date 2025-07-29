@@ -1,68 +1,132 @@
-/* Keep layout intact */
 .pageWrapper {
   display: flex;
   flex-direction: column;
-}
-
-.mainContent {
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  overflow-x: hidden;
 }
 
-/* Sticky top section with search + topbody */
+.pageWrapper.sidebarCollapsed {
+  margin-left: 70px; /* Collapsed sidebar width */
+}
+
 .topSection {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: white;
+  /* Searchbar and Topbody - scrolls normally and stays visible */
+  position: relative;
+  z-index: 1001; /* Higher than sticky right card */
+  background: transparent;
 }
 
-/* Layout below top section */
 .scrollableLayout {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   width: 100%;
-  transition: all 0.3s ease;
   gap: 1rem;
-  padding: 1rem;
 }
-
-/* When triggered, apply scroll area only to left content */
-.scrollableLayout.scrollableFixed .leftContent {
-  max-height: calc(100vh - var(--top-height, 0px));
+.leftcontent {
   overflow-y: auto;
 }
 
-/* Left and Right Panels */
-.leftContent {
-  width: 55%;
-  padding: 1rem;
-  overflow-y: hidden;
+#scrollToFixed {
   transition: all 0.3s ease;
+}
+
+.rgt_box {
+  padding-left: 5px;
+  padding-right: 0;
+}
+
+.leftContent {
+  flex: 1;
+  padding: 1rem;
+  flex: 0;
+  min-height: 100vh;
+  /* Left content scrolls normally - no special styling needed */
 }
 
 .rightStickyCard {
   width: 45%;
-  padding: 1rem;
   position: sticky;
-  top: var(--top-height, 0px); /* Align with topSection height */
+  top: 0;
+  align-self: flex-start;
+  padding: 1rem;
   height: fit-content;
-  z-index: 2;
+  transition: all 0.3s ease;
+  background: white;
 }
 
-/* Hide scrollbars on WebKit */
-.leftContent::-webkit-scrollbar {
-  display: none;
+/* Custom scrollbar for sticky right card when it's fixed */
+.rightStickyCard:has([style*="position: fixed"]) {
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 transparent;
 }
 
+.rightStickyCard:has([style*="position: fixed"])::-webkit-scrollbar {
+  width: 6px;
+}
+
+.rightStickyCard:has([style*="position: fixed"])::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rightStickyCard:has([style*="position: fixed"])::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 3px;
+}
+
+.rightStickyCard:has(
+    [style*="position: fixed"]
+  )::-webkit-scrollbar-thumb:hover {
+  background-color: #a1a1a1;
+}
+
+/* Footer section - completely separate from scrollable layout */
+.footerSection {
+  width: 100%;
+  margin-top: 2rem;
+  /* Footer scrolls independently after all content */
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
+  .pageWrapper {
+    margin-left: 0; /* No margin on mobile */
+  }
+
+  .pageWrapper.sidebarCollapsed {
+    margin-left: 0; /* No margin on mobile */
+  }
+
   .scrollableLayout {
     flex-direction: column;
   }
 
-  .leftContent,
-  .rightStickyCard {
+  .leftContent {
     width: 100%;
   }
+
+  .rightStickyCard {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    right: auto !important;
+    top: auto !important;
+    z-index: auto !important;
+  }
+}
+
+.container {
+  display: flex;
+}
+
+.mainContent {
+  margin-left: 225px; /* sidebar expanded width */
+  transition: margin-left 0.3s ease;
+  width: 100%;
+  padding: 1rem;
+}
+
+.collapsed {
+  margin-left: 70px; /* sidebar collapsed width */
 }

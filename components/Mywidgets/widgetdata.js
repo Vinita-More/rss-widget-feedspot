@@ -11,8 +11,13 @@ import {
   FaInfoCircle,
   FaCheck,
 } from "react-icons/fa";
+import useWidgetStore from "../../Store/widgetStore"; // Adjust path as needed
 
 export default function WidgetData() {
+  // Get token from Zustand store
+  const { token, setToken, setUserData } = useWidgetStore();
+
+  // Local state for component-specific data
   const [widgets, setWidgets] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editedName, setEditedName] = useState("");
@@ -20,6 +25,7 @@ export default function WidgetData() {
   const [embedCode, setEmbedCode] = useState("");
 
   const router = useRouter();
+
   const handleNameEdit = (id, currentName) => {
     setEditingId(id);
     setEditedName(currentName);
@@ -69,7 +75,7 @@ export default function WidgetData() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ id: widgetId }),
         }
@@ -100,29 +106,42 @@ export default function WidgetData() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    // Check if token exists in Zustand store, if not check localStorage
+    let currentToken = token;
+    if (!currentToken) {
+      currentToken = localStorage.getItem("token");
+      if (currentToken) {
+        setToken(currentToken);
+      }
+    }
+
+    if (!currentToken) {
       router.push("/");
       return;
     }
+
     fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchwidgets.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${currentToken}`,
       },
-      body: JSON.stringify({}), // No need to send email, token has it
+      body: JSON.stringify({}),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
           console.error("Auth error:", data.error);
+          // If token is invalid, clear it and redirect
+          setToken(null);
+          localStorage.removeItem("token");
+          router.push("/");
         } else {
           setWidgets(data);
         }
       })
       .catch((err) => console.error("Fetch error:", err));
-  }, []);
+  }, [token, setToken, router]);
 
   const handleDelete = async (id) => {
     const confirmDelete = confirm(
@@ -143,8 +162,6 @@ export default function WidgetData() {
       const result = await res.json();
       if (result.success) {
         alert("Widget deleted");
-        // Refresh list after deletion:
-        //fetchWidgets();
         setWidgets((prev) => prev.filter((widget) => widget.id !== id));
       } else {
         alert(result.error || "Failed to delete widget");
@@ -264,7 +281,7 @@ export default function WidgetData() {
         </table>
       </div>
 
-      {/* for popup on clicking embed code */}
+      {/* Embed code modal */}
       {showEmbedModal && (
         <div className={w.modalOverlay}>
           <div className={w.modal}>
@@ -282,22 +299,6 @@ export default function WidgetData() {
           </div>
         </div>
       )}
-      {/*  */}
     </div>
   );
 }
-
-// useEffect(() => {
-//   fetch("http://localhost:8080/RSS_Widget_Backend/api/fetchwidgets.php")
-//     .then((res) => res.json())
-//     .then((data) => {
-//       if (!data.error) setWidgets(data);
-//       else console.error(data.error);
-//     })
-//     .catch((err) => console.error("API error:", err));
-// }, []);
-// const handleEmbedCode = (widgetId) => {
-//   const script = `<script src="http://localhost/embed.js" data-widget-id="${widgetId}"></script>`;
-//   setEmbedCode(script);
-//   setShowEmbedModal(true);
-// };

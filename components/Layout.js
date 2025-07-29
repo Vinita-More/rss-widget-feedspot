@@ -1,42 +1,48 @@
 "use client";
-import { useState } from "react";
-import Sidebar from "./Sidebar/Sidebar";
-import Searchbar from "./Searchbar/Searchbar";
-import FooterSection from "./Footer/Footer";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import Searchbar from "@/components/Searchbar/Searchbar";
+import useWidgetStore from "@/Store/widgetStore";
 
-const Layout = ({ children }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  const handleMobileMenuToggle = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const handleSidebarToggle = (collapsed) => {
-    setIsCollapsed(collapsed);
-  };
+export default function Layout({ children }) {
+  // Get needed state from Zustand store
+  const { isCollapsed, isMobileMenuOpen } = useWidgetStore();
 
   return (
-    <>
-      <Sidebar
-        isMobileMenuOpen={isMobileMenuOpen}
-        onMobileMenuToggle={handleMobileMenuToggle}
-        onSidebarToggle={handleSidebarToggle}
-        isCollapsed={isCollapsed}
-        setIsCollapsed={setIsCollapsed}
-      />
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      {/* Sidebar */}
+      <Sidebar />
 
-      <Searchbar
-        onMobileMenuToggle={handleMobileMenuToggle}
-        isMobileMenuOpen={isMobileMenuOpen}
-        isCollapsed={isCollapsed}
-        userInitial="W"
-        userEmail="user@example.com"
-      />
+      {/* Main Content Area */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          transition: "margin-left 0.3s ease",
+        }}
+      >
+        {/* Top Searchbar */}
+        <Searchbar />
 
-      <main style={{ paddingTop: "80px" }}>{children}</main>
-    </>
+        {/* Page Content */}
+        <main style={{ flex: 1, overflow: "auto" }}>{children}</main>
+      </div>
+
+      {/* Mobile overlay backdrop */}
+      {isMobileMenuOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 998,
+          }}
+          onClick={() => useWidgetStore.getState().setMobileMenuOpen(false)}
+        />
+      )}
+    </div>
   );
-};
-
-export default Layout;
+}

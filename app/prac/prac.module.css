@@ -135,3 +135,20 @@
   height: fit-content;
   align-self: flex-start;
 }
+.newSection {
+  background-color: #f7f7f7;
+  padding: 1.5rem;
+  margin-left: 225px;
+  transition: margin-left 0.3s ease;
+}
+
+.newSection.collapsed {
+  margin-left: 70px;
+}
+
+@media (max-width: 768px) {
+  .newSection,
+  .newSection.collapsed {
+    margin-left: 0;
+  }
+}

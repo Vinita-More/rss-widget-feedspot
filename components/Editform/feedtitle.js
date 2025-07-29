@@ -1,17 +1,20 @@
 "use client";
 import e from "./editform.module.css";
 import { useState } from "react";
+import useWidgetStore from "@/Store/widgetStore";
 
-export default function Feedtitle({
-  setBgColor,
-  setSizeFont,
-  setTextColor,
-  setMainTitle,
-  setBold,
-  formData,
-  handleFormChange,
-  isCollapsed,
-}) {
+export default function Feedtitle({ isCollapsed }) {
+  // Get state and actions from Zustand store
+  const {
+    formData,
+    handleFormChange,
+    setBgColor,
+    setSizeFont,
+    setTextColor,
+    setMainTitle,
+    setBold,
+  } = useWidgetStore();
+
   const [isCustom, setIsCustom] = useState(true);
 
   const increment = () => {
@@ -64,7 +67,7 @@ export default function Feedtitle({
                   value={formData.mainTitle || ""}
                   className={e.maintitle}
                   onChange={(e) => {
-                    setMainTitle(e.target.value); // Fixed: Uncommented this line
+                    setMainTitle(e.target.value);
                     handleFormChange("mainTitle", e.target.value);
                   }}
                 />
@@ -105,7 +108,7 @@ export default function Feedtitle({
                 <label className={e.switch}>
                   <input
                     type="checkbox"
-                    checked={formData.isBold || false} // Fixed: Added checked attribute
+                    checked={formData.isBold || false}
                     onChange={(e) => {
                       const checked = e.target.checked;
                       setBold(checked);

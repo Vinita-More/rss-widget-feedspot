@@ -7,7 +7,7 @@
   position: fixed;
   background-color: rgb(250, 248, 248);
   line-height: 20px;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .searchinput {

@@ -1,36 +1,35 @@
 import rf from "./feed-url.module.css";
-import { useState } from "react";
-export default function Search({
-  onFolderChange,
-  folderId,
-  onFeedUrlChange,
-  rssInputText,
-  setRssInputText,
-  setFolderId,
-  isCollapsed,
-}) {
+import useWidgetStore from "@/Store/widgetStore";
+
+export default function Search() {
+  const {
+    folderId,
+    isCollapsed,
+    rssInputText,
+    setFolderId,
+    setRssInputText,
+    setCustomFeedUrl,
+  } = useWidgetStore();
+
   const handleChange = (e) => {
     const selectedId = parseInt(e.target.value);
-    setFolderId(selectedId); // set folderId in MainPage
-    onFolderChange(selectedId); // tell MainPage to switch to folder
+    setFolderId(selectedId);
     setRssInputText(""); // clear RSS feed input
-    onFeedUrlChange(null); // cancel custom feed mode
+    setCustomFeedUrl(null); // cancel custom feed mode
   };
 
   const handleUrlChange = (e) => {
     const value = e.target.value;
     setRssInputText(value); // update input
     if (value.trim() !== "") {
-      setFolderId(-1); // switch dropdown to “Select Folder”
-      onFolderChange(-1);
+      setFolderId(-1); // switch dropdown to "Select Folder"
     }
   };
 
   const handleGoClick = () => {
     if (rssInputText.trim() !== "") {
-      onFeedUrlChange(rssInputText); // fetch via feed URL
-      setFolderId(-1); // switch dropdown to “Select Folder”
-      onFolderChange(-1);
+      setCustomFeedUrl(rssInputText); // fetch via feed URL
+      setFolderId(-1); // switch dropdown to "Select Folder"
     }
   };
 
@@ -64,9 +63,6 @@ export default function Search({
           className={rf.input}
           value={folderId ? Number(folderId) : 0}
           onChange={handleChange}
-
-          // value={folderId !== undefined && folderId !== null ? folderId : 0}
-          //value={Number.isNaN(folderId) ? 0 : folderId}
         >
           <option value="-1">Select Folder</option>
           <option value="0">Homepage</option>

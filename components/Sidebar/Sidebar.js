@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
   HiHome,
   HiTemplate,
@@ -12,32 +12,20 @@ import {
   HiMenu,
 } from "react-icons/hi";
 import classes from "./sidebar.module.css";
+import useWidgetStore from "@/Store/widgetStore";
 
-export default function Sidebar({
-  isMobileMenuOpen,
-  onMobileMenuToggle,
-  onSidebarToggle,
-  isCollapsed,
-  setIsCollapsed,
-}) {
-  // const [isCollapsed, setIsCollapsed] = useState(false);
+export default function Sidebar() {
+  // Get state and actions from Zustand store
+  const { isMobileMenuOpen, isCollapsed, setMobileMenuOpen, setCollapsed } =
+    useWidgetStore();
 
   const toggleSidebar = () => {
-    const newCollapsedState = !isCollapsed;
-    setIsCollapsed(newCollapsedState);
-
-    // Notify parent component about the sidebar state change
-    if (onSidebarToggle) {
-      onSidebarToggle(newCollapsedState);
-    }
+    setCollapsed(!isCollapsed);
   };
 
-  // Notify parent about initial state
-  useEffect(() => {
-    if (onSidebarToggle) {
-      onSidebarToggle(isCollapsed);
-    }
-  }, []);
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <>
@@ -65,7 +53,7 @@ export default function Sidebar({
             <Link
               href="/widget"
               className={classes.link}
-              onClick={() => onMobileMenuToggle && onMobileMenuToggle()}
+              onClick={() => setMobileMenuOpen(false)}
             >
               <HiHome className={classes.icon} />
               {!isCollapsed && (
@@ -78,7 +66,7 @@ export default function Sidebar({
             <Link
               href="/widget"
               className={classes.link}
-              onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
+              onClick={() => setMobileMenuOpen(false)}
             >
               <HiTemplate className={classes.icon} />
               {!isCollapsed && (
@@ -91,7 +79,7 @@ export default function Sidebar({
             <Link
               href="/mywidgets"
               className={classes.link}
-              onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
+              onClick={() => setMobileMenuOpen(false)}
             >
               <HiCog className={classes.icon} />
               {!isCollapsed && (
@@ -104,7 +92,7 @@ export default function Sidebar({
             <Link
               href="/widget-catalog"
               className={classes.link}
-              onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
+              onClick={() => setMobileMenuOpen(false)}
             >
               <HiViewGrid className={classes.icon} />
               {!isCollapsed && (
@@ -117,7 +105,7 @@ export default function Sidebar({
             <Link
               href="/support"
               className={classes.link}
-              onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
+              onClick={() => setMobileMenuOpen(false)}
             >
               <HiQuestionMarkCircle className={classes.icon} />
               {!isCollapsed && (
@@ -130,7 +118,7 @@ export default function Sidebar({
             <Link
               href="/widget-examples"
               className={classes.link}
-              onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
+              onClick={() => setMobileMenuOpen(false)}
             >
               <HiLightBulb className={classes.icon} />
               {!isCollapsed && (
@@ -143,7 +131,7 @@ export default function Sidebar({
             <Link
               href="/prac"
               className={classes.link}
-              onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
+              onClick={() => setMobileMenuOpen(false)}
             >
               <HiUsers className={classes.icon} />
               {!isCollapsed && (
@@ -158,7 +146,7 @@ export default function Sidebar({
       {isMobileMenuOpen && (
         <div
           className={classes.mobileOverlay}
-          onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
+          onClick={() => setMobileMenuOpen(false)}
         />
       )}
     </>

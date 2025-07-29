@@ -1,42 +1,51 @@
 "use client";
-//import Link from "next/link";
 import g from "./card.module.css";
 import { useState, useEffect } from "react";
 import ch from "./card-specific.module.css";
-export default function Card({
-  showBorder,
-  borderColor,
-  textAlign,
-  fontStyle,
-  autoscroll,
-  cardHeight,
-  cardWidth,
-  selectedLayout,
-  folderId,
-  onSave,
-  widgetName,
-  setWidgetName,
-  handleFormChange,
-  onReset,
-  editMode,
-  formData,
-  feedUrl,
-  folderSelected,
-  bgColor,
-  sizeFont,
-  textColor,
-  isBold,
-  mainTitle,
-  titleBold,
-  feedBgColor,
-  showDesc,
-  isTitle,
-  descFont,
-  postNumber,
-  isCollapsed,
-}) {
+import useWidgetStore from "../../Store/widgetStore"; // Adjust path as needed
+
+export default function Card({ onSave, onReset }) {
+  // Get all necessary state and actions from Zustand store
+  const {
+    // State
+    showBorder,
+    borderColor,
+    textAlign,
+    fontStyle,
+    autoscroll,
+    cardHeight,
+    cardWidth,
+    selectedLayout,
+    folderId,
+    widgetName,
+    editMode,
+    formData,
+    customFeedUrl,
+    folderSelected,
+    bgColor,
+    sizeFont,
+    textColor,
+    isBold,
+    mainTitle,
+    titleBold,
+    feedBgColor,
+    showDesc,
+    isTitle,
+    descFont,
+    postNumber,
+    isCollapsed,
+
+    // Actions
+    setWidgetName,
+    handleFormChange,
+  } = useWidgetStore();
+
+  // Local state for feeds and error (these are component-specific, not global)
   const [feeds, setFeed] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
+
+  // Determine the feed URL to use
+  const feedUrl = customFeedUrl;
 
   useEffect(() => {
     const fetchFeeds = async () => {
@@ -144,18 +153,16 @@ export default function Card({
                 handleFormChange("widgetName", e.target.value);
               }}
             />
-            <div className={g.buttonGroup}>
-              <button
-                className={g.savebutton}
-                style={{ backgroundColor: "#f3d43c" }}
-                onClick={onSave}
-              >
-                {editMode ? "Update" : "Save & Get Code"}
-              </button>
-              <button className={g.savebutton} onClick={onReset}>
-                Reset
-              </button>
-            </div>
+            <button
+              className={g.savebutton}
+              style={{ backgroundColor: "#f3d43c" }}
+              onClick={onSave}
+            >
+              {editMode ? "Update" : "Save & Get Code"}
+            </button>
+            <button className={g.savebutton} onClick={onReset}>
+              Reset
+            </button>
           </div>
 
           <div
@@ -186,7 +193,7 @@ export default function Card({
               style={{
                 overflowY: autoscroll === "true" ? "scroll" : "visible",
                 scrollBehavior: "smooth",
-                backgroundColor: formData.feedBgColor || undefined, // done twice to apply bgcolor to both card and background on which card is
+                backgroundColor: formData.feedBgColor || undefined,
               }}
             >
               {displayFeeds.map((feed) => (
@@ -196,7 +203,6 @@ export default function Card({
                   style={{ backgroundColor: formData.feedBgColor || undefined }}
                 >
                   <a
-                    // className={g.newlink}
                     href={feed.feedurl}
                     target="_blank"
                     style={{
@@ -212,19 +218,15 @@ export default function Card({
                     {feed.image ? (
                       <img
                         src={
-                          feed.image.startsWith("http") // full external URL from RSS
+                          feed.image.startsWith("http")
                             ? feed.image
-                            : `http://localhost:8080/RSS_Widget_Backend/${feed.image}` // fallback for local
+                            : `http://localhost:8080/RSS_Widget_Backend/${feed.image}`
                         }
                         alt={feed.title}
                         width={100}
                         style={{
                           display:
                             parseInt(cardHeight) < 150 ? "none" : undefined,
-
-                          /* height: cardHeight
-                            ? `${parseInt(cardHeight) / 2}px`
-                            : undefined,*/
                         }}
                       />
                     ) : (
@@ -239,9 +241,9 @@ export default function Card({
                       </p>
                     )}
                     <div>
-                      {(isTitle === undefined ||
-                        isTitle === true ||
-                        isTitle === "true") && (
+                      {(formData.isTitle === undefined ||
+                        formData.isTitle === true ||
+                        formData.isTitle === "true") && (
                         <h1
                           className={g.newlink}
                           style={{
@@ -276,11 +278,6 @@ export default function Card({
                                 parseInt(cardWidth) < 170
                               ? "10px"
                               : undefined,
-                            /*  display:
-                              parseInt(cardHeight) < 170 ||
-                              parseInt(cardWidth) < 170
-                                ? "none"
-                                : undefined,*/
                           }}
                         >
                           {feed.description}
