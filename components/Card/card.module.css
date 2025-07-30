@@ -1,8 +1,7 @@
 .h1 {
-  height: 350px;
+  height: 500px;
   font-size: 1rem;
   width: 100%;
-  margin-top: 70px;
   margin-left: 1vh;
   flex-wrap: wrap;
   text-align: center;
@@ -18,6 +17,7 @@
   top: 0;
   z-index: 100;
   background-color: white;
+  margin-top: 40px;
 
   /*position: relative;*/
   /* margin-right: 1vh;*/
@@ -55,9 +55,9 @@
   justify-content: center; /* Center all cards horizontally */
   align-items: start;
   padding: 0.5rem;
-  /* overflow: hidden;*/
+  overflow: hidden;
   max-height: 450px;
-  max-width: 80vh;
+  max-width: 90vh;
   overflow-y: auto;
 }
 .usercard {
@@ -161,8 +161,8 @@
 }
 
 .collapsed {
-  margin-left: -70px; /* Sidebar collapsed */
-  width: 85vh;
+  margin-left: -20px; /* Sidebar collapsed */
+  width: 95vh;
   transition: margin-left 0.5s ease;
 }
 
@@ -268,7 +268,7 @@
 
 /*left image 1*/
 /* Layout for image left, text right */
-.layout-image-text {
+/*.layout-image-text {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -276,14 +276,14 @@
   align-items: flex-start;
 }
 
-/* Ensure the image takes left half */
+/* Ensure the image takes left half 
 .layout-image-text img {
   width: 150px;
   height: 200px;
   object-fit: cover;
 }
 
-/* Force text elements (that follow the img) into a vertical column */
+/* Force text elements (that follow the img) into a vertical column 
 .layout-image-text h1 {
   display: inline-block;
   width: 50%;
@@ -294,20 +294,20 @@
   display: inline-block;
   width: 50%;
 }
-/*Right image one*/
+/*Right image one
 .right_one {
   width: 95%;
   padding: 10px;
 }
 /*left image 2*/
-/*for third image button*/
+/*for third image button
 .left_three {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
-/*Fourth button layout*/
+/*Fourth button layout
 .layout-grid-4 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -324,7 +324,7 @@
   text-align: center;
 }
 
-/**/ /* Only apply this when the layout is 'grid-layout-right' */
+/**/ /* Only apply this when the layout is 'grid-layout-right' 
 .usercard.layout-grid-4 {
   width: calc(33.333% - 1rem);
   box-sizing: border-box;
@@ -339,7 +339,7 @@
   background-color: #fff;
 }
 
-/* Image styling */
+/* Image styling 
 .usercard.layout-grid-4 img {
   width: 100%;
   height: auto;
@@ -347,22 +347,22 @@
   border-radius: 6px;
 }
 
-/* Title below image */
+/* Title below image 
 .usercard.layout-grid-4 h1 {
   font-size: 0.9rem;
   margin: 0.5rem 0 0 0;
   line-height: 1.2;
 }
 
-/* Hide description and link */
+/* Hide description and link 
 .usercard.layout-grid-4 p,
 .usercard.layout-grid-4 a {
   display: none;
 }
 
-/*When right side card for fourth layout button is selected*/
+/*When right side card for fourth layout button is selected
 .usercard.grid-layout-right {
-  width: calc(33.333% - 0.5rem); /* 3 columns with spacing */
+  width: calc(33.333% - 0.5rem); /* 3 columns with spacing 
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -375,7 +375,7 @@
   background-color: #fff;
 }
 
-/* Image */
+/* Image 
 .usercard.grid-layout-right img {
   width: 100%;
   height: auto;
@@ -383,23 +383,24 @@
   border-radius: 6px;
 }
 
-/* Title below image */
+/* Title below image 
 .usercard.grid-layout-right h1 {
   font-size: 0.95rem;
   margin: 0.4rem 0 0 0;
   line-height: 1.2;
 }
 
-/* Show description optionally */
+/* Show description optionally 
 .usercard.grid-layout-right p {
   font-size: 0.85rem;
   margin: 0.3rem 0 0;
 }
 
-/* Optional link */
+/* Optional link 
 .usercard.grid-layout-right a {
   font-size: 0.8rem;
   color: blue;
   margin-top: 0.3rem;
   display: inline-block;
 }
+*/

@@ -240,15 +240,13 @@ export default function MainPage() {
       : borderColor;
 
   return (
-    <div className={p.pageWrapper} style={{ width: "100%" }}>
-      {/* Top section scrolls normally */}
-      <div className={p.topSection}>
-        <FeedspotSection isCollapsed={isCollapsed} />
-      </div>
+    <div className={p.pageWrapper}>
+      {/* Top section */}
+      <FeedspotSection isCollapsed={isCollapsed} />
 
-      {/* Everything from FeedUrl downward scrolls left, card stays sticky */}
-      <div className={p.scrollableLayout}>
-        <div className={p.leftContent}>
+      {/* Main content with two-column layout */}
+      <div className={p.mainWrapper}>
+        <div className={p.leftColumn}>
           <Search isCollapsed={isCollapsed} />
           <View
             isCollapsed={isCollapsed}
@@ -275,10 +273,13 @@ export default function MainPage() {
           />
         </div>
 
-        <div className={p.rightStickyCard}>
+        <div className={p.rightColumn}>
           <Card onSave={handleSubmit} onReset={resetAllSettings} />
         </div>
       </div>
+
+      {/* Footer at the bottom */}
+      <FooterSection style={{ marginTop: "5vh" }} />
     </div>
   );
 }

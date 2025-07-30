@@ -25,7 +25,7 @@ export default function Layout({ children }) {
         <Searchbar />
 
         {/* Page Content */}
-        <main style={{ flex: 1, overflow: "auto" }}>{children}</main>
+        <main style={{ flex: 1, overflow: "visible" }}>{children}</main>
       </div>
 
       {/* Mobile overlay backdrop */}

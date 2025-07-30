@@ -1,5 +1,5 @@
 import s from "./topbody.module.css";
-export default function Side({ isCollapsed }) {
+export default function FeedspotSection({ isCollapsed }) {
   return (
     <div className={`${isCollapsed ? s.collapsed : s.expanded}`}>
       {/* This div is parent div of headings content on the page */}

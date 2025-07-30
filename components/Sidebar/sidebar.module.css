@@ -11,7 +11,7 @@
   top: 0;
   box-sizing: border-box;
   transition: width 0.3s ease;
-  overflow: hidden;
+  /*overflow: hidden;*/
   z-index: 1000;
 }
 
@@ -74,7 +74,7 @@
   margin: 0;
   padding: 0;
   white-space: nowrap;
-  overflow: hidden;
+  /*overflow: hidden;*/
   transition: opacity 0.3s ease;
   flex: 1;
   text-align: left;
@@ -83,8 +83,8 @@
 /* Navigation */
 .nav {
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
+  /*overflow-y: auto;
+  overflow-x: hidden;*/
 }
 
 .link {
@@ -111,7 +111,7 @@
 
 .linkText {
   white-space: nowrap;
-  overflow: hidden;
+  /* overflow: hidden;*/
   text-overflow: ellipsis;
   transition: opacity 0.3s ease;
 }

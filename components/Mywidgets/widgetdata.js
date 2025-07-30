@@ -68,7 +68,11 @@ export default function WidgetData() {
   };
 
   const handleEmbedCode = async (widgetId) => {
+    console.log("Embed button clicked for widget ID:", widgetId);
+    console.log("Current token:", token);
+
     try {
+      console.log("Making API request...");
       const res = await fetch(
         `http://localhost:8080/RSS_Widget_Backend/api/fetchonewidget.php`,
         {
@@ -81,22 +85,27 @@ export default function WidgetData() {
         }
       );
 
+      console.log("API response status:", res.status);
       const data = await res.json();
+      console.log("API response data:", data);
 
       if (data && !data.error) {
         const code = `<script 
-  src="http://localhost/embed.js"
-  data-widget-id="${widgetId}"
-  data-height="${data.height || "400px"}"
-  data-width="${data.width || "100%"}"
-  data-border="${data.border === "true"}"
-  data-font="${data.font_style || "Arial"}"
-  data-font-size="${data.fontSize || "16px"}"
-></script>`;
+src="http://localhost:8080/embed.js"
+data-widget-id="${widgetId}"
+data-height="${data.height || "400px"}"
+data-width="${data.width || "100%"}"
+data-border="${data.border === "true"}"
+data-font="${data.font_style || "Arial"}"
+data-font-size="${data.fontSize || "16px"}">
+</script>`;
 
+        console.log("Generated embed code:", code);
         setEmbedCode(code);
         setShowEmbedModal(true);
+        console.log("Modal should be showing now");
       } else {
+        console.error("Widget data error:", data);
         alert("Widget not found or failed to fetch settings.");
       }
     } catch (err) {

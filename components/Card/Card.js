@@ -139,9 +139,19 @@ export default function Card({ onSave, onReset }) {
 
   return (
     <div className={g.parent}>
-      <div className={g.h1}>
+      <div
+        className={g.h1}
+        style={{
+          width: isCollapsed ? "100%" : "",
+        }}
+      >
         <div>
-          <div className={g.div1}>
+          <div
+            className={g.div1}
+            style={{
+              width: isCollapsed ? "100%" : "",
+            }}
+          >
             <input
               name="widgetName"
               type="text"
@@ -171,8 +181,15 @@ export default function Card({ onSave, onReset }) {
             }`}
             style={{
               height: cardHeight ? `${parseInt(cardHeight)}px` : undefined,
-              width: cardWidth ? `${parseInt(cardWidth)}px` : undefined,
+              /*width: cardWidth ? `${parseInt(cardWidth)}px` : undefined,*/
               border: showBorder ? `1px solid ${borderColor}` : "none",
+              width: cardWidth
+                ? isCollapsed
+                  ? `min(100%, ${parseInt(cardWidth)}px)`
+                  : `${parseInt(cardWidth)}px`
+                : isCollapsed
+                ? "100%"
+                : undefined,
             }}
           >
             {/* Feed Title with customizable styling */}
@@ -194,6 +211,7 @@ export default function Card({ onSave, onReset }) {
                 overflowY: autoscroll === "true" ? "scroll" : "visible",
                 scrollBehavior: "smooth",
                 backgroundColor: formData.feedBgColor || undefined,
+                paddingLeft: isCollapsed ? "10px" : "",
               }}
             >
               {displayFeeds.map((feed) => (

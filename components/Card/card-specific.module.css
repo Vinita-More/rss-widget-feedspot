@@ -159,6 +159,7 @@
   width: 500px;
   font-size: 0.9rem;
   height: 50px;
+  line-height: 0.7rem;
 }
 .layout-lines-only p {
   font-size: 0.75rem;
@@ -438,15 +439,23 @@
 /* Left layout - 3 items per row */
 /* Left layout with images only */
 .left_four {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three images per row */
-  gap: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  width: 25%; /* Two items per row with gap */
+  display: flex;
+  flex-direction: column;
   background: white;
+  position: relative;
   padding: 5px;
+  height: auto;
 }
 
 .left_four .newlink {
-  display: inline-block;
+  width: 48%; /* Two items per row with gap */
+  display: flex;
+  flex-direction: column;
   background: white;
 }
 
@@ -464,6 +473,10 @@
   display: none;
 }
 
+.left_four .newlink {
+  background: rgb(127, 63, 63);
+  overflow: hidden;
+}
 /* Optional responsive behavior */
 @media (max-width: 768px) {
   .left_four {
